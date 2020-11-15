@@ -15,7 +15,7 @@ App({
       apiUrl: "https://api.bbbug.com/api/",
       baseData: {
         access_token: "",
-        plat: 'app',
+        plat: 'weapp',
         version: 10000
       },
       code: {
