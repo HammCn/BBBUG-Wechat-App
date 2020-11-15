@@ -1,0 +1,17 @@
+module.exports.urldecode = function (str) {
+  return decodeURIComponent(str);
+};
+module.exports.getStaticUrl = function (url) {
+  if (url.indexOf("https://") == 0 || url.indexOf("http://") == 0) {
+    return url;
+  } else {
+    return "https://cdn.bbbug.com/uploads/" + url;
+  }
+};
+module.exports.getImageWidth = function (url) {
+  if (url.indexOf('images/emoji/') >= 0) {
+    return 60;
+  } else {
+    return 160;
+  }
+};

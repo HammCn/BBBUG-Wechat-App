@@ -1,0 +1,44 @@
+<wxs src="../../utils/helper.wxs" module="helper" />
+<view class="searchbox">
+  <form bindsubmit="roomList">
+    <view class="weui-cells weui-cells_form" style="margin:0;border-radius:0;background-color:transparent;padding:8px;">
+      <view class="weui-cell" style="padding: 5px 10px;">
+        <view class="weui-cell__hd">
+          <i class="iconfont icon-search" style="font-size: 24px;"></i>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" type="number" confirm-type="go" bindconfirm="doEnterSearchRoom" placeholder="输入房间ID进入"
+            focus="true"></input>
+        </view>
+      </view>
+    </view>
+  </form>
+</view>
+<view wx:if="{{roomList.length==0}}">
+  <view class="tipImage">
+    <image class="img" src="/res/image/alert.png" />
+  </view>
+  <view class="tipText">没有找到任何房间</view>
+</view>
+
+<view wx:for="{{roomList}}" bindtap="doEnterRoom" mark:room_id="{{item.room_id}}"  class="roomBg">
+  <view class="roomTitle">
+    <i class="iconfont roomType icon-xiaoxi2" wx:if="{{item.room_type==0}}"></i>
+    <i class="iconfont roomType icon-changyongtubiao-mianxing-61" wx:if="{{item.room_type==1}}"></i>
+    <i class="iconfont roomType icon-shezhi3" wx:if="{{item.room_type==2}}"></i>
+    <i class="iconfont roomType icon-book" wx:if="{{item.room_type==3}}"></i>
+    {{item.room_name}}
+    <font class="roomOnline" wx:if="{{item.room_online>0}}">({{item.room_online}})</font>
+    <span class="roomRight"><i class="iconfont icon-lock-fill roomLock" wx:if="{{item.room_public==1}}"></i><span
+        class="roomId">ID:{{item.room_id}}</span></span>
+  </view>
+  <view class="roomBottom">
+    <image src="{{item.user_head || '/res/image/nohead.jpg'}}" class="roomImage"></image>
+    <view class="roomUser">
+      <view>
+        房主: {{helper.urldecode(item.user_name)}}
+      </view>
+      <view class="roomNotice">{{item.room_notice||'未填写房间公告'}}</view>
+    </view>
+  </view>
+</view>

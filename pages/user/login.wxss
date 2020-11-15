@@ -1,0 +1,19 @@
+.weui-cell {
+  padding: 15px;
+}
+
+.app_desc {
+  padding-bottom: 30px;
+}
+
+.weui-cells {
+  margin: 0px 20px;
+}
+
+.weui-label {
+  width: 60px;
+}
+
+.bbbug_login_sendmail::before {
+  font-size: 24px;
+}

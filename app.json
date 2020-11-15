@@ -1,0 +1,26 @@
+{
+  "pages": [
+    "pages/index/index", 
+    "pages/song/playing",
+    "pages/song/select",
+    "pages/song/my",
+    "pages/room/select",
+    "pages/user/login",
+    "pages/user/online",
+    "pages/other/about",
+    "pages/other/detail",
+    "pages/webview/index"
+  ],
+  "requiredBackgroundModes": ["audio"],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "backgroundColor": "#f5f5f5",
+    "backgroundColorTop": "#f5f5f5",
+    "backgroundColorBottom": "#f5f5f5",
+    "navigationBarBackgroundColor": "#f5f5f5",
+    "navigationBarTitleText": "BBBUG",
+    "navigationBarTextStyle": "black",
+    "navigationStyle": "default"
+  },
+  "sitemapLocation": "sitemap.json"
+}

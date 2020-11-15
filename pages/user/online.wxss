@@ -1,0 +1,35 @@
+.userList {
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.number {
+  font-size: 16px;
+  font-weight: bolder;
+  color: #ff4500;
+  margin-right: 5px;
+}
+
+.badge {
+  display: inline-block;
+  color: orangered;
+  margin-right: 5px;
+}
+
+.tipImage {
+  text-align: center;
+  margin-top: 20%;
+
+}
+
+.tipImage .img {
+  width: 100px;
+  height: 100px;
+}
+
+.tipText {
+  margin-top: 5%;
+  font-size: 14px;
+  color: #999;
+  text-align: center;
+}

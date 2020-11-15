@@ -1,0 +1,344 @@
+movable-area {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+  pointer-events: none;
+  display: none;
+}
+
+movable-view {
+  width: 80px;
+  height: 80px;
+  background-color: #333;
+  pointer-events: stroke;
+  right: 20px;
+  top: 20px;
+  border-radius: 10px;
+}
+
+.bbbug_player {
+  position: fixed;
+  left: 10px;
+  top: 10px;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 10px;
+  height: 50px;
+  padding-right: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+.bbbug_player_image {
+  width: 46px;
+  height: 46px;
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  border-radius: 10px;
+}
+
+.bbbug_player_song {
+  font-size: 16px;
+  color: #333;
+  margin-left: 60px;
+  margin-top: 3px;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bbbug_player_user {
+  font-size: 12px;
+  color: #999;
+  margin-left: 60px;
+}
+
+.bbbug_history {
+  background-color: #f5f5f5;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  padding-bottom: env(safe-area-inset-bottom);
+  overflow-y: scroll;
+}
+
+
+.bbbug_history .bbbug_item .bbbug_system {
+  font-size: 12px;
+  color: #999;
+  margin: -3px 10%;
+  word-break: break-all;
+  word-wrap: break-word;
+  text-align: center;
+}
+
+.bbbug_history .bbbug_item {
+  padding: 10px;
+}
+
+.bbbug_history .bbbug_item .bbbug_head image {
+  width: 50px;
+  height: 50px;
+  border: 1px solid #fff;
+  border-radius: 10px;
+  position: absolute;
+  left: 10px;
+}
+
+.bbbug_history .bbbug_mine .bbbug_head image {
+  left: auto;
+  right: 10px;
+}
+
+.bbbug_history .bbbug_quot {
+  font-size: 12px;
+  color: #999;
+  background-color: #eeeeee;
+  max-width: 200px;
+  display: inline-block;
+  margin-top: 5px;
+  border-radius: 5px;
+  padding: 2px 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bbbug_history .bbbug_item .bbbug_user {
+  margin-left: 60px;
+  margin-right: 60px;
+  font-size: 14px;
+  color: #999;
+  text-align: left;
+}
+
+.bbbug_history .bbbug_mine .bbbug_user {
+  text-align: right;
+}
+
+.bbbug_input {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  padding-bottom: env(safe-area-inset-bottom);
+  height: 40px;
+  padding: 5px 50px;
+}
+
+.bbbug_at {
+  position: fixed;
+  left: 5px;
+  bottom: 55px;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.bbbug_at_user {
+  background-color: #666;
+  color: #fff;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+.bbbug_at_user view {
+  max-width: 200px;
+  display: inline-block;
+  margin-right: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.bbbug_at_user i {
+  font-size: 12px;
+  vertical-align: middle;
+}
+
+.bbbug_face {
+  position: fixed;
+  left: 10px;
+  bottom: 10px;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.bbbug_face image {
+  vertical-align: middle;
+  width: 32px;
+  height: 32px;
+}
+
+.bbbug_more {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.bbbug_more image {
+  vertical-align: middle;
+  width: 36px;
+  height: 36px;
+}
+
+.bbbug_cover {
+  background-color: #fff;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 50px;
+  color: #999;
+  z-index: 10;
+  text-align: center;
+  padding: 0px 10px;
+  padding-bottom: env(safe-area-inset-bottom);
+  line-height: 50px;
+}
+
+.bbbug_history .bbbug_item .bbbug_content {
+  margin-left: 60px;
+  margin-top: 5px;
+  margin-right: 60px;
+  text-align: left;
+}
+
+.bbbug_history .bbbug_mine .bbbug_content {
+  text-align: right;
+}
+
+.bbbug_history .bbbug_item .bbbug_content .bbbug_text {
+  background-color: white;
+  border-radius: 10px;
+  padding: 8px 10px;
+  display: inline-block;
+  max-width: 80%;
+  word-break: break-all;
+  word-wrap: break-word;
+  font-size: 16px;
+  color: #333;
+  text-align: left;
+}
+
+.bbbug_history .bbbug_item .bbbug_content .bbbug_link {
+  background-color: white;
+  border-radius: 10px;
+  padding: 8px 10px;
+  display: inline-block;
+  max-width: 90%;
+  word-break: break-all;
+  word-wrap: break-word;
+  font-size: 16px;
+  color: #333;
+  text-align: left;
+}
+
+.bbbug_history .bbbug_item .bbbug_content .bbbug_link .bbbug_link_title {
+  font-size: 14px;
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bbbug_history .bbbug_item .bbbug_content .bbbug_link .bbbug_link_desc {
+  font-size: 12px;
+  color: #999999;
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  line-clamp: 3;
+}
+
+.bbbug_history .bbbug_item .bbbug_content .bbbug_link .bbbug_link_url {
+  font-size: 12px;
+  background-color: #666;
+  color: #fff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: -10px;
+  margin-top: 20px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding: 0px 10px;
+}
+
+.bbbug_history .bbbug_mine .bbbug_content .bbbug_text {
+  background-color: #cccccc;
+  color: #333333;
+}
+
+.bbbug_history .bbbug_item .bbbug_content .bbbug_image {
+  background-color: white;
+  border-radius: 10px;
+  padding: 2px;
+  display: inline-block;
+  max-width: 80%;
+  word-break: break-all;
+  word-wrap: break-word;
+  font-size: 14px;
+  color: #333;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.bbbug_history .bbbug_item .bbbug_content .bbbug_image image {
+  width: 120px;
+  height: 120px;
+  border-radius: 10px;
+}
+
+.bbbug_scroll_button {
+  position: fixed;
+  right: 10px;
+  bottom: 60px;
+  padding-bottom: env(safe-area-inset-bottom);
+  padding: 8px 16px;
+  font-size: 16px;
+  color: white;
+  background-color: #666666;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+}
+
+.bbbug_emoji {
+  position: fixed;
+  left: 10px;
+  right: 10px;
+  bottom: 60px;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.bbbug_emoji_box {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+  /* display: flex;
+  flex-direction: row;
+  flex-wrap: wrap; */
+}
+
+.bbbug_emoji .bbbug_emoji_box view {
+  font-size: 14px;
+  color: #999;
+  padding: 20px 0px;
+  text-align: center;
+}
+
+.bbbug_emoji .bbbug_emoji_box image {
+  width: 12%;
+  margin: 1%;
+}

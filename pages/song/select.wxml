@@ -1,0 +1,36 @@
+<view class="searchbox">
+  <form bindsubmit="doSearchSong">
+    <view class="weui-cells weui-cells_form" style="margin:0;border-radius:0;background-color:transparent;padding:8px;">
+      <view class="weui-cell" style="padding: 5px 10px;">
+        <view class="weui-cell__hd">
+          <i class="iconfont icon-search" style="font-size: 24px;"></i>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" type="text" confirm-type="search" bindconfirm="doSearchSong"
+            placeholder="输入歌手/歌名/专辑搜索" focus="true"></input>
+        </view>
+      </view>
+    </view>
+  </form>
+</view>
+<view wx:if="{{songList.length==0}}">
+  <view class="tipImage">
+    <image class="img" src="/res/image/alert.png" />
+  </view>
+  <view class="tipText">没有搜索到歌曲呀,换个关键词试试吧</view>
+</view>
+<view class="weui-panel weui-panel_access songList" style="margin:0;border-radius: 0;" wx:if="{{songList.length>0}}">
+  <view class="weui-panel__bd">
+    <view class="weui-media-box weui-media-box_appmsg" wx:for="{{songList}}" bindtap="showMenu" mark:item="{{item}}">
+      <view class="weui-media-box__hd">
+        <image class="weui-media-box__thumb song_image" src="{{item.pic}}" alt="" mode="widthFix"></image>
+      </view>
+      <view class="weui-media-box__bd">
+        <view class="weui-media-box__title">{{item.name}}</view>
+        <view class="weui-media-box__desc">
+          歌手：{{item.singer}}
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,30 @@
+.logo {
+  margin-top: 25%;
+  text-align: center;
+}
+
+.logo>image {
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+}
+
+.product {
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+.version {
+  font-size: 12px;
+  color: #999;
+  font-weight: 500;
+}
+
+.copyright {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 20px;
+  font-size: 12px;
+  color: #999;
+}

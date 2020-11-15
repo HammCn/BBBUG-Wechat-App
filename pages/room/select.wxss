@@ -1,0 +1,113 @@
+.roomBg {
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 10px;
+  position: relative;
+  height: 100px;
+}
+
+.roomTitle {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-break: break-all;
+  font-size: 16px;
+  margin-right: 80px;
+}
+
+.roomBottom {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  left: 10px;
+}
+
+.roomOnline {
+  color: orangered;
+}
+
+.roomType {
+  font-size: 16px;
+  font-weight: bold;
+  color: orangered;
+  padding: 2px;
+  margin-left: 5px;
+}
+
+.roomNotice {
+  font-size: 12px;
+  color: #AAAAAA;
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.roomUser {
+  margin-left: 50px;
+  font-size: 14px;
+  color: #333;
+  margin-top: 10px;
+  line-height: 22px;
+}
+
+.roomImage {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  margin-top: 10px;
+  position: absolute;
+  background-color: #F5F5F5;
+  border: 1px solid #F5F5F5;
+}
+
+
+.roomId {
+  font-size: 12px;
+  color: #666;
+  background-color: #F5F5F5;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-weight: 100;
+}
+
+.roomRight {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  vertical-align: middle;
+}
+
+.roomLock {
+  color: orangered;
+  font-size: 14px;
+}
+
+.tipImage {
+  text-align: center;
+  margin-top: 20%;
+
+}
+
+.tipImage .img {
+  width: 100px;
+  height: 100px;
+}
+
+.tipText {
+  margin-top: 5%;
+  font-size: 14px;
+  color: #999;
+  text-align: center;
+}
+
+.searchbox {
+  margin: 0px;
+  background-color: white;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 10px;
+}

@@ -1,0 +1,30 @@
+<wxs src="../../utils/helper.wxs" module="helper" />
+<view wx:if="{{userList.length==0}}">
+  <view class="tipImage">
+    <image class="img" src="/res/image/alert.png" />
+  </view>
+  <view class="tipText">好尴尬,房间里一个人都没有</view>
+</view>
+<view class="weui-panel weui-panel_access userList" style="margin:0;border-radius: 0;" wx:if="{{userList.length>0}}">
+  <view class="weui-panel__bd">
+    <view class="weui-media-box weui-media-box_appmsg" wx:for="{{userList}}" bindtap="showMenu" mark:item="{{item}}">
+      <view class="weui-media-box__hd">
+        <image class="weui-media-box__thumb" style="border-radius: 10px;width:64px;height:64px;margin-right:10px;"
+          src="{{item.user_head || '/res/image/nohead.jpg'}}" mode="widthFix"></image>
+      </view>
+      <view class="weui-media-box__bd">
+        <view class="weui-media-box__title"><i style="color:#66CBFF;margin-right:5px;" class="iconfont icon-xingbie-nan"
+            wx:if="{{item.user_sex==1}}"></i><i style="color:#FE9898;margin-right:5px;" class="iconfont icon-xingbie-nv"
+            wx:if="{{item.user_sex!=1}}"></i>{{helper.urldecode(item.user_name)}}</view>
+        <view class="weui-media-box__desc">
+          <view class="status">
+            <view class="badge" style="color:#999999">ID:{{item.user_id}}</view>
+            <view class="badge" wx:if="{{item.user_shutdown}}">禁言</view>
+            <view class="badge" wx:if="{{item.user_songdown}}">禁歌</view>
+          </view>
+          <view>{{helper.urldecode(item.user_remark)}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

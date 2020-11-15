@@ -1,0 +1,34 @@
+<view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
+  <view class="page__bd">
+    <view class="app_title">BBBUG</view>
+    <view class="app_desc">请先登录后再进入音乐聊天室</view>
+    <form bindsubmit="formSubmit" bindreset="formReset">
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">帐号</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" placeholder="你的邮箱或ID" type="email" value="" name="user_account" auto-focus
+              bindinput="userAccountChanged" />
+          </view>
+          <view class="weui-cell__ft" bindtap="sendMail"><i class="iconfont icon-mail bbbug_login_sendmail"></i></view>
+        </view>
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">密码</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" placeholder="你的密码或验证码" password="true" value="" name="user_password" />
+          </view>
+        </view>
+      </view>
+      <view class="weui-btn-area">
+        <button form-type="submit" class="weui-btn" type="primary">马上登录</button>
+      </view>
+    </form>
+    <view class="weui-footer weui-footer_fixed-bottom">
+      <view class="weui-footer__text">正在使用安全的HTTPS通信</view>
+    </view>
+  </view>
+</view>
