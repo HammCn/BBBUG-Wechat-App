@@ -51,3 +51,12 @@ IM后端采用```node-websocket```实现```Websocket```服务，使用```pm2```�
 3. 提交代码
 4. 新建 Pull Request
 ```
+
+### 晒个截图
+
+<p align="center">
+<img src="https://images.gitee.com/uploads/images/2020/1115/160421_d7b821d3_145025.jpeg" width="20%"/>
+<img src="https://images.gitee.com/uploads/images/2020/1115/160432_e9b5f02a_145025.jpeg" width="20%"/>
+<img src="https://images.gitee.com/uploads/images/2020/1115/160441_01037a5f_145025.jpeg" width="20%"/>
+<img src="https://images.gitee.com/uploads/images/2020/1115/160451_5b7483eb_145025.jpeg" width="20%"/>
+</p>
