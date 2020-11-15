@@ -825,6 +825,7 @@ Page({
     // audio.epname = "(" + that.data.roomInfo.room_name + ")";
     audio.coverImgUrl = msg.song.pic;
     audio.webUrl = msg.song.pic;
+    audio.currentTime = parseInt(new Date().valueOf() / 1000) - msg.since
     audio.play();
   },
   showMainMenu() {

@@ -7,8 +7,8 @@
           <i class="iconfont icon-search" style="font-size: 24px;"></i>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" type="number" confirm-type="go" bindconfirm="doEnterSearchRoom" placeholder="输入房间ID进入"
-            focus="true"></input>
+          <input class="weui-input" type="number" confirm-type="go" bindconfirm="doEnterSearchRoom"
+            placeholder="输入房间ID进入"></input>
         </view>
       </view>
     </view>
@@ -21,7 +21,7 @@
   <view class="tipText">没有找到任何房间</view>
 </view>
 
-<view wx:for="{{roomList}}" bindtap="doEnterRoom" mark:room_id="{{item.room_id}}"  class="roomBg">
+<view wx:for="{{roomList}}" bindtap="doEnterRoom" mark:room_id="{{item.room_id}}" class="roomBg">
   <view class="roomTitle">
     <i class="iconfont roomType icon-xiaoxi2" wx:if="{{item.room_type==0}}"></i>
     <i class="iconfont roomType icon-changyongtubiao-mianxing-61" wx:if="{{item.room_type==1}}"></i>
