@@ -1,10 +1,12 @@
-<h1>BBBUG 音乐聊天室 微信小程序</h1>
 
+<p align="center">
+<img width="200" src="https://images.gitee.com/uploads/images/2020/1115/155720_ed5789d0_145025.jpeg"/>
+</p>
+<p align="center">
 <a href="https://gitee.com/bbbug_com/bbbug-wechat-app/stargazers" target="_blank"><img src="https://svg.hamm.cn/gitee.svg?type=star&user=bbbug_com&project=bbbug-wechat-app"/></a>
 <a href="https://gitee.com/bbbug_com/bbbug-wechat-app/members" target="_blank"><img src="https://svg.hamm.cn/gitee.svg?type=fork&user=bbbug_com&project=bbbug-wechat-app"/></a>
 <img src="https://svg.hamm.cn/badge.svg?key=Platform&value=微信小程序"/>
-
-
+</p>
 
 ### 介绍
 
