@@ -7,7 +7,7 @@
           <i class="iconfont icon-search" style="font-size: 24px;"></i>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" type="number" confirm-type="go" bindconfirm="doEnterSearchRoom"
+          <input class="weui-input" type="text" confirm-type="go" bindconfirm="doEnterSearchRoom"
             placeholder="输入房间ID进入"></input>
         </view>
       </view>

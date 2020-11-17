@@ -129,9 +129,11 @@ movable-view {
   right: 0;
   bottom: 0;
   background-color: #fff;
-  padding-bottom: env(safe-area-inset-bottom);
-  height: 40px;
-  padding: 5px 50px;
+  padding: 0px 40px;
+}
+.bbbug_input input{
+  padding: 13px;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 13px);
 }
 
 .bbbug_at {
@@ -166,9 +168,9 @@ movable-view {
 }
 
 .bbbug_face {
-  position: fixed;
+  position: absolute;
   left: 10px;
-  bottom: 10px;
+  bottom: 8px;
   padding-bottom: env(safe-area-inset-bottom);
 }
 
@@ -179,9 +181,9 @@ movable-view {
 }
 
 .bbbug_more {
-  position: fixed;
+  position: absolute;
   right: 10px;
-  bottom: 10px;
+  bottom: 8px;
   padding-bottom: env(safe-area-inset-bottom);
 }
 

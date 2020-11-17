@@ -63,9 +63,17 @@
       <view wx:if="{{imageList.length==0}}">请输入表情关键词搜索</view>
     </view>
   </view>
-  <input class="bbbug_input" type="text" confirm-type="{{messageSendButton}}" confirm-hold="{{messageConfirmHold}}"
-    placeholder="{{messagePlaceHolder}}" bindconfirm="sendMessage" focus="{{messageFocus}}" value="{{message}}"
-    bindfocus="messageFocused" />
+  <view class="bbbug_input">
+    <input type="text" confirm-type="{{messageSendButton}}" confirm-hold="{{messageConfirmHold}}"
+      placeholder="{{messagePlaceHolder}}" bindconfirm="sendMessage" focus="{{messageFocus}}" value="{{message}}"
+      bindfocus="messageFocused" />
+    <view class="bbbug_face" bindtap="showOrHideEmojiBox">
+      <image src="/res/image/emoji.png" />
+    </view>
+    <view class="bbbug_more" bindtap="showMainMenu">
+      <image src="/res/image/more.png" />
+    </view>
+  </view>
   <view class="bbbug_at" wx:if="{{atMessageObj}}">
     <view class="bbbug_at_user" bindtap="clearAtInfo" wx:if="{{!atMessageObj.message}}">
       @{{helper.urldecode(atMessageObj.user_name)}} <i class="iconfont icon-close"></i></view>
@@ -76,12 +84,6 @@
       <view wx:if="{{atMessageObj.message.type=='img'}}">[图片]</view>
       <i class="iconfont icon-close"></i>
     </view>
-  </view>
-  <view class="bbbug_face" bindtap="showOrHideEmojiBox">
-    <image src="/res/image/emoji.png" />
-  </view>
-  <view class="bbbug_more" bindtap="showMainMenu">
-    <image src="/res/image/more.png" />
   </view>
   <view class="bbbug_scroll_button" wx:if="{{!isScrollEnabled}}" bindtap="enableScroll">新消息</view>
   <view class="bbbug_cover" wx:if="{{!userInfo || userInfo.user_id<0}}" bindtap="login">点击登录后加入互动吧</view>
