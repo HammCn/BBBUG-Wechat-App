@@ -305,6 +305,9 @@ Page({
             });
             break;
           default:
+            wx.showToast({
+              title: '即将上线,敬请期待',
+            });
         }
       }
     });
@@ -801,14 +804,23 @@ Page({
 
         break;
       case 'playSong':
-        that.playMusic(msg);
+        if (msg && msg.song && msg.user) {
+          that.playMusic(msg);
+        }
+        break;
+      case 'all':
+        that.addSystemMessage(msg.content);
         break;
       case 'online':
         wx.setNavigationBarTitle({
           title: that.data.roomInfo.room_name + '(' + msg.data.length + ')',
         });
         break;
+      case 'roomUpdate':
+        that.getRoomInfo();
+        break;
       default:
+        console.log(msg);
     }
     that.autoScroll();
   },
@@ -830,9 +842,12 @@ Page({
   },
   showMainMenu() {
     let that = this;
-    let menu = ['搜索点歌', '我的歌单', '在线用户', '切换房间', '退出登录'];
+    let menu = ['搜索点歌', '我的歌单', '在线用户', '切换房间'];
     if (that.data.userInfo.user_admin || that.data.userInfo.user_id == that.data.roomInfo.room_user) {
-      menu = ['搜索点歌', '我的歌单', '在线用户', '切换房间', '房间管理', '退出登录'];
+      menu = ['搜索点歌', '我的歌单', '在线用户', '切换房间', '房间管理'];
+    }
+    if (that.data.userInfo && that.data.userInfo.user_id > 0) {
+      menu.push("修改资料");
     }
     wx.showActionSheet({
       itemList: menu,
@@ -875,6 +890,16 @@ Page({
               userInfo: app.globalData.userInfo
             });
             that.getMyInfo();
+            break;
+          case '修改资料':
+            wx.navigateTo({
+              url: '../user/motify',
+            });
+            break;
+          case '房间管理':
+            wx.navigateTo({
+              url: '../room/motify',
+            });
             break;
           default:
         }

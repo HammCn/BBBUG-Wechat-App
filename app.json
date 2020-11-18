@@ -1,10 +1,14 @@
 {
   "pages": [
     "pages/index/index", 
+    "pages/user/motify",
     "pages/song/playing",
     "pages/song/select",
     "pages/song/my",
     "pages/room/select",
+    "pages/room/motify",
+    "pages/room/create",
+    "pages/user/index",
     "pages/user/login",
     "pages/user/online",
     "pages/other/about",

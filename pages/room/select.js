@@ -2,12 +2,35 @@ const app = getApp();
 Page({
   data: {
     roomList: [],
+    userInfo: false
   },
   onLoad() {
-    this.getHotRooms()
+    this.getHotRooms();
+    this.getMyInfo();
+  },
+  getMyInfo() {
+    let that = this;
+    app.request({
+      url: "user/getmyinfo",
+      success(res) {
+        that.setData({
+          userInfo: res.data
+        });
+      }
+    });
   },
   doEnterRoom(e) {
     this.joinRoom(e.mark.room_id);
+  },
+  createRoom() {
+    wx.navigateTo({
+      url: '../room/create',
+    });
+  },
+  joinMyRoom() {
+    if (this.data.userInfo && this.data.userInfo.myRoom) {
+      this.joinRoom(this.data.userInfo.myRoom.room_id);
+    }
   },
   getHotRooms() {
     let that = this;

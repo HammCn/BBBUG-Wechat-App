@@ -1,0 +1,53 @@
+<view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
+  <view class="page__bd">
+    <form bindsubmit="doSubmit" bindreset="formReset" wx:if="{{userInfo}}">
+      <view class="user_head">
+        <image class="weui-media-box__thumb" bindtap="chooseImage"
+          src="{{user_head||'https://cdn.bbbug.com/images/nohead.jpg'}}">
+        </image>
+      </view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">昵称</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" placeholder="你牛批的名字" type="text" name="user_name"
+              value="{{userInfo.user_name}}" />
+          </view>
+        </view>
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">签名</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" placeholder="你的个性签名" type="text" name="user_remark"
+              value="{{userInfo.user_remark}}" />
+          </view>
+        </view>
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">性别</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" placeholder="请选择你的性别" type="text" value="{{sexList[user_sex].name}}"
+              readonly="readonly" bindtap="changeSex" />
+          </view>
+        </view>
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">密码</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" placeholder="你的登录密码" password="true" name="user_password"
+              value="{{userInfo.user_password}}" />
+          </view>
+        </view>
+      </view>
+      <view class="weui-btn-area">
+        <button form-type="submit" class="weui-btn" type="primary">保存资料</button>
+      </view>
+      <view class="logout" bindtap="logout">退出登录</view>
+    </form>
+  </view>
+</view>

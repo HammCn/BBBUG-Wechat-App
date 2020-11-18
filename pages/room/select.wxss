@@ -6,7 +6,9 @@
   position: relative;
   height: 100px;
 }
-
+.roomList{
+  padding-bottom: 70px;
+}
 .roomTitle {
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -14,6 +16,19 @@
   word-break: break-all;
   font-size: 16px;
   margin-right: 80px;
+}
+
+.btn_create {
+  position: fixed;
+  right: 20px;
+  bottom: calc(env(safe-area-inset-bottom) + 20px);
+  display: block;
+  padding: 8px 16px;
+  color: #fff;
+  background-color: #666;
+  border-radius: 5px;
+  font-size: 14px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
 }
 
 .roomBottom {

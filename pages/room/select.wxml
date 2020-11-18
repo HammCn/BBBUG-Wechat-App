@@ -21,7 +21,8 @@
   <view class="tipText">没有找到任何房间</view>
 </view>
 
-<view wx:for="{{roomList}}" bindtap="doEnterRoom" mark:room_id="{{item.room_id}}" class="roomBg">
+<view class="roomList">
+  <view wx:for="{{roomList}}" bindtap="doEnterRoom" mark:room_id="{{item.room_id}}" class="roomBg">
   <view class="roomTitle">
     <i class="iconfont roomType icon-xiaoxi2" wx:if="{{item.room_type==0}}"></i>
     <i class="iconfont roomType icon-changyongtubiao-mianxing-61" wx:if="{{item.room_type==1}}"></i>
@@ -42,3 +43,7 @@
     </view>
   </view>
 </view>
+</view>
+
+<view class="btn_create" wx:if="{{userInfo && !userInfo.myRoom}}" bindtap="createRoom">创建房间</view>
+<view class="btn_create" wx:if="{{userInfo && userInfo.myRoom}}" bindtap="joinMyRoom">我的房间</view>

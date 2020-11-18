@@ -1,0 +1,31 @@
+.weui-cell {
+  padding: 15px;
+}
+
+
+.weui-label {
+  width: 80px;
+}
+
+.user_head {
+  text-align: center;
+  margin: 30px;
+}
+
+.logout {
+  font-size: 16px;
+  color: orangered;
+  text-align: center;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 30px;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.user_head image {
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+  border: 1px solid #ddd;
+}

@@ -8,8 +8,13 @@ page {
   font-family: 'Roboto';
   padding-bottom: calc(env(safe-area-inset-bottom)/2);
 }
+
 .weui-media-box__title {
   display: block;
+}
+
+.weui-btn-area {
+  margin: 20px 10px;
 }
 
 .page {
@@ -17,7 +22,7 @@ page {
 }
 
 .weui-cell_switch {
-  padding: 10px 15px!important;
+  padding: 10px 15px !important;
 }
 
 .weui-media-box__title {

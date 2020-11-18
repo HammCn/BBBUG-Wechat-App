@@ -1,0 +1,26 @@
+<wxs src="../../utils/helper.wxs" module="helper" />
+<view class="top" wx:if="{{userInfo}}">
+  <view class="headimg">
+    <image src="{{helper.urldecode(userInfo.user_head)}}"></image>
+  </view>
+  <view class="username">{{helper.urldecode(userInfo.user_name)}}</view>
+  <view class="desc">{{helper.urldecode(userInfo.user_remark)}}</view>
+</view>
+<view class="weui-cells">
+  <navigator url="../user/motify" class="weui-cell weui-cell_access">
+    <view class="weui-cell__bd">
+      <view>
+        <i class="item iconfont icon-icon_message"></i>修改资料</view>
+    </view>
+    <view class="weui-cell__ft"></view>
+  </navigator>
+</view>
+<view class="weui-cells">
+  <view class="weui-cell weui-cell_access" bindtap="doLogout" wx:if="{{userInfo}}">
+    <view class="weui-cell__bd">
+      <view>
+        <i class="item iconfont icon-poweroff"></i>退出登录</view>
+    </view>
+    <view class="weui-cell__ft"></view>
+  </view>
+</view>

@@ -29,7 +29,7 @@ movable-view {
   border-radius: 10px;
   height: 50px;
   padding-right: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
 }
 
 .bbbug_player_image {
@@ -131,7 +131,8 @@ movable-view {
   background-color: #fff;
   padding: 0px 40px;
 }
-.bbbug_input input{
+
+.bbbug_input input {
   padding: 13px;
   padding-bottom: calc(env(safe-area-inset-bottom) + 13px);
 }
