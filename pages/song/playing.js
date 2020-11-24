@@ -93,6 +93,20 @@ Page({
             });
             break;
           case '播放':
+            app.request({
+              url: 'song/playSong',
+              data: {
+                room_id: app.globalData.roomInfo.room_id,
+                mid: song.song.mid,
+              },
+              loading: "播放中",
+              success: function (res) {
+                that.getSongList();
+                wx.showToast({
+                  title: '播放成功'
+                });
+              }
+            });
             break;
           default:
         }
