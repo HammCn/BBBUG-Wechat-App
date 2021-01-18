@@ -13,6 +13,11 @@
 <img width="200" src="https://images.gitee.com/uploads/images/2020/1115/155720_ed5789d0_145025.jpeg"/>
 </p>
 
+
+<p align="center">
+<a href="https://bbbug.com" target="_blank"><img src="https://api.bbbug.com/api/badge/888"/></a>
+</p>
+
 ### 介绍
 
 一个可以聊天听歌的音乐聊天室，支持了Gitee/OSChina/QQ/钉钉等OAuth登录，支持多房间和创建私人房间，支持房间加密和切换房间模式，支持绑定二级域名与顶级域名，提供了第三方网站的快速接入方案。此仓库为微信小程序仓库。开发者QQ群：1140258698
