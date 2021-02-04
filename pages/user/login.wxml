@@ -28,7 +28,10 @@
       </view>
     </form>
     <view class="weui-footer weui-footer_fixed-bottom">
-      <view class="weui-footer__text">正在使用安全的HTTPS通信</view>
+      <view class="wechat-login">
+        <view class="icon" bindtap="wxLogin"><i class="iconfont icon-wechat"></i></view>
+        <view>一键登录</view>
+      </view>
     </view>
   </view>
 </view>

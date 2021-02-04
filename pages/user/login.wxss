@@ -17,3 +17,15 @@
 .bbbug_login_sendmail::before {
   font-size: 24px;
 }
+
+.wechat-login {
+  font-size: 14px;
+  color: #999;
+  text-align: center;
+  padding-bottom: 50px;
+}
+
+.wechat-login .iconfont {
+  color: #666;
+  font-size: 48px;
+}

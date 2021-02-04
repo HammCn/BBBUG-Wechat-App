@@ -84,6 +84,11 @@ Page({
               }
             });
             break;
+          case '查看主页':
+            wx.showToast({
+              title: '即将上线',
+            });
+            break;
           default:
         }
       }

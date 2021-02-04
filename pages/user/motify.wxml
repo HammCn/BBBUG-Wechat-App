@@ -5,6 +5,7 @@
         <image class="weui-media-box__thumb" bindtap="chooseImage"
           src="{{user_head||'https://cdn.bbbug.com/images/nohead.jpg'}}">
         </image>
+        <view>ID: {{userInfo.user_id}}</view>
       </view>
       <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell weui-cell_input">

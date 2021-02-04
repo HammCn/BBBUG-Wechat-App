@@ -103,6 +103,8 @@ movable-view image {
 .bbbug_player_userhead {
   margin-top: -25%;
   filter: blur(20px);
+  width: 100%;
+  height: 100%;
 }
 
 .bbbug_history {
@@ -213,7 +215,7 @@ movable-view image {
 }
 
 .bbbug_input input {
-  padding: 13px;
+  padding: 15px;
 }
 
 .bbbug_at {
@@ -251,7 +253,7 @@ movable-view image {
 .bbbug_face {
   position: absolute;
   left: 10px;
-  top: 8px;
+  top: 10px;
 }
 
 .bbbug_face image {
@@ -260,10 +262,16 @@ movable-view image {
   height: 32px;
 }
 
+.bbbug_time {
+  font-size: 12px;
+  color: #ccc;
+  margin-top: 5px;
+}
+
 .bbbug_more {
   position: absolute;
   right: 10px;
-  top: 8px;
+  top: 10px;
 }
 
 .bbbug_more image {
@@ -283,7 +291,7 @@ movable-view image {
   z-index: 10;
   text-align: center;
   padding: 0px 10px;
-  padding-bottom: env(safe-area-inset-bottom);
+  padding-bottom: calc(env(safe-area-inset-bottom)/2);
   line-height: 50px;
 }
 
@@ -387,7 +395,7 @@ movable-view image {
 .bbbug_scroll_button {
   position: fixed;
   right: 10px;
-  bottom: 70px;
+  bottom: 80px;
   padding-bottom: calc(env(safe-area-inset-bottom)/2);
   padding: 8px 16px;
   font-size: 14px;

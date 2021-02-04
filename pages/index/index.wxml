@@ -50,6 +50,7 @@
             <view class="bbbug_quot" wx:if="{{item.at.message.type=='jump'}}">[飞机票]</view>
             <view class="bbbug_quot" wx:if="{{item.at.message.type=='link'}}">[链接]</view>
           </view>
+          <view class="bbbug_time">{{helper.friendlyTime(item.message_time)}}</view>
         </view>
       </block>
       <view class="bbbug_system" wx:if="{{item.type=='system'}}">{{helper.urldecode(item.content)}}</view>
@@ -79,7 +80,7 @@
     </view>
     <input type="text" confirm-type="{{messageSendButton}}" confirm-hold="{{messageConfirmHold}}"
       placeholder="{{messagePlaceHolder}}" bindconfirm="sendMessage" focus="{{messageFocus}}" value="{{message}}"
-      bindfocus="messageFocused" cursor-spacing="13" />
+      bindfocus="messageFocused" cursor-spacing="15" />
     <view class="bbbug_more" bindtap="showMainMenu">
       <image src="/res/image/more.png" />
     </view>

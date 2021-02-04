@@ -32,6 +32,30 @@ Page({
   userAccountChanged(e) {
     this.data.user_account = e.detail.value;
   },
+  wxLogin() {
+    let that = this;
+    wx.login({
+      success(res) {
+        if (res.code) {
+          app.request({
+            url: "weapp/wxAppLogin",
+            data: {
+              code: res.code
+            },
+            loading: "登录中",
+            success(res) {
+              wx.setStorageSync('access_token', res.data.access_token);
+              const eventChannel = that.getOpenerEventChannel()
+              eventChannel.emit('loginSuccess', null);
+              wx.navigateBack();
+            },
+          });
+        } else {
+          console.log('登录失败！' + res.errMsg)
+        }
+      }
+    })
+  },
   sendMail() {
     let that = this;
     app.request({

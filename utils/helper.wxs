@@ -15,3 +15,22 @@ module.exports.getImageWidth = function (url) {
     return 160;
   }
 };
+
+module.exports.friendlyTime = function (time) {
+  var now = parseInt(getDate().valueOf() / 1000);
+  if (now - time <= 60) {
+    return '刚刚';
+  } else if (now - time > 60 && now - time <= 3600) {
+    return parseInt((now - time) / 60) + '分钟前'
+  } else if (now - time > 3600 && now - time <= 86400) {
+    return parseInt((now - time) / 3600) + '小时前'
+  } else if (now - time > 86400 && now - time <= 86400 * 7) {
+    return parseInt((now - time) / 86400) + '天前'
+  } else if (now - time > 86400 * 7 && now - time <= 86400 * 30) {
+    return parseInt((now - time) / 86400 / 7) + '周前'
+  } else if (now - time > 86400 * 30 && now - time <= 86400 * 30 * 12) {
+    return parseInt((now - time) / 86400 / 30) + '月前'
+  } else {
+    return parseInt((now - time) / 86400 / 365) + '年前'
+  }
+}

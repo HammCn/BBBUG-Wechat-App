@@ -314,7 +314,7 @@ Page({
             break;
           default:
             wx.showToast({
-              title: '即将上线,敬请期待',
+              title: '即将上线',
             });
         }
       }
@@ -638,7 +638,7 @@ Page({
             if (_obj.at) {
               _obj.content = '@' + _obj.at.user_name + " " + _obj.content;
             }
-            _obj.time = res.data[i].message_createtime;
+            _obj.message_time = res.data[i].message_createtime;
             _obj.isAtAll = false;
             if (_obj.type == 'text') {
               _obj.isAtAll = decodeURIComponent(_obj.content).indexOf('@全体') == 0 && (_obj.user.user_id == that.data.roomInfo.room_user || _obj.user.user_admin) ? true : false;

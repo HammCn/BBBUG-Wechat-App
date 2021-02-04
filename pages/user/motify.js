@@ -43,17 +43,15 @@ Page({
             }
             break;
           case '上传头像':
+            console.log(123);
             wx.chooseImage({
               count: 1,
               sizeType: 'compressed',
-              sourceType: 'album',
+              // sourceType: 'album',
               success(res) {
-                console.log(res);
                 wx.showLoading({
                   title: '上传中',
                 });
-                console.log(app.globalData);
-                console
                 wx.uploadFile({
                   url: app.globalData.request.apiUrl + "attach/uploadHead",
                   filePath: res.tempFilePaths[0],
@@ -64,7 +62,7 @@ Page({
                     res.data = JSON.parse(res.data);
                     if (res.data.code == 200) {
                       that.setData({
-                        user_head: "https://cdn.bbbug.com/uploads/" + res.data.data.attach_path
+                        user_head: app.globalData.request.cdnUrl + "/uploads/" + res.data.data.attach_path
                       });
                     } else {
                       wx.showModal({
