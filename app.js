@@ -13,6 +13,7 @@ App({
     //网络请求相关参数
     request: {
       apiUrl: "https://api.bbbug.com/api/",
+      cdnUrl: "https://bbbug.hamm.cn/",
       baseData: {
         access_token: "",
         plat: 'weapp',
