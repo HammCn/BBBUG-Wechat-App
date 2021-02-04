@@ -3,6 +3,8 @@ Page({
   data: {
     newsList: [],
     newsShow: true,
+    isPanelShow: false,
+    isMusicPlaying: true,
     message: "",
     placeholderDefault: "说点什么吧...",
     placeholderSearchImage: "关键词搜索表情",
@@ -114,6 +116,12 @@ Page({
   },
   onLoad: function (options) {
     let that = this;
+    console.log(options)
+    if (options.scene) {
+      wx.setStorageSync('room_id', options.scene);
+    } else if (options.room_id) {
+      wx.setStorageSync('room_id', options.room_id);
+    }
     let emojiList = [];
     for (let i = 1; i <= 30; i++) {
       emojiList.push("/res/Emojis/" + i + ".png");
@@ -185,7 +193,7 @@ Page({
     if (str.indexOf("https://") == 0 || str.indexOf("http://") == 0) {
       return str.replace("http://", "https://");
     } else {
-      return "https://cdn.bbbug.com/uploads/" + str;
+      return app.globalData.request.cdnUrl + "/uploads/" + str;
     }
   },
   searchImages(message) {
@@ -384,6 +392,12 @@ Page({
               }
             });
             break;
+          case '进入房间':
+            that.setData({
+              room_id: msg.jump.room_id
+            });
+            that.getRoomInfo();
+            break;
           default:
             wx.showToast({
               title: '即将上线',
@@ -394,11 +408,11 @@ Page({
   },
   longTapToAtUser(user) {
     this.setData({
+      isPanelShow: false,
       atMessageObj: {
         user_id: user.user_id,
         user_name: decodeURIComponent(user.user_name),
-      },
-      messageFocus: true
+      }
     });
     wx.vibrateShort();
   },
@@ -406,7 +420,7 @@ Page({
     let that = this;
     let url = false;
     if (e.mark.url.indexOf("/res/Emojis/") > -1) {
-      url = "https://cdn.bbbug.com/images/emoji/" + e.mark.url.replace('/res/Emojis/', '');
+      url = app.globalData.request.cdnUrl + "/images/emoji/" + e.mark.url.replace('/res/Emojis/', '');
     } else {
       url = e.mark.url;
     }
@@ -437,6 +451,7 @@ Page({
       });
     }
     this.setData({
+      isPanelShow: false,
       isEmojiBoxShow: !this.data.isEmojiBoxShow,
     });
     this.setData({
@@ -449,6 +464,7 @@ Page({
   hideAllDialog() {
     this.setData({
       isEmojiBoxShow: false,
+      isPanelShow: false,
       messagePlaceHolder: this.data.placeholderDefault,
       messageSendButton: this.data.messageButtonTitleSend
     });
@@ -481,11 +497,31 @@ Page({
   },
   showSongMenu() {
     let that = this;
-    let menu = ['播放列表', '收藏到歌单', '切歌&不喜欢'];
+    let menu = ['收藏到歌单', '切歌&不喜欢'];
+    if (that.data.isMusicPlaying) {
+      menu.push('关闭音乐');
+    } else {
+      menu.push('打开音乐');
+    }
     wx.showActionSheet({
       itemList: menu,
       success(res) {
         switch (menu[res.tapIndex]) {
+          case '关闭音乐':
+          case '打开音乐':
+            if (that.data.isMusicPlaying) {
+              let audio = wx.getBackgroundAudioManager();
+              audio.stop();
+              that.setData({
+                isMusicPlaying: false
+              });
+            } else {
+              that.setData({
+                isMusicPlaying: true
+              });
+              that.playMusic(that.data.songInfo);
+            }
+            break;
           case '收藏到歌单':
             app.request({
               url: "song/addMySong",
@@ -530,17 +566,12 @@ Page({
               }
             });
             break;
-          case '播放列表':
-            wx.navigateTo({
-              url: '../song/playing',
-            });
-            break;
           default:
         }
       }
     });
   },
-  getMyInfo() {
+  getMyInfo(reloadRoom = true) {
     let that = this;
     wx.showNavigationBarLoading();
     app.request({
@@ -551,7 +582,9 @@ Page({
         });
         app.globalData.userInfo = res.data;
         wx.hideNavigationBarLoading();
-        that.getRoomInfo();
+        if (reloadRoom) {
+          that.getRoomInfo();
+        }
       },
       error(res) {
         wx.hideNavigationBarLoading();
@@ -732,6 +765,7 @@ Page({
   },
   messageController(msg) {
     let that = this;
+    console.log(msg);
     switch (msg.type) {
       case 'touch':
         that.addSystemMessage(decodeURIComponent(msg.user.user_name) + " 摸了摸 " + decodeURIComponent(msg.at.user_name) + msg.at.user_touchtip, '#999', '#eee');
@@ -743,6 +777,8 @@ Page({
         break;
       case 'text':
       case 'img':
+      case 'link':
+      case 'jump':
       case 'system':
         if (msg.type == 'text' && msg.at) {
           msg.content = "@" + decodeURIComponent(msg.at.user_name) + " " + msg.content;
@@ -760,11 +796,6 @@ Page({
         break;
       case 'pass':
         that.addSystemMessage(decodeURIComponent(msg.user.user_name) + " 切掉了《" + msg.song.name + "》", '#ff4500');
-
-        break;
-      case 'chat_bg':
-        that.addSystemMessage(decodeURIComponent(msg.user.user_name) + " 运气大爆发,触发了点歌背景墙特效(1小时内播放歌曲时有效)!", 'green',
-          '#eee');
 
         break;
       case 'push':
@@ -820,7 +851,7 @@ Page({
         that.getRoomInfo();
         break;
       default:
-        console.log(msg);
+        console.log("消息未解析")
     }
     that.autoScroll();
   },
@@ -829,22 +860,107 @@ Page({
     that.setData({
       songInfo: msg
     });
-    // return;
+
+    for (let i = 0; i < that.data.messageList.length; i++) {
+      if (that.data.messageList[i].type == 'play') {
+        that.data.messageList.splice(i, 1);
+        break;
+      }
+    }
+    that.data.messageList.push({
+      type: 'play',
+      data: msg
+    });
+    that.setData({
+      messageList: that.data.messageList
+    });
     let audio = wx.getBackgroundAudioManager();
-    audio.src = 'https://api.bbbug.com/api/song/playurl?mid=' + msg.song.mid;
+    audio.src = app.globalData.request.apiUrl + '/song/playurl?mid=' + msg.song.mid;
     audio.title = msg.song.name + ' - ' + msg.song.singer;
     audio.singer = "点歌人: " + decodeURIComponent(msg.user.user_name) + " " + that.data.roomInfo.room_name + "";
     // audio.epname = "(" + that.data.roomInfo.room_name + ")";
     audio.coverImgUrl = msg.song.pic;
     audio.webUrl = msg.song.pic;
     audio.seek(parseInt(new Date().valueOf() / 1000) - msg.since);
-    audio.play();
+    if (that.data.isMusicPlaying) {
+      audio.play();
+    } else {
+      audio.stop();
+    }
+  },
+  mainMenuClicked(e) {
+    let that = this;
+    switch (e.mark.title) {
+      case '点歌':
+        wx.navigateTo({
+          url: '../song/select',
+        });
+        break;
+      case '已点':
+        wx.navigateTo({
+          url: '../song/playing',
+        });
+        break;
+      case '歌单':
+        wx.navigateTo({
+          url: '../song/my',
+        });
+        break;
+      case '在线':
+        wx.navigateTo({
+          url: '../user/online',
+        });
+        break;
+      case '换房':
+        wx.navigateTo({
+          url: '../room/select',
+          events: {
+            changeRoomSuccess: function (room_id) {
+              console.log(room_id);
+              that.setData({
+                room_id: room_id
+              });
+              that.getRoomInfo();
+            }
+          }
+        });
+        break;
+      case '注销':
+        app.globalData.userInfo = app.globalData.guestUserInfo;
+        app.globalData.request.baseData.access_token = app.globalData.guestUserInfo.access_token;
+        wx.setStorageSync('access_token', app.globalData.guestUserInfo.access_token);
+        that.setData({
+          userInfo: app.globalData.userInfo
+        });
+        that.getMyInfo();
+        break;
+      case '资料':
+        wx.navigateTo({
+          url: '../user/motify',
+          events: {
+            myInfoChanged: function () {
+              that.getMyInfo(false);
+            }
+          }
+        });
+        break;
+      case '管理':
+        wx.navigateTo({
+          url: '../room/motify',
+        });
+        break;
+      default:
+    }
   },
   showMainMenu() {
     let that = this;
-    let menu = ['搜索点歌', '我的歌单', '在线用户', '切换房间'];
+    that.setData({
+      isPanelShow: !that.data.isPanelShow
+    });
+    return;
+    let menu = ['我的歌单', '在线用户', '切换房间'];
     if (that.data.userInfo.user_admin || that.data.userInfo.user_id == that.data.roomInfo.room_user) {
-      menu = ['搜索点歌', '我的歌单', '在线用户', '切换房间', '房间管理'];
+      menu = ['我的歌单', '在线用户', '切换房间', '房间管理'];
     }
     if (that.data.userInfo && that.data.userInfo.user_id > 0) {
       menu.push("修改资料");
@@ -853,55 +969,7 @@ Page({
       itemList: menu,
       success(res) {
         switch (menu[res.tapIndex]) {
-          case '在线用户':
-            wx.navigateTo({
-              url: '../user/online',
-            });
-            break;
-          case '搜索点歌':
-            wx.navigateTo({
-              url: '../song/select',
-            });
-            break;
-          case '我的歌单':
-            wx.navigateTo({
-              url: '../song/my',
-            });
-            break;
-          case '切换房间':
-            wx.navigateTo({
-              url: '../room/select',
-              events: {
-                changeRoomSuccess: function (room_id) {
-                  console.log(room_id);
-                  that.setData({
-                    room_id: room_id
-                  });
-                  that.getRoomInfo();
-                }
-              }
-            });
-            break;
-          case '退出登录':
-            app.globalData.userInfo = app.globalData.guestUserInfo;
-            app.globalData.request.baseData.access_token = app.globalData.guestUserInfo.access_token;
-            wx.setStorageSync('access_token', app.globalData.guestUserInfo.access_token);
-            that.setData({
-              userInfo: app.globalData.userInfo
-            });
-            that.getMyInfo();
-            break;
-          case '修改资料':
-            wx.navigateTo({
-              url: '../user/motify',
-            });
-            break;
-          case '房间管理':
-            wx.navigateTo({
-              url: '../room/motify',
-            });
-            break;
-          default:
+
         }
       }
     })

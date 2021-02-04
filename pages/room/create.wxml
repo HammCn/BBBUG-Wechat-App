@@ -6,7 +6,7 @@
       <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell weui-cell_input">
           <view class="weui-cell__hd">
-            <view class="weui-label">帐号</view>
+            <view class="weui-label">名称</view>
           </view>
           <view class="weui-cell__bd">
             <input class="weui-input" placeholder="房间名称" type="text" value="" name="room_name" auto-focus />
@@ -14,7 +14,7 @@
         </view>
         <view class="weui-cell weui-cell_input">
           <view class="weui-cell__hd">
-            <view class="weui-label">密码</view>
+            <view class="weui-label">描述</view>
           </view>
           <view class="weui-cell__bd">
             <input class="weui-input" placeholder="房间的简单描述" value="" name="room_notice" />

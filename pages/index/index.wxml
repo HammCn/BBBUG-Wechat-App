@@ -3,16 +3,16 @@
   <scroll-view class="bbbug_history" scroll-into-view="{{bbbug_view_scroll}}" scroll-y="true" bindtap="hideAllDialog"
     bindscroll="messageListScrolling">
     <view class="bbbug_item {{item.user.user_id==userInfo.user_id?'bbbug_mine':''}}" wx:for="{{messageList}}">
-      <block wx:if="{{item.type!='system'}}">
+      <block wx:if="{{item.type!='system' && item.type!='play'}}">
         <view class="bbbug_head">
-          <image src="{{helper.getStaticUrl(item.user.user_head)}}" abindtap="userTap" abindlongpress="longTapToAtUser"
+          <image src="{{helper.getStaticUrl(item.user.user_head)}}"
             bindtouchstart="touchStarted" bindtouchend="touchEnded" mark:user="{{item.user}}" />
         </view>
         <view class="bbbug_user">
           <view class="bbbug_username">{{helper.urldecode(item.user.user_name)}}</view>
         </view>
         <view class="bbbug_content" bindlongpress="longTapToMessage" mark:msg="{{item}}" bindtap="hideAllDialog">
-          <block wx:if="{{item.user.user_id==userInfo.user_id}}">
+          <block wx:if="{{item.type=='text' && item.user.user_id==userInfo.user_id}}">
             <!-- 我的消息 -->
             <view class="bbbug_text" wx:if="{{item.type=='text' && userInfo.user_sex==1}}"
               style="background-color:#66cbff">{{helper.urldecode(item.content)}}</view>
@@ -38,6 +38,11 @@
             <view class="bbbug_link_desc">{{helper.urldecode(item.desc)||'没有读取到网站描述信息...'}}</view>
             <view class="bbbug_link_url">{{helper.urldecode(item.link)}}</view>
           </view>
+          <view class="bbbug_link" wx:if="{{item.type=='jump'}}">
+            <view class="bbbug_link_title">ID:{{item.jump.room_id}} {{item.jump.room_name}}</view>
+            <view class="bbbug_link_desc">{{item.jump.room_notice}}</view>
+            <view class="bbbug_link_url">房间飞机票</view>
+          </view>
           <view wx:if="{{item.at && item.at.message}}">
             <view class="bbbug_quot" wx:if="{{item.at.message.type=='text'}}">
               {{helper.urldecode(item.at.message.content)}}</view>
@@ -48,14 +53,19 @@
         </view>
       </block>
       <view class="bbbug_system" wx:if="{{item.type=='system'}}">{{helper.urldecode(item.content)}}</view>
+      <view class="bbbug_player" wx:if="{{item.type=='play'}}" bindlongpress="showSongMenu">
+        <image class="bbbug_player_userhead" src="{{helper.getStaticUrl(item.data.user.user_head)}}" mode="widthFix">
+        </image>
+        <image class="bbbug_player_img" src="{{helper.getStaticUrl(item.data.song.pic)}}" mode="widthFix"></image>
+        <image class="bbbug_player_outer" src="/res/image/player_bg.png" mode="widthFix"></image>
+        <image class="bbbug_player_bar" src="/res/image/player_bar.png" mode="widthFix"></image>
+        <view class="bbbug_player_song">{{item.data.song.name}}</view>
+        <view class="bbbug_player_singer">{{item.data.song.singer}}</view>
+        <view class="bbbug_player_user">点歌人 {{item.data.user.user_name}}</view>
+      </view>
     </view>
     <view class="bbbug_view_id" id="{{bbbug_view_id}}" style="height:{{bottomHeight}}px;"></view>
   </scroll-view>
-  <view class="bbbug_player" wx:if="{{songInfo}}" bindtap="showSongMenu">
-    <image class="bbbug_player_image" src="{{songInfo.song.pic}}" mode="widthFix"></image>
-    <view class="bbbug_player_song">{{songInfo.song.name}}</view>
-    <view class="bbbug_player_user">点歌人: {{helper.urldecode(songInfo.user.user_name)}}</view>
-  </view>
   <view class="bbbug_emoji" style="display:{{isEmojiBoxShow ?'inline-block':'none'}}">
     <view class="bbbug_emoji_box">
       <image wx:for="{{imageList}}" src="{{item}}" mode="widthFix" bindtap="sendEmoji" bindlongpress="previewImage"
@@ -64,12 +74,12 @@
     </view>
   </view>
   <view class="bbbug_input">
+    <view class="bbbug_face" bindtap="showOrHideEmojiBox">
+      <image src="/res/image/add.png" />
+    </view>
     <input type="text" confirm-type="{{messageSendButton}}" confirm-hold="{{messageConfirmHold}}"
       placeholder="{{messagePlaceHolder}}" bindconfirm="sendMessage" focus="{{messageFocus}}" value="{{message}}"
-      bindfocus="messageFocused" cursor-spacing="13"/>
-    <view class="bbbug_face" bindtap="showOrHideEmojiBox">
-      <image src="/res/image/emoji.png" />
-    </view>
+      bindfocus="messageFocused" cursor-spacing="13" />
     <view class="bbbug_more" bindtap="showMainMenu">
       <image src="/res/image/more.png" />
     </view>
@@ -87,9 +97,43 @@
   </view>
   <view class="bbbug_scroll_button" wx:if="{{!isScrollEnabled}}" bindtap="enableScroll">新消息</view>
   <view class="bbbug_cover" wx:if="{{!userInfo || userInfo.user_id<0}}" bindtap="login">点击登录后加入互动吧</view>
-  <movable-area>
-    <movable-view inertia="true" direction="all"></movable-view>
-  </movable-area>
+  <view class="bbbug_panel" wx:if="{{isPanelShow}}">
+    <view class="bbbug_panel_item" bindtap="mainMenuClicked" mark:title="点歌">
+      <view class="bbbug_panel_icon"><i class="iconfont icon-icon_invite"></i></view>
+      <view class="bbbug_panel_title">点歌</view>
+    </view>
+    <view class="bbbug_panel_item" bindtap="mainMenuClicked" mark:title="已点">
+      <view class="bbbug_panel_icon"><i class="iconfont icon-icon_dispose"></i></view>
+      <view class="bbbug_panel_title">已点</view>
+    </view>
+    <view class="bbbug_panel_item" bindtap="mainMenuClicked" mark:title="歌单">
+      <view class="bbbug_panel_icon"><i class="iconfont icon-icon_doc"></i></view>
+      <view class="bbbug_panel_title">歌单</view>
+    </view>
+    <view class="bbbug_panel_item" bindtap="mainMenuClicked" mark:title="在线">
+      <view class="bbbug_panel_icon"><i class="iconfont icon-icon_group"></i></view>
+      <view class="bbbug_panel_title">在线</view>
+    </view>
+    <view class="bbbug_panel_item" bindtap="mainMenuClicked" mark:title="换房">
+      <view class="bbbug_panel_icon"><i class="iconfont icon-icon_homepage"></i></view>
+      <view class="bbbug_panel_title">换房</view>
+    </view>
+    <view class="bbbug_panel_item" bindtap="mainMenuClicked" mark:title="资料">
+      <view class="bbbug_panel_icon"><i class="iconfont icon-icon_compile"></i></view>
+      <view class="bbbug_panel_title">资料</view>
+    </view>
+    <view class="bbbug_panel_item" bindtap="mainMenuClicked" mark:title="管理">
+      <view class="bbbug_panel_icon"><i class="iconfont icon-icon_boss"></i></view>
+      <view class="bbbug_panel_title">管理</view>
+    </view>
+  </view>
+  <!-- <movable-area>
+    <movable-view inertia="true" direction="all" bindtap="showSongMenu" wx:if="{{roomInfo && userInfo && (userInfo.user_admin||userInfo.user_id==roomInfo.room_user)}}">
+      <image wx:if="{{songInfo && songInfo.song}}" src="{{helper.getStaticUrl(songInfo.user.user_head)}}"
+        mode="widthFix"></image>
+      <image wx:if="{{!songInfo || !songInfo.song}}" src="/res/image/nohead.jpg" mode="widthFix"></image>
+    </movable-view>
+  </movable-area> -->
 </view>
 <view wx:if="{{newsShow}}"
   style="position:fixed;left:0;right:0;top:0;bottom:0;z-index:99;background-color:#f5f5f5;overflow:hidden;overflow-y:scroll;">

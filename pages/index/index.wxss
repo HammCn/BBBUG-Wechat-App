@@ -8,54 +8,101 @@ movable-area {
   height: 100%;
   z-index: 20;
   pointer-events: none;
-  display: none;
 }
 
 movable-view {
   width: 80px;
   height: 80px;
-  background-color: #333;
   pointer-events: stroke;
-  right: 20px;
+  left: 20px;
   top: 20px;
-  border-radius: 10px;
+  border-radius: 100%;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+movable-view image {
+  width: 100%;
+  height: 100%;
 }
 
 .bbbug_player {
-  position: fixed;
-  left: 10px;
-  top: 10px;
-  background-color: rgba(255, 255, 255, 0.95);
+  height: 120px;
+  background-color: #f5f5f5;
   border-radius: 10px;
-  height: 50px;
-  padding-right: 10px;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  margin: 10px;
+  position: relative;
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  background-color: #333;
 }
 
-.bbbug_player_image {
-  width: 46px;
-  height: 46px;
+.bbbug_player_img {
   position: absolute;
-  left: 2px;
-  top: 2px;
-  border-radius: 10px;
+  left: 28px;
+  top: 28px;
+  width: 64px;
+  height: 64px;
+  border-radius: 100%;
+}
+
+.bbbug_player_outer {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+}
+
+.bbbug_player_bar {
+  position: absolute;
+  left: 50px;
+  top: 0px;
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
 }
 
 .bbbug_player_song {
-  font-size: 16px;
-  color: #333;
-  margin-left: 60px;
-  margin-top: 3px;
-  max-width: 300px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  position: absolute;
+  left: 120px;
+  top: 10px;
+  right: 20px;
+  font-size: 18px;
+  font-weight: 500;
   white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .bbbug_player_user {
+  position: absolute;
+  right: 20px;
+  bottom: 10px;
   font-size: 12px;
-  color: #999;
-  margin-left: 60px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.bbbug_player_singer {
+  position: absolute;
+  left: 120px;
+  top: 40px;
+  right: 20px;
+  font-size: 14px;
+  color: #ccc;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.bbbug_player_userhead {
+  margin-top: -25%;
+  filter: blur(20px);
 }
 
 .bbbug_history {
@@ -65,7 +112,7 @@ movable-view {
   right: 0;
   top: 0;
   bottom: 0;
-  padding-bottom: env(safe-area-inset-bottom);
+  padding-bottom: calc(env(safe-area-inset-bottom)/2);
   overflow-y: scroll;
 }
 
@@ -123,26 +170,59 @@ movable-view {
   text-align: right;
 }
 
-.bbbug_input {
+.bbbug_panel {
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
   background-color: #fff;
+  padding: 5px;
+  padding-bottom: calc(calc(env(safe-area-inset-bottom)/2) + 5px);
+  text-align: center;
+  display: flex;
+  align-content: flex-start;
+  flex-flow: row wrap;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+}
+
+.bbbug_panel_item {
+  display: inline-block;
+  flex: 0 0 25%;
+  margin: 5px 0px;
+}
+
+.bbbug_panel_icon .iconfont {
+  font-size: 32px;
+  color: #666;
+}
+
+.bbbug_panel_title {
+  font-size: 12px;
+  color: #666;
+  margin-top: -10px;
+}
+
+.bbbug_input {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
   padding: 0px 40px;
+  padding-bottom: calc(env(safe-area-inset-bottom)/2);
+  background-color: white;
 }
 
 .bbbug_input input {
   padding: 13px;
-  padding-bottom: calc(env(safe-area-inset-bottom) + 13px);
 }
 
 .bbbug_at {
   position: fixed;
   left: 5px;
   bottom: 55px;
-  padding-bottom: env(safe-area-inset-bottom);
+  padding-bottom: calc(env(safe-area-inset-bottom)/2);
 }
+
 
 .bbbug_at_user {
   background-color: #666;
@@ -171,8 +251,7 @@ movable-view {
 .bbbug_face {
   position: absolute;
   left: 10px;
-  bottom: 8px;
-  padding-bottom: env(safe-area-inset-bottom);
+  top: 8px;
 }
 
 .bbbug_face image {
@@ -184,8 +263,7 @@ movable-view {
 .bbbug_more {
   position: absolute;
   right: 10px;
-  bottom: 8px;
-  padding-bottom: env(safe-area-inset-bottom);
+  top: 8px;
 }
 
 .bbbug_more image {
@@ -244,10 +322,11 @@ movable-view {
   font-size: 16px;
   color: #333;
   text-align: left;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 .bbbug_history .bbbug_item .bbbug_content .bbbug_link .bbbug_link_title {
-  font-size: 14px;
+  font-size: 16px;
   color: #333;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -257,11 +336,13 @@ movable-view {
 .bbbug_history .bbbug_item .bbbug_content .bbbug_link .bbbug_link_desc {
   font-size: 12px;
   color: #999999;
-  text-overflow: -o-ellipsis-lastline;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  line-clamp: 3;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
 }
 
 .bbbug_history .bbbug_item .bbbug_content .bbbug_link .bbbug_link_url {
@@ -306,14 +387,14 @@ movable-view {
 .bbbug_scroll_button {
   position: fixed;
   right: 10px;
-  bottom: 60px;
-  padding-bottom: env(safe-area-inset-bottom);
+  bottom: 70px;
+  padding-bottom: calc(env(safe-area-inset-bottom)/2);
   padding: 8px 16px;
-  font-size: 16px;
+  font-size: 14px;
   color: white;
   background-color: #666666;
   border-radius: 5px;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 }
 
 .bbbug_emoji {
@@ -321,17 +402,14 @@ movable-view {
   left: 10px;
   right: 10px;
   bottom: 60px;
-  padding-bottom: env(safe-area-inset-bottom);
+  padding-bottom: calc(env(safe-area-inset-bottom)/2);
 }
 
 .bbbug_emoji_box {
   background-color: rgba(255, 255, 255, 0.95);
   border-radius: 10px;
   padding: 10px;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
-  /* display: flex;
-  flex-direction: row;
-  flex-wrap: wrap; */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 }
 
 .bbbug_emoji .bbbug_emoji_box view {

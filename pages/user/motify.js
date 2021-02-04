@@ -110,9 +110,9 @@ Page({
       url: "user/updateMyInfo",
       data: userInfo,
       success(res) {
-        wx.showToast({
-          title: '修改成功',
-        });
+        const eventChannel = that.getOpenerEventChannel();
+        eventChannel.emit('myInfoChanged');
+        wx.navigateBack();
       }
     });
   },
@@ -121,6 +121,7 @@ Page({
     app.request({
       url: "user/getmyinfo",
       success(res) {
+        res.data.user_name = decodeURIComponent(res.data.user_name);
         that.setData({
           userInfo: res.data,
           user_sex: res.data.user_sex,

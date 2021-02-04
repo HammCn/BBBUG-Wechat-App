@@ -16,7 +16,7 @@
             <view class="weui-label">房间类型</view>
           </view>
           <view class="weui-cell__bd">
-            <input class="weui-input" placeholder="请选择房间类型" type="text" value="{{roomType[room_type].name}}"
+            <input class="weui-input" placeholder="请选择房间类型" type="text" value="{{roomType[room_type].name}}" disabled="disabled"
               readonly="readonly" bindtap="changeType" />
           </view>
         </view>

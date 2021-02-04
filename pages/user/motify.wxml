@@ -30,7 +30,7 @@
             <view class="weui-label">性别</view>
           </view>
           <view class="weui-cell__bd">
-            <input class="weui-input" placeholder="请选择你的性别" type="text" value="{{sexList[user_sex].name}}"
+            <input class="weui-input" placeholder="请选择你的性别" type="text" value="{{sexList[user_sex].name}}" disabled="disabled"
               readonly="readonly" bindtap="changeSex" />
           </view>
         </view>
