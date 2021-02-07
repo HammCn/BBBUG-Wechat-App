@@ -3,7 +3,7 @@
     <form bindsubmit="doSubmit" bindreset="formReset" wx:if="{{userInfo}}">
       <view class="user_head">
         <image class="weui-media-box__thumb" bindtap="chooseImage"
-          src="{{user_head||'https://cdn.bbbug.com/images/nohead.jpg'}}">
+          src="{{user_head||'https://bbbug.com/images/nohead.jpg'}}">
         </image>
         <view>ID: {{userInfo.user_id}}</view>
       </view>

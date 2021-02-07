@@ -66,6 +66,12 @@
           "pathName": "pages/user/login",
           "query": "room_id=888",
           "scene": null
+        },
+        {
+          "name": "用户主页",
+          "pathName": "pages/user/profile",
+          "query": "user_id=1",
+          "scene": null
         }
       ]
     }

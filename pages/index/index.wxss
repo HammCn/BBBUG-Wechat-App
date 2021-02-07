@@ -31,7 +31,7 @@ movable-view image {
   background-color: #f5f5f5;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
   margin: 10px;
   position: relative;
   color: white;
@@ -46,6 +46,13 @@ movable-view image {
   width: 64px;
   height: 64px;
   border-radius: 100%;
+}
+
+.bbbug_player_tips {
+  text-align: center;
+  font-size: 14px;
+  color: #999;
+  padding-top: 50px;
 }
 
 .bbbug_player_outer {
@@ -80,7 +87,7 @@ movable-view image {
 
 .bbbug_player_user {
   position: absolute;
-  right: 20px;
+  right: 15px;
   bottom: 10px;
   font-size: 12px;
   white-space: nowrap;
@@ -107,14 +114,27 @@ movable-view image {
   height: 100%;
 }
 
+.bbbug_upload {
+  background-color: #666;
+  color: white !important;
+  padding: 8px 16px !important;
+  font-size: 14px !important;
+  float: right;
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: 10px;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
 .bbbug_history {
   background-color: #f5f5f5;
   position: absolute;
   left: 0;
   right: 0;
-  top: 0;
+  top: 130px;
   bottom: 0;
-  padding-bottom: calc(env(safe-area-inset-bottom)/2);
+  padding-bottom: calc(env(safe-area-inset-bottom)/1.5);
   overflow-y: scroll;
 }
 
@@ -178,7 +198,7 @@ movable-view image {
   right: 0;
   bottom: 0;
   background-color: #fff;
-  padding: 5px;
+  padding: 10px 5px;
   padding-bottom: calc(calc(env(safe-area-inset-bottom)/2) + 5px);
   text-align: center;
   display: flex;

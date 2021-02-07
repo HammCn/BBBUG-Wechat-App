@@ -1,0 +1,27 @@
+.user_head {
+  text-align: center;
+  margin: 30px;
+}
+
+
+.user_head image {
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+  border: 1px solid #ddd;
+}
+
+.user_name {
+  font-size: 20px;
+  margin-top: 10px;
+}
+
+.user_remark {
+  font-size: 12px;
+  color: #999;
+}
+
+.user_info view {
+  font-size: 12px;
+  display: inline-block;
+}

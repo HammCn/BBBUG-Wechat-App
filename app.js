@@ -10,6 +10,7 @@ App({
     });
   },
   globalData: {
+    access_token_changed: false,
     //网络请求相关参数
     request: {
       apiUrl: "https://api.bbbug.com/api/",
@@ -31,7 +32,7 @@ App({
     guestUserInfo: {
       myRoom: false,
       user_admin: false,
-      user_head: "//cdn.bbbug.com/new/images/nohead.jpg",
+      user_head: "https://bbbug.hamm.cn/new/images/nohead.jpg",
       user_id: -1,
       user_name: "Ghost",
       access_token: "45af3cfe44942c956e026d5fd58f0feffbd3a237",
@@ -171,7 +172,18 @@ App({
       }
     });
   },
+  watchAccessToken(callback) {
+    let obj = this.globalData;
+    Object.defineProperty(obj, 'access_token_changed', {
+      set: function (value) {
+        if (value && callback) {
+          callback();
+        }
+      }
+    });
+  },
   showLogin: function () {
+    let that = this;
     wx.navigateTo({
       url: '../user/login',
     });

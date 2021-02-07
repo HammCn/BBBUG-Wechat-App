@@ -116,7 +116,10 @@ Page({
   },
   onLoad: function (options) {
     let that = this;
-    console.log(options)
+    app.watchAccessToken(function () {
+      console.log('access_token changed');
+      that.getMyInfo();
+    });
     if (options.scene) {
       wx.setStorageSync('room_id', options.scene);
     } else if (options.room_id) {
@@ -312,6 +315,11 @@ Page({
               }
             });
             break;
+            // case '查看主页':
+            //   wx.navigateTo({
+            //     url: '../user/profile?user_id=' + user.user_id,
+            //   })
+            //   break;
           default:
             wx.showToast({
               title: '即将上线',
@@ -487,12 +495,7 @@ Page({
   login() {
     let that = this;
     wx.navigateTo({
-      url: '../user/login',
-      events: {
-        loginSuccess: function (data) {
-          that.getMyInfo();
-        }
-      }
+      url: '../user/login'
     });
   },
   showSongMenu() {
@@ -581,6 +584,7 @@ Page({
           userInfo: res.data
         });
         app.globalData.userInfo = res.data;
+        app.globalData.access_token_changed = false;
         wx.hideNavigationBarLoading();
         if (reloadRoom) {
           that.getRoomInfo();
@@ -888,6 +892,51 @@ Page({
       audio.stop();
     }
   },
+  chooseImage() {
+    let that = this;
+    wx.chooseImage({
+      count: 1,
+      sizeType: 'compressed',
+      success(res) {
+        that.hideAllDialog();
+        wx.showLoading({
+          title: '发送中',
+        });
+        wx.uploadFile({
+          url: app.globalData.request.apiUrl + "attach/uploadImage",
+          filePath: res.tempFilePaths[0],
+          name: 'file',
+          formData: app.globalData.request.baseData,
+          success(res) {
+            wx.hideLoading();
+            res.data = JSON.parse(res.data);
+            if (res.data.code == 200) {
+              let url = app.globalData.request.cdnUrl + "/uploads/" + res.data.data.attach_path;
+              app.request({
+                url: "message/send",
+                data: {
+                  where: 'channel',
+                  to: that.data.room_id,
+                  type: 'img',
+                  msg: url,
+                  resource: url,
+                },
+                success(res) {
+                  that.hideAllDialog();
+                }
+              });
+            } else {
+              wx.showModal({
+                title: "上传失败(" + res.data.code + ")",
+                content: res.data.msg,
+                showCancel: false
+              });
+            }
+          },
+        })
+      },
+    });
+  },
   mainMenuClicked(e) {
     let that = this;
     switch (e.mark.title) {
@@ -947,6 +996,13 @@ Page({
       case '管理':
         wx.navigateTo({
           url: '../room/motify',
+        });
+        break;
+      case '分享':
+        let imgUrl = 'https://api.bbbug.com/api/weapp/qrcode?room_id=' + that.data.room_id;
+        wx.previewImage({
+          urls: [imgUrl],
+          current: imgUrl
         });
         break;
       default:

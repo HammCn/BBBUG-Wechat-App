@@ -5,7 +5,7 @@ module.exports.getStaticUrl = function (url) {
   if (url.indexOf("https://") == 0 || url.indexOf("http://") == 0) {
     return url;
   } else {
-    return "https://cdn.bbbug.com/uploads/" + url;
+    return "https://bbbug.hamm.cn/uploads/" + url;
   }
 };
 module.exports.getImageWidth = function (url) {

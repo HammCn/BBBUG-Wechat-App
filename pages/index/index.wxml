@@ -5,8 +5,8 @@
     <view class="bbbug_item {{item.user.user_id==userInfo.user_id?'bbbug_mine':''}}" wx:for="{{messageList}}">
       <block wx:if="{{item.type!='system' && item.type!='play'}}">
         <view class="bbbug_head">
-          <image src="{{helper.getStaticUrl(item.user.user_head)}}"
-            bindtouchstart="touchStarted" bindtouchend="touchEnded" mark:user="{{item.user}}" />
+          <image src="{{helper.getStaticUrl(item.user.user_head)}}" bindtouchstart="touchStarted"
+            bindtouchend="touchEnded" mark:user="{{item.user}}" />
         </view>
         <view class="bbbug_user">
           <view class="bbbug_username">{{helper.urldecode(item.user.user_name)}}</view>
@@ -54,23 +54,30 @@
         </view>
       </block>
       <view class="bbbug_system" wx:if="{{item.type=='system'}}">{{helper.urldecode(item.content)}}</view>
-      <view class="bbbug_player" wx:if="{{item.type=='play'}}" bindlongpress="showSongMenu">
-        <image class="bbbug_player_userhead" src="{{helper.getStaticUrl(item.data.user.user_head)}}" mode="widthFix">
-        </image>
-        <image class="bbbug_player_img" src="{{helper.getStaticUrl(item.data.song.pic)}}" mode="widthFix"></image>
-        <image class="bbbug_player_outer" src="/res/image/player_bg.png" mode="widthFix"></image>
-        <image class="bbbug_player_bar" src="/res/image/player_bar.png" mode="widthFix"></image>
-        <view class="bbbug_player_song">{{item.data.song.name}}</view>
-        <view class="bbbug_player_singer">{{item.data.song.singer}}</view>
-        <view class="bbbug_player_user">点歌人 {{item.data.user.user_name}}</view>
-      </view>
     </view>
     <view class="bbbug_view_id" id="{{bbbug_view_id}}" style="height:{{bottomHeight}}px;"></view>
   </scroll-view>
+  <view class="bbbug_player" bindlongpress="showSongMenu">
+    <!-- <image class="bbbug_player_userhead" src="{{helper.getStaticUrl(songInfo.user.user_head)}}" mode="widthFix">
+    </image> -->
+    <view wx:if="{{songInfo}}">
+      <image class="bbbug_player_img" src="{{helper.getStaticUrl(songInfo.song.pic)}}" mode="widthFix"></image>
+      <image class="bbbug_player_outer" src="/res/image/player_bg.png" mode="widthFix"></image>
+      <image class="bbbug_player_bar" src="/res/image/player_bar.png" mode="widthFix"></image>
+      <view class="bbbug_player_song">{{songInfo.song.name}}</view>
+      <view class="bbbug_player_singer">{{songInfo.song.singer}}</view>
+      <view class="bbbug_player_user">点歌人 {{songInfo.user.user_name}}</view>
+    </view>
+    <view wx:if="{{!songInfo}}">
+      <view class="bbbug_player_tips">播放器加载中</view>
+    </view>
+  </view>
   <view class="bbbug_emoji" style="display:{{isEmojiBoxShow ?'inline-block':'none'}}">
     <view class="bbbug_emoji_box">
       <image wx:for="{{imageList}}" src="{{item}}" mode="widthFix" bindtap="sendEmoji" bindlongpress="previewImage"
         mark:url="{{item}}" style="height:{{isSystemEmoji?'auto':'80px'}}"></image>
+
+      <view wx:if="{{imageList.length>0}}" class="bbbug_upload" bindtap="chooseImage">发送图片</view>
       <view wx:if="{{imageList.length==0}}">请输入表情关键词搜索</view>
     </view>
   </view>
@@ -126,6 +133,10 @@
     <view class="bbbug_panel_item" bindtap="mainMenuClicked" mark:title="管理">
       <view class="bbbug_panel_icon"><i class="iconfont icon-icon_boss"></i></view>
       <view class="bbbug_panel_title">管理</view>
+    </view>
+    <view class="bbbug_panel_item" bindtap="mainMenuClicked" mark:title="分享">
+      <view class="bbbug_panel_icon"><i class="iconfont icon-qrcode"></i></view>
+      <view class="bbbug_panel_title">分享</view>
     </view>
   </view>
   <!-- <movable-area>

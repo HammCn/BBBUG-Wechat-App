@@ -84,12 +84,15 @@ Page({
               }
             });
             break;
-          case '查看主页':
+          // case '查看主页':
+          //   wx.navigateTo({
+          //     url: '../user/profile?user_id=' + user.user_id,
+          //   })
+          //   break;
+          default:
             wx.showToast({
               title: '即将上线',
             });
-            break;
-          default:
         }
       }
     })

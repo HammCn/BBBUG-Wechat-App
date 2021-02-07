@@ -23,6 +23,7 @@ Page({
       loading: "登录中",
       success(res) {
         wx.setStorageSync('access_token', res.data.access_token);
+        app.globalData.access_token_changed = true;
         const eventChannel = that.getOpenerEventChannel()
         eventChannel.emit('loginSuccess', null);
         wx.navigateBack();
@@ -45,6 +46,7 @@ Page({
             loading: "登录中",
             success(res) {
               wx.setStorageSync('access_token', res.data.access_token);
+              app.globalData.access_token_changed = true;
               const eventChannel = that.getOpenerEventChannel()
               eventChannel.emit('loginSuccess', null);
               wx.navigateBack();
