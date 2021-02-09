@@ -151,7 +151,7 @@ Page({
     app.request({
       url: "",
       success(res) {
-        if (res.data.hide) {
+        if (res.data.hide || true) {
           that.setData({
             newsShow: false
           });
@@ -183,9 +183,6 @@ Page({
   },
   onShow: function () {
     let that = this;
-  },
-  onShareAppMessage: function () {
-
   },
   clearAtInfo() {
     this.setData({
@@ -858,6 +855,15 @@ Page({
         console.log("消息未解析")
     }
     that.autoScroll();
+  },
+  onShareAppMessage() {
+    let that = this;
+    if (that.data.songInfo) {
+      return {
+        title: '正在播放 ' + that.data.songInfo.song.name + '(' + that.data.songInfo.song.singer + ")",
+        path: '/pages/index/index?room_id=' + that.data.room_id
+      };
+    }
   },
   playMusic(msg) {
     let that = this;
