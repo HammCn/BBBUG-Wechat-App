@@ -114,57 +114,21 @@ Page({
       }
     });
   },
-  syncWechatUserInfo() {
+  syncWechatUserInfo(e) {
     let that = this;
-    that.getWechatUserData(function (res) {
-      let wechatUserData = JSON.parse(res.rawData);
-      let userInfo = that.data.userInfo;
-      userInfo.user_head = wechatUserData.avatarUrl;
-      userInfo.user_sex = (wechatUserData.gender == 1 ? 1 : 0);
-      userInfo.user_name = encodeURIComponent(wechatUserData.nickName);
-      that.setData({
-        userInfo: userInfo,
-        user_head: wechatUserData.avatarUrl,
-        user_sex: (wechatUserData.gender == 1 ? 1 : 0),
-      });
-      wx.showToast({
-        title: '同步成功',
-      });
+    console.log(e);
+    let wechatUserData = JSON.parse(e.detail.rawData);
+    let userInfo = that.data.userInfo;
+    userInfo.user_head = wechatUserData.avatarUrl;
+    userInfo.user_sex = (wechatUserData.gender == 1 ? 1 : 0);
+    userInfo.user_name = encodeURIComponent(wechatUserData.nickName);
+    that.setData({
+      userInfo: userInfo,
+      user_head: wechatUserData.avatarUrl,
+      user_sex: (wechatUserData.gender == 1 ? 1 : 0),
     });
-  },
-  getWechatUserData(callback) {
-    let that = this;
-    wx.getSetting({
-      success(res) {
-        if (!res.authSetting['scope.userInfo']) {
-          wx.authorize({
-            scope: 'scope.userInfo',
-            success() {
-              wx.getUserInfo({
-                success: function (res) {
-                  callback(res);
-                }
-              });
-            },
-            fail() {
-              wx.showModal({
-                title: "请先授权",
-                content: "请允许访问你的个人信息后重试",
-                showCancel: false,
-                success() {
-                  wx.openSetting();
-                }
-              });
-            }
-          });
-        } else {
-          wx.getUserInfo({
-            success: function (res) {
-              callback(res);
-            }
-          })
-        }
-      }
+    wx.showToast({
+      title: '同步成功',
     });
   },
   getMyInfo() {
