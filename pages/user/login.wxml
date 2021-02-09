@@ -9,7 +9,7 @@
             <view class="weui-label">帐号</view>
           </view>
           <view class="weui-cell__bd">
-            <input class="weui-input" placeholder="你的邮箱或ID" type="email" value="" name="user_account" auto-focus
+            <input class="weui-input" placeholder="你的邮箱或ID" type="email" value="" name="user_account"
               bindinput="userAccountChanged" />
           </view>
           <view class="weui-cell__ft" bindtap="sendMail"><i class="iconfont icon-mail bbbug_login_sendmail"></i></view>
