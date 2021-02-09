@@ -151,7 +151,8 @@ Page({
     app.request({
       url: "",
       success(res) {
-        if (res.data.hide || true) {
+        // if (res.data.hide || true) {
+        if (res.data.hide) {
           that.setData({
             newsShow: false
           });
