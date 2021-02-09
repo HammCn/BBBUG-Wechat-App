@@ -1,18 +1,34 @@
-// pages/other/detail.js
+let app = getApp();
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    item: {},
+    news_id: 0,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let that = this;
+    that.setData({
+      news_id: options.news_id
+    });
+    app.request({
+      url: "/index/detail",
+      data: {
+        id: that.data.news_id
+      },
+      success(res) {
+        console.log(res);
+        that.setData({
+          item: res.data
+        });
+      }
+    });
   },
 
   /**

@@ -1,0 +1,11 @@
+<view
+  style="position:fixed;left:0;right:0;top:0;bottom:0;z-index:99;background-color:#f5f5f5;overflow:hidden;overflow-y:scroll;">
+  <view style="background-color:white;border-radius:10px;margin:10px;padding:10px;">
+    <view>
+      <view wx-if="{{item.project.cn}}"
+        style="display:inline-block;background-color:orangered;border-radius:5px;color:white;padding:2px 5px;font-size:12px;margin-right:10px;">
+        热门</view>{{item.summary.title}}
+    </view>
+    <view style="font-size:14px;color:#999;margin-top:10px;">{{item.content}}</view>
+  </view>
+</view>

@@ -178,9 +178,9 @@ Page({
   },
   openNewsDetail(e) {
     let id = e.mark.news_id;
-    // wx.navigateTo({
-    //   url: '../other/detail?news_id=' + id,
-    // });
+    wx.navigateTo({
+      url: '../other/detail?news_id=' + id,
+    });
   },
   onShow: function () {
     let that = this;

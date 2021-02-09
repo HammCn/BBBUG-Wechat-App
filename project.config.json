@@ -63,8 +63,8 @@
       "list": [
         {
           "name": "自定义入口",
-          "pathName": "pages/user/motify",
-          "query": "",
+          "pathName": "pages/other/detail",
+          "query": "news_id=51801",
           "scene": null
         }
       ]

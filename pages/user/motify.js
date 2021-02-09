@@ -121,7 +121,7 @@ Page({
     let userInfo = that.data.userInfo;
     userInfo.user_head = wechatUserData.avatarUrl;
     userInfo.user_sex = (wechatUserData.gender == 1 ? 1 : 0);
-    userInfo.user_name = encodeURIComponent(wechatUserData.nickName);
+    userInfo.user_name = (wechatUserData.nickName);
     that.setData({
       userInfo: userInfo,
       user_head: wechatUserData.avatarUrl,
