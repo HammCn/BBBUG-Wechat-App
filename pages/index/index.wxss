@@ -274,14 +274,14 @@ movable-view image {
 
 .bbbug_face {
   position: absolute;
-  left: 5px;
-  top: 5px;
+  left: 8px;
+  top: 8px;
 }
 
 .bbbug_face image {
   vertical-align: middle;
-  width: 42px;
-  height: 42px;
+  width: 36px;
+  height: 36px;
 }
 
 .bbbug_time {
@@ -292,14 +292,14 @@ movable-view image {
 
 .bbbug_more {
   position: absolute;
-  right: 5px;
-  top: 5px;
+  right: 8px;
+  top: 8px;
 }
 
 .bbbug_more image {
   vertical-align: middle;
-  width: 42px;
-  height: 42px;
+  width: 36px;
+  height: 36px;
 }
 
 .bbbug_cover {
