@@ -48,7 +48,7 @@
       <view class="weui-btn-area">
         <button form-type="submit" class="weui-btn" type="primary">保存资料</button>
       </view>
-      <view class="logout" bindtap="logout">退出登录</view>
+      <view class="footer"><view class="syncWechatUserInfo" bindtap="syncWechatUserInfo"><i class="iconfont icon-wechat-fill"></i>同步资料</view> <view class="logout" bindtap="logout"><i class="iconfont icon-poweroff"></i>退出登录</view></view>
     </form>
   </view>
 </view>

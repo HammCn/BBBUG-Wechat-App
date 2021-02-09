@@ -12,15 +12,36 @@
   margin: 30px;
 }
 
-.logout {
-  font-size: 16px;
-  color: orangered;
+.footer {
   text-align: center;
   position: fixed;
   left: 0;
   right: 0;
   bottom: 30px;
+  font-size: 16px;
   padding-bottom: env(safe-area-inset-bottom);
+  color: #666;
+}
+
+.footer view {
+  display: inline-block;
+  margin: 0px 5px;
+  vertical-align: middle;
+}
+
+.logout {
+  color: orangered;
+}
+
+.logout i {
+  font-size: 16px;
+  font-weight: bold;
+  vertical-align: middle;
+}
+
+.syncWechatUserInfo i {
+  font-size: 20px;
+  vertical-align: middle;
 }
 
 .user_head image {
