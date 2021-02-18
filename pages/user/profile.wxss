@@ -19,9 +19,78 @@
 .user_remark {
   font-size: 12px;
   color: #999;
+  margin-top: 10px;
 }
-
 .user_info view {
   font-size: 12px;
   display: inline-block;
+}
+
+.user_id {
+  background-color: #999;
+  color: white;
+  padding: 1px 5px;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+.user_sex i{
+  color: white;
+  padding: 0px 5px;
+  border-radius: 5px;
+  display: inline-block;
+  margin-left: 3px;
+  font-size: 14px;
+}
+
+.user_sex .icon-man {
+  background-color: #759fd1;
+}
+
+.user_sex .icon-woman {
+  background-color: #f288a4;
+}
+.user_device i{
+  background-color: #333333;
+  color: white;
+  padding: 0px 5px;
+  border-radius: 5px;
+  display: inline-block;
+  margin-left: 3px;
+  font-size: 14px;
+}
+.number {
+  font-size: 16px;
+  font-weight: bolder;
+  color: #ff4500;
+  margin-right: 5px;
+}
+
+.tipImage {
+  text-align: center;
+  margin-top: 20%;
+
+}
+
+.tipImage .img {
+  width: 100px;
+  height: 100px;
+}
+
+.tipText {
+  margin-top: 50px;
+  font-size: 14px;
+  color: #999;
+  text-align: center;
+}
+
+.song_image {
+  border-radius: 10px;
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+.songList{
+  margin:10px;
+  border-radius: 10px;
 }

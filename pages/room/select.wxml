@@ -26,8 +26,7 @@
   <view class="roomTitle">
     <i class="iconfont roomType icon-xiaoxi2" wx:if="{{item.room_type==0}}"></i>
     <i class="iconfont roomType icon-changyongtubiao-mianxing-61" wx:if="{{item.room_type==1}}"></i>
-    <i class="iconfont roomType icon-shezhi3" wx:if="{{item.room_type==2}}"></i>
-    <i class="iconfont roomType icon-book" wx:if="{{item.room_type==3}}"></i>
+    <i class="iconfont roomType icon-icon_voice" wx:if="{{item.room_type==4}}"></i>
     {{item.room_name}}
     <font class="roomOnline" wx:if="{{item.room_online>0}}">({{item.room_online}})</font>
     <span class="roomRight"><i class="iconfont icon-lock-fill roomLock" wx:if="{{item.room_public==1}}"></i><span

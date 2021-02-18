@@ -63,8 +63,8 @@
       "list": [
         {
           "name": "自定义入口",
-          "pathName": "pages/other/detail",
-          "query": "news_id=51801",
+          "pathName": "pages/user/profile",
+          "query": "user_id=8",
           "scene": null
         }
       ]

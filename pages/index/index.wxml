@@ -147,6 +147,24 @@
     </movable-view>
   </movable-area> -->
 </view>
+<view wx:if="{{showPasswordForm}}" class="passwordForm">
+  <view class="tips">该房间需要输入密码</view>
+  <form bindsubmit="doPasswordSubmit">
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__bd">
+          <input class="weui-input" placeholder="请输入房间密码" password="true" name="password" />
+        </view>
+      </view>
+    </view>
+    <view class="weui-btn-area">
+      <button form-type="submit" class="weui-btn" type="primary">确认密码</button>
+    </view>
+    <view class="footer">
+      <view class="logout" bindtap="doEnterDefaultRoom"><i class="iconfont icon-poweroff"></i>取消进入</view>
+    </view>
+  </form>
+</view>
 <view wx:if="{{newsShow}}"
   style="position:fixed;left:0;right:0;top:0;bottom:0;z-index:99;background-color:#f5f5f5;overflow:hidden;overflow-y:scroll;">
   <view wx:for="{{newsList}}" wx:key="item" wx:if="{{item.type=='project'}}" bindtap="openNewsDetail"

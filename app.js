@@ -123,12 +123,14 @@ App({
             default:
               //解析其他状态码
               if (_data.error) {
-                _data.error(res.data);
-                wx.showModal({
-                  title: '操作失败(' + res.data.code + ')',
-                  content: res.data.msg,
-                  showCancel: false
-                });
+                let dontAlert = _data.error(res.data);
+                if(!dontAlert){
+                  wx.showModal({
+                    title: '操作失败(' + res.data.code + ')',
+                    content: res.data.msg,
+                    showCancel: false
+                  });
+                }
               } else {
                 wx.showModal({
                   title: '操作失败(' + res.data.code + ')',

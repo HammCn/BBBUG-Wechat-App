@@ -453,3 +453,56 @@ movable-view image {
   width: 12%;
   margin: 1%;
 }
+
+.weui-cell {
+  padding: 15px;
+}
+
+
+.weui-label {
+  width: 60px;
+}
+
+.passwordForm {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: #f5f5f5;
+}
+
+.passwordForm .tips {
+  margin-top: 50px;
+  color: #666;
+  text-align: center;
+  margin-bottom: 50px;
+  font-size: 20px;
+}
+
+.footer {
+  text-align: center;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 30px;
+  font-size: 16px;
+  padding-bottom: env(safe-area-inset-bottom);
+  color: #666;
+}
+
+.footer view {
+  display: inline-block;
+  margin: 0px 5px;
+  vertical-align: middle;
+}
+
+.logout {
+  color: orangered;
+}
+
+.logout i {
+  font-size: 16px;
+  font-weight: bold;
+  vertical-align: middle;
+}

@@ -6,6 +6,7 @@ Page({
     isPanelShow: false,
     isMusicPlaying: true,
     message: "",
+    showPasswordForm: false,
     placeholderDefault: "说点什么吧...",
     placeholderSearchImage: "关键词搜索表情",
     messageButtonTitleSend: "send",
@@ -176,6 +177,12 @@ Page({
       }
     });
   },
+  doPasswordSubmit(e) {
+    this.setData({
+      room_password: e.detail.value.password
+    });
+    this.getRoomInfo();
+  },
   openNewsDetail(e) {
     let id = e.mark.news_id;
     wx.navigateTo({
@@ -313,11 +320,11 @@ Page({
               }
             });
             break;
-            // case '查看主页':
-            //   wx.navigateTo({
-            //     url: '../user/profile?user_id=' + user.user_id,
-            //   })
-            //   break;
+          case '查看主页':
+            wx.navigateTo({
+              url: '../user/profile?user_id=' + user.user_id,
+            })
+            break;
           default:
             wx.showToast({
               title: '即将上线',
@@ -587,15 +594,38 @@ Page({
         if (reloadRoom) {
           that.getRoomInfo();
         }
+        that.alertChangeInfo();
       },
       error(res) {
         wx.hideNavigationBarLoading();
       }
     });
   },
+  alertChangeInfo() {
+    let infoChanged = wx.getStorageSync('infoChanged') || false;
+    if (!infoChanged) {
+      wx.showModal({
+        confirmText: "完善资料",
+        cancelText: "不再提示",
+        title: "修改资料",
+        content: "快去完善资料展示自己的个性主页吧",
+        success: function (res) {
+          wx.setStorageSync('infoChanged', new Date().valueOf());
+          if (res.confirm) {
+            wx.navigateTo({
+              url: '../user/motify',
+            });
+          }
+        }
+      });
+    }
+  },
   getRoomInfo() {
     let that = this;
     wx.showNavigationBarLoading();
+    that.setData({
+      showPasswordForm: false,
+    });
     app.request({
       url: "room/getRoomInfo",
       data: {
@@ -604,6 +634,7 @@ Page({
       },
       success(res) {
         wx.hideNavigationBarLoading();
+        wx.hideLoading();
         that.setData({
           roomInfo: res.data
         });
@@ -616,8 +647,21 @@ Page({
       },
       error(res) {
         wx.hideNavigationBarLoading();
+        if (res.code == 302) {
+          that.setData({
+            showPasswordForm: true,
+            room_password: "",
+          });
+          return true;
+        }
       }
     });
+  },
+  doEnterDefaultRoom() {
+    this.setData({
+      room_id: this.data.default_room
+    });
+    this.getRoomInfo();
   },
   getMessageList() {
     let that = this;
@@ -776,6 +820,11 @@ Page({
             wx.vibrateLong();
           }
         }
+        break;
+      case 'join':
+        msg.content = msg.content;
+        msg.type = 'system';
+        that.addMessageToList(msg);
         break;
       case 'text':
       case 'img':

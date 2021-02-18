@@ -6,33 +6,46 @@
         <image class="weui-media-box__thumb"
           src="{{helper.getStaticUrl(userInfo.user_head)||'https://bbbug.com/images/nohead.jpg'}}">
         </image>
+        <view class="user_name">{{helper.urldecode(userInfo.user_name)}}</view>
         <view class="user_info">
           <view class="user_id">ID:{{userInfo.user_id}}</view>
           <view class="user_sex">
             <i class="iconfont icon-man" wx:if="{{userInfo.user_sex==1}}"></i>
             <i class="iconfont icon-woman" wx:if="{{userInfo.user_sex==0}}"></i>
           </view>
-          <view class="user_device" wx:if="{{userInfo.user_device=='MacOS'}}"><i class="iconfont icon-Windows"></i>
+          <view class="user_device" wx:if="{{userInfo.user_device=='Windows'}}"><i class="iconfont icon-windows-fill"></i>
           </view>
-          <view class="user_device" wx:if="{{userInfo.user_device=='MacOS'}}"><i class="iconfont icon-apple"></i></view>
-          <view class="user_device" wx:if="{{userInfo.user_device=='MacOS'}}"><i class="iconfont icon-Windows"></i>
+          <view class="user_device" wx:if="{{userInfo.user_device=='MacOS'}}"><i class="iconfont icon-apple-fill"></i>
           </view>
-          <!-- 
-          <i class="iconfont user_icon user_female icon-xingbie-nv" title="女生" v-if="userInfo.user_sex==0"></i>
-          <i class="iconfont user_icon user_male icon-xingbie-nan" title="男生" v-if="userInfo.user_sex==1"></i>
-
-          <i class="iconfont user_device icon-vscode" v-if="userInfo.user_device=='VSCODE'"
-            title="Visual Studio Code插件在线"></i>
-          <i class="iconfont user_device icon-apple-fill" v-if="userInfo.user_device=='MacOS'" title="Mac 在线"></i>
-          <i class="iconfont user_device icon-windows-fill" v-if="userInfo.user_device=='Windows'"
-            title="Windows 在线"></i>
-          <i class="iconfont user_device icon-apple-fill"
-            v-if="userInfo.user_device=='iOS' || userInfo.user_device=='iPhone'" title="iOS 在线"></i>
-          <i class="iconfont user_device icon-android-fill" v-if="userInfo.user_device=='Android'"
-            title="Android 在线"></i> -->
+          <view class="user_device" wx:if="{{userInfo.user_device=='iPhone'}}"><i class="iconfont icon-apple-fill"></i>
+          </view>
+          <view class="user_device" wx:if="{{userInfo.user_device=='Android'}}"><i class="iconfont icon-android-fill"></i>
+          </view>
+          <view class="user_device" wx:if="{{userInfo.user_device=='VSCODE'}}"><i class="iconfont icon-vscode"></i>
+          </view>
         </view>
-        <view class="user_name">{{helper.urldecode(userInfo.user_name)}}</view>
         <view class="user_remark">{{userInfo.user_remark}}</view>
+     
+      </view>   <view class="user_song">
+        <view wx:if="{{songList.length==0}}">
+          <view class="tipText">没有歌曲啦，快去点歌吧</view>
+        </view>
+        <view class="weui-panel weui-panel_access songList" wx:if="{{songList.length>0}}">
+          <view class="weui-panel__bd">
+            <view class="weui-media-box weui-media-box_appmsg" wx:for="{{songList}}">
+              <view class="weui-media-box__hd">
+                <image class="weui-media-box__thumb song_image" src="{{item.pic}}" alt="" mode="widthFix">
+                </image>
+              </view>
+              <view class="weui-media-box__bd">
+                <view class="weui-media-box__title">{{item.name}}</view>
+                <view class="weui-media-box__desc">
+                  {{item.singer}}
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
       </view>
     </view>
   </view>
