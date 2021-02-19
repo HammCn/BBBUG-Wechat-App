@@ -602,15 +602,15 @@ Page({
     });
   },
   alertChangeInfo() {
-    let infoChanged = wx.getStorageSync('infoChanged') || false;
-    if (!infoChanged) {
+    let infoChanged = wx.getStorageSync('userInfoChanged') || false;
+    if (!infoChanged && this.data.userInfo.user_id > 0) {
       wx.showModal({
         confirmText: "完善资料",
         cancelText: "不再提示",
         title: "修改资料",
         content: "快去完善资料展示自己的个性主页吧",
         success: function (res) {
-          wx.setStorageSync('infoChanged', new Date().valueOf());
+          wx.setStorageSync('userInfoChanged', new Date().valueOf());
           if (res.confirm) {
             wx.navigateTo({
               url: '../user/motify',
@@ -1025,6 +1025,11 @@ Page({
               that.setData({
                 room_id: room_id
               });
+              that.setData({
+                songInfo: false
+              });
+              let audio = wx.getBackgroundAudioManager();
+              audio.stop();
               that.getRoomInfo();
             }
           }

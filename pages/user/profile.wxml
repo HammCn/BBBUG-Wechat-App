@@ -1,10 +1,11 @@
 <wxs src="../../utils/helper.wxs" module="helper" />
 <view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
   <view class="page__bd">
-    <view bindsubmit="doSubmit" bindreset="formReset" wx:if="{{userInfo}}">
+    <view wx:if="{{userInfo}}">
       <view class="user_head">
-        <image class="weui-media-box__thumb"
-          src="{{helper.getStaticUrl(userInfo.user_head)||'https://bbbug.com/images/nohead.jpg'}}">
+        <image bindtap="headImageTouched" class="weui-media-box__thumb"
+        src="{{helper.getStaticUrl(userInfo.user_head)||'https://bbbug.com/images/nohead.jpg'}}"
+        mark:url="{{helper.getStaticUrl(userInfo.user_head)||'https://bbbug.com/images/nohead.jpg'}}">
         </image>
         <view class="user_name">{{helper.urldecode(userInfo.user_name)}}</view>
         <view class="user_info">
@@ -28,7 +29,7 @@
      
       </view>   <view class="user_song">
         <view wx:if="{{songList.length==0}}">
-          <view class="tipText">没有歌曲啦，快去点歌吧</view>
+          <view class="tipText">Ta还没点过歌呀,快邀请Ta点歌吧</view>
         </view>
         <view class="weui-panel weui-panel_access songList" wx:if="{{songList.length>0}}">
           <view class="weui-panel__bd">

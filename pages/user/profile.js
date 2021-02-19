@@ -3,7 +3,7 @@ Page({
   data: {
     userInfo: false,
     user_id: 0,
-    songList:[]
+    songList: []
   },
   onLoad: function (options) {
     this.setData({
@@ -32,7 +32,21 @@ Page({
     console.log(device)
     return device;
   },
-  getSongList(){
+  headImageTouched(e) {
+    let url = e.mark.url;
+    wx.showActionSheet({
+      itemList: ['查看大图'],
+      success: function (res) {
+        if (res.tapIndex == 0) {
+          wx.previewImage({
+            urls: [url],
+            current: url
+          });
+        }
+      }
+    })
+  },
+  getSongList() {
     let that = this;
     app.request({
       url: "song/getusersongs",
