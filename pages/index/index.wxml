@@ -2,64 +2,66 @@
 <view class="bbbug">
   <scroll-view class="bbbug_history" scroll-into-view="{{bbbug_view_scroll}}" scroll-y="true" bindtap="hideAllDialog"
     bindscroll="messageListScrolling">
-    <view class="bbbug_item {{item.user.user_id==userInfo.user_id?'bbbug_mine':''}}" wx:for="{{messageList}}">
+    <block wx:for="{{messageList}}">
       <block wx:if="{{item.type!='system' && item.type!='play'}}">
-        <view class="bbbug_head">
-          <image src="{{helper.getStaticUrl(item.user.user_head)}}" bindtouchstart="touchStarted"
-            bindtouchend="touchEnded" mark:user="{{item.user}}" />
-        </view>
-        <view class="bbbug_user">
-          <view class="bbbug_username">{{helper.urldecode(item.user.user_name)}}</view>
-        </view>
-        <view class="bbbug_content" bindlongpress="longTapToMessage" mark:msg="{{item}}" bindtap="hideAllDialog">
-          <block wx:if="{{item.type=='text' && item.user.user_id==userInfo.user_id}}">
-            <!-- 我的消息 -->
-            <view class="bbbug_text" wx:if="{{item.type=='text' && userInfo.user_sex==1}}"
-              style="background-color:#66cbff">{{helper.urldecode(item.content)}}</view>
-            <view class="bbbug_text" wx:if="{{item.type=='text' && userInfo.user_sex!=1}}"
-              style="background-color:#fe9898;color:white;">{{helper.urldecode(item.content)}}</view>
-          </block>
-          <block wx:if="{{item.type=='text' && item.user.user_id!=userInfo.user_id}}">
-            <!-- 文字消息 且不是自己发的 -->
-            <!-- 别人@了我 -->
-            <view class="bbbug_text" wx:if="{{item.at && item.at.user_id==userInfo.user_id}}"
-              style="background-color:#666;color:white;">{{helper.urldecode(item.content)}}</view>
-            <!-- 没有@或者不是@自己 -->
-            <view class="bbbug_text" wx:if="{{(!item.at || item.at.user_id!=userInfo.user_id)}}"
-              style="background-color:#fff">{{helper.urldecode(item.content)}}</view>
-          </block>
-          <view class="bbbug_image" wx:if="{{item.type=='img'}}">
-            <image src="{{helper.getStaticUrl(item.content)}}"
-              style="width:{{helper.getImageWidth(item.content)+'px'}};height:{{helper.getImageWidth(item.content)+'px'}};"
-              mode="widthFix" lazy-load="true" bindtap="previewImage" mark:url="{{item.resource}}" />
+        <view class="bbbug_item {{item.user.user_id==userInfo.user_id?'bbbug_mine':''}}">
+          <view class="bbbug_head">
+            <image src="{{helper.getStaticUrl(item.user.user_head)}}" bindtouchstart="touchStarted"
+              bindtouchend="touchEnded" mark:user="{{item.user}}" />
           </view>
-          <view class="bbbug_link" wx:if="{{item.type=='link'}}">
-            <view class="bbbug_link_title">{{helper.urldecode(item.title)}}</view>
-            <view class="bbbug_link_desc">{{helper.urldecode(item.desc)||'没有读取到网站描述信息...'}}</view>
-            <view class="bbbug_link_url">{{helper.urldecode(item.link)}}</view>
+          <view class="bbbug_user">
+            <view class="bbbug_username">{{helper.urldecode(item.user.user_name)}}</view>
           </view>
-          <view class="bbbug_link" wx:if="{{item.type=='jump'}}">
-            <view class="bbbug_link_title">ID:{{item.jump.room_id}} {{item.jump.room_name}}</view>
-            <view class="bbbug_link_desc">{{item.jump.room_notice}}</view>
-            <view class="bbbug_link_url">房间飞机票</view>
+          <view class="bbbug_content" bindlongpress="longTapToMessage" mark:msg="{{item}}" bindtap="hideAllDialog">
+            <block wx:if="{{item.type=='text' && item.user.user_id==userInfo.user_id}}">
+              <!-- 我的消息 -->
+              <view class="bbbug_text" wx:if="{{item.type=='text' && userInfo.user_sex==1}}"
+                style="background-color:#66cbff">{{helper.urldecode(item.content)}}</view>
+              <view class="bbbug_text" wx:if="{{item.type=='text' && userInfo.user_sex!=1}}"
+                style="background-color:#fe9898;color:white;">{{helper.urldecode(item.content)}}</view>
+            </block>
+            <block wx:if="{{item.type=='text' && item.user.user_id!=userInfo.user_id}}">
+              <!-- 文字消息 且不是自己发的 -->
+              <!-- 别人@了我 -->
+              <view class="bbbug_text" wx:if="{{item.at && item.at.user_id==userInfo.user_id}}"
+                style="background-color:#666;color:white;">{{helper.urldecode(item.content)}}</view>
+              <!-- 没有@或者不是@自己 -->
+              <view class="bbbug_text" wx:if="{{(!item.at || item.at.user_id!=userInfo.user_id)}}"
+                style="background-color:#fff">{{helper.urldecode(item.content)}}</view>
+            </block>
+            <view class="bbbug_image" wx:if="{{item.type=='img'}}">
+              <image src="{{helper.getStaticUrl(item.content)}}"
+                style="width:{{helper.getImageWidth(item.content)+'px'}};height:{{helper.getImageWidth(item.content)+'px'}};"
+                mode="widthFix" lazy-load="true" bindtap="previewImage" mark:url="{{item.resource}}" />
+            </view>
+            <view class="bbbug_link" wx:if="{{item.type=='link'}}">
+              <view class="bbbug_link_title">{{helper.urldecode(item.title)}}</view>
+              <view class="bbbug_link_desc">{{helper.urldecode(item.desc)||'没有读取到网站描述信息...'}}</view>
+              <view class="bbbug_link_url">{{helper.urldecode(item.link)}}</view>
+            </view>
+            <view class="bbbug_link" wx:if="{{item.type=='jump'}}">
+              <view class="bbbug_link_title">ID:{{item.jump.room_id}} {{item.jump.room_name}}</view>
+              <view class="bbbug_link_desc">{{item.jump.room_notice}}</view>
+              <view class="bbbug_link_url">房间飞机票</view>
+            </view>
+            <view wx:if="{{item.at && item.at.message}}">
+              <view class="bbbug_quot" wx:if="{{item.at.message.type=='text'}}">
+                {{helper.urldecode(item.at.message.content)}}</view>
+              <view class="bbbug_quot" wx:if="{{item.at.message.type=='img'}}">[图片]</view>
+              <view class="bbbug_quot" wx:if="{{item.at.message.type=='jump'}}">[飞机票]</view>
+              <view class="bbbug_quot" wx:if="{{item.at.message.type=='link'}}">[链接]</view>
+            </view>
+            <view class="bbbug_time">{{helper.friendlyTime(item.message_time)}}</view>
           </view>
-          <view wx:if="{{item.at && item.at.message}}">
-            <view class="bbbug_quot" wx:if="{{item.at.message.type=='text'}}">
-              {{helper.urldecode(item.at.message.content)}}</view>
-            <view class="bbbug_quot" wx:if="{{item.at.message.type=='img'}}">[图片]</view>
-            <view class="bbbug_quot" wx:if="{{item.at.message.type=='jump'}}">[飞机票]</view>
-            <view class="bbbug_quot" wx:if="{{item.at.message.type=='link'}}">[链接]</view>
-          </view>
-          <view class="bbbug_time">{{helper.friendlyTime(item.message_time)}}</view>
         </view>
       </block>
-      <view class="bbbug_system" wx:if="{{item.type=='system'}}">{{helper.urldecode(item.content)}}</view>
-    </view>
+      <view class="bbbug_system" wx:if="{{item.type=='system'}}">
+        <view>{{helper.urldecode(item.content)}}</view>
+      </view>
+    </block>
     <view class="bbbug_view_id" id="{{bbbug_view_id}}" style="height:{{bottomHeight}}px;"></view>
   </scroll-view>
-  <view class="bbbug_player" bindlongpress="showSongMenu">
-    <!-- <image class="bbbug_player_userhead" src="{{helper.getStaticUrl(songInfo.user.user_head)}}" mode="widthFix">
-    </image> -->
+  <view class="bbbug_player" bindtap="showSongMenu" bindlongpress="setSimplePlayer" wx:if="{{!simplePlayer}}">
     <view wx:if="{{songInfo}}">
       <image class="bbbug_player_img" src="{{helper.getStaticUrl(songInfo.song.pic)}}" mode="widthFix"></image>
       <image class="bbbug_player_outer" src="/res/image/player_bg.png" mode="widthFix"></image>
@@ -139,13 +141,17 @@
       <view class="bbbug_panel_title">分享</view>
     </view>
   </view>
-  <!-- <movable-area>
-    <movable-view inertia="true" direction="all" bindtap="showSongMenu" wx:if="{{roomInfo && userInfo && (userInfo.user_admin||userInfo.user_id==roomInfo.room_user)}}">
-      <image wx:if="{{songInfo && songInfo.song}}" src="{{helper.getStaticUrl(songInfo.user.user_head)}}"
-        mode="widthFix"></image>
-      <image wx:if="{{!songInfo || !songInfo.song}}" src="/res/image/nohead.jpg" mode="widthFix"></image>
+  <movable-area>
+    <movable-view inertia="true" direction="all" bindtap="showSongMenu" bindlongpress="setSimplePlayer"
+      wx:if="{{simplePlayer}}">
+      <image class="player_bg" src="../../res/image/player_bg.png"></image>
+      <view>
+        <image wx:if="{{songInfo && songInfo.song}}" src="{{helper.getStaticUrl(songInfo.song.pic)}}" mode="widthFix">
+        </image>
+        <image wx:if="{{!songInfo || !songInfo.song}}" src="/res/image/nohead.jpg" mode="widthFix"></image>
+      </view>
     </movable-view>
-  </movable-area> -->
+  </movable-area>
 </view>
 <view wx:if="{{showPasswordForm}}" class="passwordForm">
   <view class="tips">该房间需要输入密码</view>

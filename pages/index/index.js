@@ -6,6 +6,7 @@ Page({
     isPanelShow: false,
     isMusicPlaying: true,
     message: "",
+    simplePlayer: true,
     showPasswordForm: false,
     placeholderDefault: "说点什么吧...",
     placeholderSearchImage: "关键词搜索表情",
@@ -46,6 +47,11 @@ Page({
     touchTimer: false,
     clickTimer: false,
     enableTouchEnd: false,
+  },
+  setSimplePlayer() {
+    this.setData({
+      simplePlayer: !this.data.simplePlayer
+    });
   },
   enableScroll() {
     this.setData({
@@ -118,7 +124,6 @@ Page({
   onLoad: function (options) {
     let that = this;
     app.watchAccessToken(function () {
-      console.log('access_token changed');
       that.getMyInfo();
     });
     if (options.scene) {
@@ -266,7 +271,6 @@ Page({
   },
   userTap(user) {
     let that = this;
-    console.log(user)
     let menu = ['查看主页'];
     if ((that.data.userInfo.user_admin || that.data.userInfo.user_id == that.data.roomInfo.room_user) && that.data.userInfo.user_id != user.user_id) {
       menu = ['查看主页', '禁止点歌', '禁止发言', '解除限制'];
@@ -335,7 +339,6 @@ Page({
   },
   longTapToMessage(e) {
     let that = this;
-    console.log(e);
     if (!that.data.userInfo || that.data.userInfo.user_id < 0) {
       return;
     }
@@ -360,7 +363,6 @@ Page({
         break;
       default:
     }
-    console.log(menuList);
     wx.showActionSheet({
       itemList: menuList,
       success(res) {
@@ -486,7 +488,6 @@ Page({
   previewImage(e) {
     let that = this;
     if (e.mark.url) {
-      console.log(e.mark.url);
       if (e.mark.url.indexOf('images/emoji/') == -1 && e.mark.url.indexOf('/res/Emojis/') == -1) {
         wx.previewImage({
           current: that.getStaticUrl(e.mark.url),
@@ -811,7 +812,6 @@ Page({
   },
   messageController(msg) {
     let that = this;
-    console.log(msg);
     switch (msg.type) {
       case 'touch':
         that.addSystemMessage(decodeURIComponent(msg.user.user_name) + " 摸了摸 " + decodeURIComponent(msg.at.user_name) + msg.at.user_touchtip, '#999', '#eee');
@@ -934,6 +934,7 @@ Page({
     that.setData({
       messageList: that.data.messageList
     });
+
     let audio = wx.getBackgroundAudioManager();
     audio.src = app.globalData.request.apiUrl + '/song/playurl?mid=' + msg.song.mid;
     audio.title = msg.song.name + ' - ' + msg.song.singer;
@@ -943,6 +944,7 @@ Page({
     audio.webUrl = msg.song.pic;
     audio.seek(parseInt(new Date().valueOf() / 1000) - msg.since);
     if (that.data.isMusicPlaying) {
+      that.addSystemMessage('正在播放 ' + decodeURIComponent(msg.user.user_name) + ' 点的 ' + msg.song.name + '(' + msg.song.singer + ')');
       audio.play();
     } else {
       audio.stop();
@@ -1021,7 +1023,6 @@ Page({
           url: '../room/select',
           events: {
             changeRoomSuccess: function (room_id) {
-              console.log(room_id);
               that.setData({
                 room_id: room_id
               });

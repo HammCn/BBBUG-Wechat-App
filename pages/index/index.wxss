@@ -11,14 +11,34 @@ movable-area {
 }
 
 movable-view {
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   pointer-events: stroke;
   left: 20px;
   top: 20px;
   border-radius: 100%;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   overflow: hidden;
+  background-color: #333333;
+  position: relative;
+}
+
+movable-view .player_bg {
+  width: 100px;
+  height: 100px;
+}
+
+movable-view image {
+  border-radius: 100%;
+}
+
+movable-view view {
+  position: absolute;
+  left: 19px;
+  right: 19px;
+  top: 19px;
+  bottom: 19px;
+  border-radius: 100%;
 }
 
 movable-view image {
@@ -132,20 +152,27 @@ movable-view image {
   position: absolute;
   left: 0;
   right: 0;
-  top: 130px;
+  top: 0;
   bottom: 0;
   padding-bottom: calc(env(safe-area-inset-bottom)/1.5);
   overflow-y: scroll;
 }
 
+.bbbug_history .bbbug_system {
+  margin: 10px 10%;
+  text-align: center;
+}
 
-.bbbug_history .bbbug_item .bbbug_system {
+.bbbug_history .bbbug_system view {
   font-size: 12px;
-  color: #999;
-  margin: -3px 10%;
+  color: #fff;
   word-break: break-all;
   word-wrap: break-word;
   text-align: center;
+  background-color: #ccc;
+  padding: 2px 5px;
+  border-radius: 5px;
+  display: inline-block;
 }
 
 .bbbug_history .bbbug_item {
