@@ -163,6 +163,23 @@ Page({
             newsShow: false
           });
           that.getMyInfo();
+          let platform = systemInfo.platform.toLowerCase();
+          // if (platform != 'windows' && platform != 'mac') {
+          if (platform == 'windows' || platform == 'mac') {
+            wx.showModal({
+              title: "适配提醒",
+              content: "是否为你切换到更丝滑体验的Web版本?",
+              confirmText: "切换",
+              cancelText: "暂不",
+              success(res) {
+                if (res.confirm) {
+                  wx.redirectTo({
+                    url: '../webview/index?url=' + encodeURIComponent('https://bbbug.com?access_token=' + access_token + "&title=BBBUG"),
+                  });
+                }
+              }
+            });
+          }
         } else {
           that.setData({
             newsList: res.data.data,
@@ -172,7 +189,7 @@ Page({
             title: '每日推荐',
           });
           wx.showToast({
-            title: '今日推荐已更新',
+            title: '已更新',
           });
           let audio = wx.getBackgroundAudioManager();
           audio.src = 'http://img02.tuke88.com/newpreview_music/09/01/43/5c89e6ded0ebf83768.mp3';
