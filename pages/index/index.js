@@ -137,7 +137,7 @@ Page({
     }
     let systemInfo = wx.getSystemInfoSync();
     this.setData({
-      bottomHeight: systemInfo.safeArea.bottom - systemInfo.safeArea.height + 50,
+      bottomHeight: systemInfo.safeArea.bottom - systemInfo.safeArea.height + 60,
       emojiList: emojiList,
       imageList: emojiList,
       messagePlaceHolder: this.data.placeholderDefault,
@@ -154,52 +154,42 @@ Page({
       });
     }
     wx.setStorageSync('access_token', access_token);
-    app.request({
-      url: "",
-      success(res) {
-        // if (res.data.hide || true) {
-        if (res.data.hide) {
-          that.setData({
-            newsShow: false
-          });
-          that.getMyInfo();
-          let platform = systemInfo.platform.toLowerCase();
-          // if (platform != 'windows' && platform != 'mac') {
-          if (platform == 'windows' || platform == 'mac') {
-            wx.showModal({
-              title: "适配提醒",
-              content: "是否为你切换到更丝滑体验的Web版本?",
-              confirmText: "切换",
-              cancelText: "暂不",
-              success(res) {
-                if (res.confirm) {
-                  let audio = wx.getBackgroundAudioManager();
-                  audio.stop();
-                  wx.redirectTo({
-                    url: '../webview/index?url=' + encodeURIComponent('https://bbbug.com?access_token=' + access_token + "&title=BBBUG"),
-                  });
-                }
-              }
+    let loadSuccess = wx.getStorageSync('loadSuccess');
+    if (!loadSuccess) {
+      app.request({
+        url: "",
+        success(res) {
+          if (res.data.hide) {
+            that.setData({
+              newsShow: false
             });
+            wx.setStorageSync('loadSuccess', 1);
+            that.getMyInfo();
+          } else {
+            that.setData({
+              newsList: res.data.data,
+              newsShow: true
+            });
+            wx.setNavigationBarTitle({
+              title: '每日推荐',
+            });
+            wx.showToast({
+              title: '已更新',
+            });
+            let audio = wx.getBackgroundAudioManager();
+            audio.src = 'http://img02.tuke88.com/newpreview_music/09/01/43/5c89e6ded0ebf83768.mp3';
+            audio.title = "背景音乐";
+            audio.play();
           }
-        } else {
-          that.setData({
-            newsList: res.data.data,
-            newsShow: true
-          });
-          wx.setNavigationBarTitle({
-            title: '每日推荐',
-          });
-          wx.showToast({
-            title: '已更新',
-          });
-          let audio = wx.getBackgroundAudioManager();
-          audio.src = 'http://img02.tuke88.com/newpreview_music/09/01/43/5c89e6ded0ebf83768.mp3';
-          audio.title = "背景音乐";
-          audio.play();
         }
-      }
-    });
+      });
+    }else{
+      that.setData({
+        newsShow: false
+      });
+      wx.setStorageSync('loadSuccess', 1);
+      that.getMyInfo();
+    }
   },
   doPasswordSubmit(e) {
     this.setData({

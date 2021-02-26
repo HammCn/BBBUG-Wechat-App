@@ -154,7 +154,7 @@ movable-view image {
   right: 0;
   top: 0;
   bottom: 0;
-  padding-bottom: calc(env(safe-area-inset-bottom)/1.5);
+  padding-bottom: calc(env(safe-area-inset-bottom)/2);
   overflow-y: scroll;
 }
 
