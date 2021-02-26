@@ -173,6 +173,8 @@ Page({
               cancelText: "暂不",
               success(res) {
                 if (res.confirm) {
+                  let audio = wx.getBackgroundAudioManager();
+                  audio.stop();
                   wx.redirectTo({
                     url: '../webview/index?url=' + encodeURIComponent('https://bbbug.com?access_token=' + access_token + "&title=BBBUG"),
                   });
