@@ -125,6 +125,18 @@ Page({
   },
   onLoad: function (options) {
     let that = this;
+    const updateManager = wx.getUpdateManager()
+    updateManager.onUpdateReady(function () {
+      wx.showModal({
+        title: '版本更新',
+        content: '你已经更新至最新版本，请点击确定重启最新版本',
+        showCancel: false,
+        success: function (res) {
+          updateManager.applyUpdate()
+        }
+      })
+    });
+    updateManager.onUpdateFailed(function () {});
     app.watchAccessToken(function () {
       that.getMyInfo();
     });
