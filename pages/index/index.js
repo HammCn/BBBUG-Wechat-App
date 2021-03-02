@@ -7,6 +7,8 @@ Page({
     isMusicPlaying: true,
     message: "",
     simplePlayer: true,
+    musicLrcObj: [],
+    lrcString:"",
     showPasswordForm: false,
     placeholderDefault: "说点什么吧...",
     placeholderSearchImage: "关键词搜索表情",
@@ -183,13 +185,46 @@ Page({
           }
         }
       });
-    }else{
+    } else {
       that.setData({
         newsShow: false
       });
       wx.setStorageSync('loadSuccess', 1);
       that.getMyInfo();
     }
+
+    let audio = wx.getBackgroundAudioManager();
+    audio.onTimeUpdate(function (e) {
+      if (that.data.songInfo) {
+        wx.getBackgroundAudioPlayerState({
+          success(res) {
+            console.log(that.data.musicLrcObj)
+            if (that.data.musicLrcObj && res.status == 1) {
+              for (let i = 0; i < that.data.musicLrcObj.length; i++) {
+                if (i == that.data.musicLrcObj.length - 1) {
+                  that.setData({
+                    lrcString: that.data.musicLrcObj[i].lineLyric
+                  });
+                  return;
+                } else {
+                  if (res.currentPosition > that.data.musicLrcObj[i].time && res.currentPosition < that.data.musicLrcObj[i + 1].time) {
+                    that.setData({
+                      lrcString: that.data.musicLrcObj[i].lineLyric
+                    });
+                    return;
+                  }
+                }
+              }
+            }
+          }
+        });
+        //   that.audioPercent = parseInt(that.$refs.audio.currentTime / that.$refs.audio.duration * 100);
+        //   if (that.$refs.audio.duration > 0 && that.$refs.audio.duration != NaN) {
+        //    
+        //     }
+        // });
+      }
+    });
   },
   doPasswordSubmit(e) {
     this.setData({
@@ -611,6 +646,25 @@ Page({
       }
     });
   },
+  getMusicLrc() {
+    let that = this;
+    that.setData({
+      musicLrcObj: [],
+      lrcString: "歌词读取中..."
+    });
+    app.request({
+      url: 'song/getLrc',
+      data: {
+        mid: that.data.songInfo.song.mid
+      },
+      success(res) {
+        that.setData({
+          musicLrcObj: res.data,
+          lrcString: "歌词加载中..."
+        });
+      },
+    });
+  },
   alertChangeInfo() {
     let infoChanged = wx.getStorageSync('userInfoChanged') || false;
     if (!infoChanged && this.data.userInfo.user_id > 0) {
@@ -929,7 +983,7 @@ Page({
     that.setData({
       songInfo: msg
     });
-
+    that.getMusicLrc();
     for (let i = 0; i < that.data.messageList.length; i++) {
       if (that.data.messageList[i].type == 'play') {
         that.data.messageList.splice(i, 1);
