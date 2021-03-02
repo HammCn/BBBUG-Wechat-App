@@ -198,7 +198,6 @@ Page({
       if (that.data.songInfo) {
         wx.getBackgroundAudioPlayerState({
           success(res) {
-            console.log(that.data.musicLrcObj)
             if (that.data.musicLrcObj && res.status == 1) {
               for (let i = 0; i < that.data.musicLrcObj.length; i++) {
                 if (i == that.data.musicLrcObj.length - 1) {
