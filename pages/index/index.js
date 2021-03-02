@@ -156,42 +156,33 @@ Page({
       });
     }
     wx.setStorageSync('access_token', access_token);
-    let loadSuccess = wx.getStorageSync('loadSuccess');
-    if (!loadSuccess) {
-      app.request({
-        url: "",
-        success(res) {
-          if (res.data.hide) {
-            that.setData({
-              newsShow: false
-            });
-            wx.setStorageSync('loadSuccess', 1);
-            that.getMyInfo();
-          } else {
-            that.setData({
-              newsList: res.data.data,
-              newsShow: true
-            });
-            wx.setNavigationBarTitle({
-              title: '每日推荐',
-            });
-            wx.showToast({
-              title: '已更新',
-            });
-            let audio = wx.getBackgroundAudioManager();
-            audio.src = 'http://img02.tuke88.com/newpreview_music/09/01/43/5c89e6ded0ebf83768.mp3';
-            audio.title = "背景音乐";
-            audio.play();
-          }
+    app.request({
+      url: "",
+      success(res) {
+        if (res.data.hide) {
+          that.setData({
+            newsShow: false
+          });
+          wx.setStorageSync('loadSuccess', 1);
+          that.getMyInfo();
+        } else {
+          that.setData({
+            newsList: res.data.data,
+            newsShow: true
+          });
+          wx.setNavigationBarTitle({
+            title: '每日推荐',
+          });
+          wx.showToast({
+            title: '已更新',
+          });
+          let audio = wx.getBackgroundAudioManager();
+          audio.src = 'http://img02.tuke88.com/newpreview_music/09/01/43/5c89e6ded0ebf83768.mp3';
+          audio.title = "背景音乐";
+          audio.play();
         }
-      });
-    } else {
-      that.setData({
-        newsShow: false
-      });
-      wx.setStorageSync('loadSuccess', 1);
-      that.getMyInfo();
-    }
+      }
+    });
 
     let audio = wx.getBackgroundAudioManager();
     audio.onTimeUpdate(function (e) {
