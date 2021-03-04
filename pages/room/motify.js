@@ -5,6 +5,7 @@ Page({
     room_type_index: 0,
     room_addsong_index: 0,
     room_sendmsg_index: 0,
+    room_public_index: 0,
     room_type: [{
       id: 0,
       name: "普通聊天房"
@@ -86,7 +87,7 @@ Page({
     }, {
       value: 1,
       title: "仅管理可发言"
-    }],
+    }]
   },
   onLoad: function (options) {},
   onShow: function () {
@@ -121,11 +122,22 @@ Page({
         break;
       default:
     }
+    let room_public_index = 0;
+    switch (app.globalData.roomInfo.room_public) {
+      case 0:
+        room_public_index = 0;
+        break;
+      case 1:
+        room_public_index = 1;
+        break;
+      default:
+    }
     this.setData({
       roomInfo: app.globalData.roomInfo,
       room_type_index: room_type_index,
       room_addsong_index: room_addsong_index,
-      room_sendmsg_index: room_sendmsg_index
+      room_sendmsg_index: room_sendmsg_index,
+      room_public_index: room_public_index
     });
   },
   changeType() {
@@ -139,6 +151,21 @@ Page({
       success(res) {
         that.setData({
           room_type_index: res.tapIndex
+        });
+      }
+    })
+  },
+  changePublic() {
+    let that = this;
+    let menu = [];
+    for (let i = 0; i < that.data.room_public.length; i++) {
+      menu.push(that.data.room_public[i].title);
+    }
+    wx.showActionSheet({
+      itemList: menu,
+      success(res) {
+        that.setData({
+          room_public_index: res.tapIndex
         });
       }
     })
@@ -191,6 +218,7 @@ Page({
     }
     roomInfo.room_addsong = that.data.room_addsong_index;
     roomInfo.room_sendmsg = that.data.room_sendmsg_index;
+    roomInfo.room_public = that.data.room_public_index;
     roomInfo.room_id = that.data.roomInfo.room_id;
     app.request({
       url: "room/saveMyRoom",
@@ -203,4 +231,28 @@ Page({
       }
     });
   },
+  deleteHistory() {
+    let that = this;
+    wx.showActionSheet({
+      itemList: ['确认删除'],
+      success(res) {
+        if (res.tapIndex == 0) {
+          app.request({
+            url: "message/clear",
+            data: {
+              room_id: that.data.roomInfo.room_id
+            },
+            success(res) {
+              wx.showToast({
+                title: '删除成功',
+              });
+              let eventChannel = that.getOpenerEventChannel();
+              eventChannel.emit('reloadMessage', null);
+              wx.navigateBack();
+            }
+          });
+        }
+      }
+    });
+  }
 })

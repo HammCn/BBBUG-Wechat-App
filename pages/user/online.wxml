@@ -7,10 +7,10 @@
 </view>
 <view class="weui-panel weui-panel_access userList" style="margin:0;border-radius: 0;" wx:if="{{userList.length>0}}">
   <view class="weui-panel__bd">
-    <view class="weui-media-box weui-media-box_appmsg" wx:for="{{userList}}" bindtap="showMenu" mark:item="{{item}}">
+    <view class="weui-media-box weui-media-box_appmsg" wx:for="{{userList}}" bindtap="showMenu" bindlongpress="showMenuMaster" mark:item="{{item}}">
       <view class="weui-media-box__hd">
         <image class="weui-media-box__thumb" style="border-radius: 10px;width:64px;height:64px;margin-right:10px;"
-          src="{{item.user_head || '/res/image/nohead.jpg'}}" mode="widthFix"></image>
+          src="{{item.user_head || '/res/image/nohead.jpg'}}" mode="widthFix" catchtap="openProfile" mark:user="{{item}}"></image>
       </view>
       <view class="weui-media-box__bd">
         <view class="weui-media-box__title"><i style="color:#66CBFF;margin-right:5px;" class="iconfont icon-xingbie-nan"

@@ -37,6 +37,15 @@
         </view>
         <view class="weui-cell weui-cell_input">
           <view class="weui-cell__hd">
+            <view class="weui-label">摸摸</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" placeholder="你的摸一摸文案" type="text" name="user_touchtip"
+              value="{{userInfo.user_touchtip}}" />
+          </view>
+        </view>
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
             <view class="weui-label">密码</view>
           </view>
           <view class="weui-cell__bd">

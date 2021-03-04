@@ -8,7 +8,7 @@ Page({
     message: "",
     simplePlayer: true,
     musicLrcObj: [],
-    lrcString:"",
+    lrcString: "",
     showPasswordForm: false,
     placeholderDefault: "说点什么吧...",
     placeholderSearchImage: "关键词搜索表情",
@@ -92,22 +92,26 @@ Page({
     if (that.data.enableTouchEnd) {
       this.data.clickTimer = setTimeout(function () {
         if (that.data.isDoubleClick) {
-          app.request({
-            url: "message/touch",
-            data: {
-              at: e.mark.user.user_id,
-              room_id: that.data.room_id
-            },
-            success(res) {
-              wx.vibrateLong();
-            }
-          });
+          that.doTouchUser(e.mark.user.user_id);
         } else {
           that.userTap(e.mark.user);
         }
         that.data.isDoubleClick = false;
       }, 300);
     }
+  },
+  doTouchUser(user_id) {
+    let that = this;
+    app.request({
+      url: "message/touch",
+      data: {
+        at: user_id,
+        room_id: that.data.room_id
+      },
+      success(res) {
+        wx.vibrateLong();
+      }
+    });
   },
   messageListScrolling(e) {
     let res = wx.getSystemInfoSync();
@@ -1081,6 +1085,14 @@ Page({
       case '在线':
         wx.navigateTo({
           url: '../user/online',
+          events: {
+            doAtUser: function (userInfo) {
+              that.longTapToAtUser(userInfo)
+            },
+            doTouchUser: function (user_id) {
+              that.doTouchUser(user_id);
+            },
+          }
         });
         break;
       case '换房':
@@ -1123,6 +1135,11 @@ Page({
       case '管理':
         wx.navigateTo({
           url: '../room/motify',
+          events: {
+            reloadMessage: function () {
+              that.getMessageList();
+            },
+          }
         });
         break;
       case '分享':

@@ -29,3 +29,15 @@
   border-radius: 100%;
   border: 1px solid #ddd;
 }
+
+.deleteHistory {
+  font-size: 14px;
+  color: orangered;
+  text-align: center;
+  margin-top: 20px;
+  vertical-align: middle;
+}
+
+.deleteHistory i {
+  vertical-align: middle;
+}
