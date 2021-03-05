@@ -874,7 +874,7 @@ Page({
         data: "heartBeat"
       });
       clearTimeout(that.data.websocket.heartBeatTimer);
-      that.data.websocket.heartBeatTimer = clearTimeout(function () {
+      that.data.websocket.heartBeatTimer = setTimeout(function () {
         that.websocketHeartBeat();
       }, 10000);
     }
