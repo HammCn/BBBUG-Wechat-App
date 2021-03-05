@@ -7,6 +7,10 @@
   width: 80px;
 }
 
+.page__bd {
+  margin-bottom: calc(env(safe-area-inset-bottom) + 30px);
+}
+
 .user_head {
   text-align: center;
   margin: 30px;
