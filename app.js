@@ -124,7 +124,7 @@ App({
               //解析其他状态码
               if (_data.error) {
                 let dontAlert = _data.error(res.data);
-                if(!dontAlert){
+                if (!dontAlert) {
                   wx.showModal({
                     title: '操作失败(' + res.data.code + ')',
                     content: res.data.msg,
@@ -187,7 +187,7 @@ App({
   showLogin: function () {
     let that = this;
     wx.navigateTo({
-      url: '../user/login',
+      url: '../user/login?bbbug=1',
     });
   }
 });

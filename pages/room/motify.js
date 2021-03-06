@@ -1,6 +1,7 @@
 const app = getApp();
 Page({
   data: {
+    bbbug: false,
     roomInfo: false,
     room_type_index: 0,
     room_addsong_index: 0,
@@ -88,7 +89,17 @@ Page({
       title: "仅管理可发言"
     }],
   },
-  onLoad: function (options) {},
+  onLoad: function (options) {
+    if (!options.bbbug) {
+      return;
+    }
+    this.setData({
+      bbbug: true
+    });
+    wx.setNavigationBarTitle({
+      title: '切换房间',
+    });
+  },
   onShow: function () {
     let room_type_index = 0;
     let that = this;

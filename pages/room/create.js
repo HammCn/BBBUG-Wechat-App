@@ -5,10 +5,17 @@ const app = getApp()
  */
 Page({
   data: {
+    bbbug: false,
     room_name: "",
     room_notice: ""
   },
-  onLoad: function () {
+  onLoad: function (options) {
+    if (!options.bbbug) {
+      return;
+    }
+    this.setData({
+      bbbug: true
+    });
     wx.hideNavigationBarLoading();
     wx.setNavigationBarTitle({
       title: '　',

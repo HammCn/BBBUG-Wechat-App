@@ -183,13 +183,54 @@ Page({
           }
         }
       });
-    }else{
+    } else {
       that.setData({
         newsShow: false
       });
       wx.setStorageSync('loadSuccess', 1);
       that.getMyInfo();
     }
+
+    let audioManager = wx.getBackgroundAudioManager();
+    audioManager.onNext(function () {
+      let type = 'pass';
+      if (that.data.roomInfo.room_user == that.data.userInfo.user_id || that.data.userInfo.user_admin || that.data.songInfo.user.user_id == that.data.userInfo.user_id) {
+        type = 'pass';
+      } else {
+        type = 'vote';
+      }
+      app.request({
+        url: "song/pass",
+        data: {
+          room_id: app.globalData.roomInfo.room_id,
+          mid: that.data.songInfo.song.mid,
+        },
+        loading: type == 'pass' ? '切歌中' : '投票中',
+        success: function (res) {
+          if (type != 'pass') {}
+        },
+        error(res) {
+          return true;
+        }
+      });
+      return false;
+    });
+
+    audioManager.onPrev(function () {
+      app.request({
+        url: "song/addMySong",
+        data: {
+          room_id: app.globalData.roomInfo.room_id,
+          mid: that.data.songInfo.song.mid,
+        },
+        loading: "收藏中",
+        success: function (res) {},
+        error(res) {
+          return true;
+        }
+      });
+      return false;
+    });
   },
   doPasswordSubmit(e) {
     this.setData({
@@ -335,7 +376,7 @@ Page({
             break;
           case '查看主页':
             wx.navigateTo({
-              url: '../user/profile?user_id=' + user.user_id,
+              url: '../user/profile?bbbug=1&user_id=' + user.user_id,
             })
             break;
           default:
@@ -510,7 +551,7 @@ Page({
   login() {
     let that = this;
     wx.navigateTo({
-      url: '../user/login'
+      url: '../user/login?bbbug=1'
     });
   },
   showSongMenu() {
@@ -1009,27 +1050,27 @@ Page({
     switch (e.mark.title) {
       case '点歌':
         wx.navigateTo({
-          url: '../song/select',
+          url: '../song/select?bbbug=1',
         });
         break;
       case '已点':
         wx.navigateTo({
-          url: '../song/playing',
+          url: '../song/playing?bbbug=1',
         });
         break;
       case '歌单':
         wx.navigateTo({
-          url: '../song/my',
+          url: '../song/my?bbbug=1',
         });
         break;
       case '在线':
         wx.navigateTo({
-          url: '../user/online',
+          url: '../user/online?bbbug=1',
         });
         break;
       case '换房':
         wx.navigateTo({
-          url: '../room/select',
+          url: '../room/select?bbbug=1',
           events: {
             changeRoomSuccess: function (room_id) {
               that.setData({
@@ -1066,7 +1107,7 @@ Page({
         break;
       case '管理':
         wx.navigateTo({
-          url: '../room/motify',
+          url: '../room/motify?bbbug=1',
         });
         break;
       case '分享':

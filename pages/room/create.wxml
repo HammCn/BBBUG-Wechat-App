@@ -1,5 +1,5 @@
 <view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
-  <view class="page__bd">
+  <view class="page__bd" wx:if="{{bbbug}}">
     <view class="app_title">BBBUG</view>
     <view class="app_desc">创建一个你自己的房间</view>
     <form bindsubmit="formSubmit" bindreset="formReset">

@@ -1,17 +1,25 @@
 const app = getApp();
 Page({
   data: {
+    bbbug: false,
     userInfo: false,
     user_id: 0,
     songList: []
   },
   onLoad: function (options) {
+    console.log(options);
+    if (!options.bbbug) {
+      return;
+    }
     this.setData({
+      bbbug: true,
       user_id: options.user_id || 0
     });
   },
   onShow: function () {
-    this.getUserInfo();
+    if (this.data.bbbug) {
+      this.getUserInfo();
+    }
   },
   getUserInfo() {
     let that = this;

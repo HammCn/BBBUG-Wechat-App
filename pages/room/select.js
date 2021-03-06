@@ -1,10 +1,20 @@
 const app = getApp();
 Page({
   data: {
+    bbbug: false,
     roomList: [],
     userInfo: false
   },
-  onLoad() {
+  onLoad(options) {
+    if (!options.bbbug) {
+      return;
+    }
+    this.setData({
+      bbbug: true
+    });
+    wx.setNavigationBarTitle({
+      title: '切换房间',
+    });
     this.getHotRooms();
     this.getMyInfo();
   },

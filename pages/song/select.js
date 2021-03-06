@@ -1,8 +1,20 @@
 const app = getApp();
 Page({
   data: {
+    bbbug: false,
     songList: [],
     room_id: 0,
+  },
+  onLoad(options) {
+    if (!options.bbbug) {
+      return;
+    }
+    this.setData({
+      bbbug: true
+    });
+    wx.setNavigationBarTitle({
+      title: '搜索点歌',
+    });
   },
   doSearchSong(e) {
     let that = this;

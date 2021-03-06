@@ -1,9 +1,19 @@
 const app = getApp();
 Page({
   data: {
+    bbbug: false,
     userList: [],
   },
-  onLoad() {
+  onLoad(options) {
+    if (!options.bbbug) {
+      return;
+    }
+    this.setData({
+      bbbug: true
+    });
+    wx.setNavigationBarTitle({
+      title: '在线用户',
+    });
     this.getList();
   },
   onPullDownRefresh() {
@@ -86,7 +96,7 @@ Page({
             break;
           case '查看主页':
             wx.navigateTo({
-              url: '../user/profile?user_id=' + user.user_id,
+              url: '../user/profile?bbbug=1&user_id=' + user.user_id,
             })
             break;
           default:

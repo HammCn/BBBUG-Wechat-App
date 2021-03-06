@@ -1,11 +1,11 @@
 <wxs src="../../utils/helper.wxs" module="helper" />
 <view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
-  <view class="page__bd">
+  <view class="page__bd" wx:if="{{bbbug}}">
     <view wx:if="{{userInfo}}">
       <view class="user_head">
         <image bindtap="headImageTouched" class="weui-media-box__thumb"
-        src="{{helper.getStaticUrl(userInfo.user_head)||'https://bbbug.com/images/nohead.jpg'}}"
-        mark:url="{{helper.getStaticUrl(userInfo.user_head)||'https://bbbug.com/images/nohead.jpg'}}">
+          src="{{helper.getStaticUrl(userInfo.user_head)||'https://bbbug.com/images/nohead.jpg'}}"
+          mark:url="{{helper.getStaticUrl(userInfo.user_head)||'https://bbbug.com/images/nohead.jpg'}}">
         </image>
         <view class="user_name">{{helper.urldecode(userInfo.user_name)}}</view>
         <view class="user_info">
@@ -14,20 +14,23 @@
             <i class="iconfont icon-man" wx:if="{{userInfo.user_sex==1}}"></i>
             <i class="iconfont icon-woman" wx:if="{{userInfo.user_sex==0}}"></i>
           </view>
-          <view class="user_device" wx:if="{{userInfo.user_device=='Windows'}}"><i class="iconfont icon-windows-fill"></i>
+          <view class="user_device" wx:if="{{userInfo.user_device=='Windows'}}"><i
+              class="iconfont icon-windows-fill"></i>
           </view>
           <view class="user_device" wx:if="{{userInfo.user_device=='MacOS'}}"><i class="iconfont icon-apple-fill"></i>
           </view>
           <view class="user_device" wx:if="{{userInfo.user_device=='iPhone'}}"><i class="iconfont icon-apple-fill"></i>
           </view>
-          <view class="user_device" wx:if="{{userInfo.user_device=='Android'}}"><i class="iconfont icon-android-fill"></i>
+          <view class="user_device" wx:if="{{userInfo.user_device=='Android'}}"><i
+              class="iconfont icon-android-fill"></i>
           </view>
           <view class="user_device" wx:if="{{userInfo.user_device=='VSCODE'}}"><i class="iconfont icon-vscode"></i>
           </view>
         </view>
         <view class="user_remark">{{userInfo.user_remark}}</view>
-     
-      </view>   <view class="user_song">
+
+      </view>
+      <view class="user_song">
         <view wx:if="{{songList.length==0}}">
           <view class="tipText">Ta还没点过歌呀,快邀请Ta点歌吧</view>
         </view>

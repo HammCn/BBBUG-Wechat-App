@@ -12,9 +12,7 @@
     "pages/room/select",
     "pages/room/motify",
     "pages/room/create",
-    "pages/other/about",
-    "pages/other/detail",
-    "pages/webview/index"
+    "pages/other/detail"
   ],
   "requiredBackgroundModes": ["audio"],
   "window": {

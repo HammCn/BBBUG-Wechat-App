@@ -1,12 +1,22 @@
 const app = getApp();
 Page({
   data: {
+    bbbug:false,
     songList: [],
     room_id: 0,
     page: 1,
     isLoading: false,
   },
-  onLoad() {
+  onLoad(options) {
+    if (!options.bbbug) {
+      return;
+    }
+    this.setData({
+      bbbug: true
+    });
+    wx.setNavigationBarTitle({
+      title: '我的歌单',
+    });
     this.getSongList();
   },
   onPullDownRefresh() {

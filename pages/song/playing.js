@@ -1,10 +1,20 @@
 const app = getApp();
 Page({
   data: {
+    bbbug: false,
     songList: [],
     room_id: 0,
   },
-  onLoad() {
+  onLoad(options) {
+    if (!options.bbbug) {
+      return;
+    }
+    this.setData({
+      bbbug: true
+    });
+    wx.setNavigationBarTitle({
+      title: '待播放列表',
+    });
     this.getSongList();
   },
   onPullDownRefresh() {
