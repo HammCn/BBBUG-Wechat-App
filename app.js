@@ -1,14 +1,4 @@
 App({
-  /**
-   * 打开WebView
-   * @param {string} url 
-   * @param {string} title 
-   */
-  openUrl: function (url, title = null) {
-    wx.navigateTo({
-      url: '../webview/index?title=' + (title == null ? encodeURIComponent(this.product.name) : title) + '&url=' + encodeURIComponent(url),
-    });
-  },
   globalData: {
     access_token_changed: false,
     //网络请求相关参数

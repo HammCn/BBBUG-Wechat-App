@@ -131,14 +131,7 @@ Page({
     let that = this;
     const updateManager = wx.getUpdateManager()
     updateManager.onUpdateReady(function () {
-      wx.showModal({
-        title: '版本更新',
-        content: '你已经更新至最新版本，请点击确定重启最新版本',
-        showCancel: false,
-        success: function (res) {
-          updateManager.applyUpdate()
-        }
-      })
+      updateManager.applyUpdate()
     });
     updateManager.onUpdateFailed(function () {});
     app.watchAccessToken(function () {
@@ -197,33 +190,6 @@ Page({
           audio.title = "背景音乐";
           audio.play();
         }
-      }
-    });
-
-    let audio = wx.getBackgroundAudioManager();
-    audio.onTimeUpdate(function (e) {
-      if (that.data.songInfo) {
-        wx.getBackgroundAudioPlayerState({
-          success(res) {
-            if (that.data.musicLrcObj && res.status == 1) {
-              for (let i = 0; i < that.data.musicLrcObj.length; i++) {
-                if (i == that.data.musicLrcObj.length - 1) {
-                  that.setData({
-                    lrcString: that.data.musicLrcObj[i].lineLyric
-                  });
-                  return;
-                } else {
-                  if (res.currentPosition > that.data.musicLrcObj[i].time && res.currentPosition < that.data.musicLrcObj[i + 1].time) {
-                    that.setData({
-                      lrcString: that.data.musicLrcObj[i].lineLyric
-                    });
-                    return;
-                  }
-                }
-              }
-            }
-          }
-        });
       }
     });
   },
