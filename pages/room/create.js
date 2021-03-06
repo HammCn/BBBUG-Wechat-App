@@ -29,7 +29,6 @@ Page({
       data: postData,
       loading: "创建中",
       success(res) {
-        console.log(res);
         let room_id = res.data.room_id;
         wx.showModal({
           title: "创建成功",

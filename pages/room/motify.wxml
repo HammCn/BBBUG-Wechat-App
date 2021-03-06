@@ -84,9 +84,30 @@
               bindtap="changeSendmsg" />
           </view>
         </view>
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">房间权限</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" placeholder="请选择房间权限" type="text" value="{{room_public[room_public_index].title}}"
+              disabled="disabled" readonly="readonly" bindtap="changePublic" />
+          </view>
+        </view>
+        <view class="weui-cell weui-cell_input" wx:if="{{room_public_index}}">
+          <view class="weui-cell__hd">
+            <view class="weui-label">房间密码</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" placeholder="房间密码" type="number" name="room_password"
+              value="{{roomInfo.room_password}}" />
+          </view>
+        </view>
       </view>
       <view class="weui-btn-area">
         <button form-type="submit" class="weui-btn" type="primary">修改信息</button>
+      </view>
+      <view>
+        <view class="deleteHistory" bindtap="deleteHistory"><i class="iconfont icon-poweroff"></i>删除房间聊天记录</view>
       </view>
     </form>
   </view>

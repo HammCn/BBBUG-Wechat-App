@@ -7,7 +7,6 @@ Page({
     songList: []
   },
   onLoad: function (options) {
-    console.log(options);
     if (!options.bbbug) {
       return;
     }
@@ -37,7 +36,6 @@ Page({
     });
   },
   getUserDevice(device) {
-    console.log(device)
     return device;
   },
   headImageTouched(e) {

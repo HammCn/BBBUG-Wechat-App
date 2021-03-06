@@ -35,13 +35,25 @@ Page({
       }
     });
   },
-  showMenu(e) {
+  doubleTapToTouchUser() {
+    let that = this;
+    const eventChannel = that.getOpenerEventChannel()
+    eventChannel.emit('doAtUser', user);
+    wx.navigateBack();
+  },
+  openProfile(e) {
+    wx.navigateTo({
+      url: '../user/profile?user_id=' + e.mark.user.user_id,
+    });
+  },
+  showMenuMaster(e) {
     let that = this;
     let user = e.mark.item;
-    let menu = ["查看主页"];
-    if (app.globalData.roomInfo && app.globalData.userInfo && (app.globalData.roomInfo.room_user == app.globalData.userInfo.user_id || app.globalData.userInfo.user_admin)) {
-      menu = ["查看主页", "禁止点歌", "禁止发言", "解除限制"];
+    let menu = ["禁止点歌", "禁止发言", "解除限制"];;
+    if (!app.globalData.roomInfo && app.globalData.userInfo && (app.globalData.roomInfo.room_user == app.globalData.userInfo.user_id || app.globalData.userInfo.user_admin)) {
+      return;
     }
+    let eventChannel = that.getOpenerEventChannel()
     wx.showActionSheet({
       itemList: menu,
       success(res) {
@@ -94,6 +106,30 @@ Page({
               }
             });
             break;
+          default:
+            wx.showToast({
+              title: '即将上线',
+            });
+        }
+      }
+    })
+  },
+  showMenu(e) {
+    let that = this;
+    let user = e.mark.item;
+    let menu = ["@Ta一下", "摸一摸Ta", "查看主页"];
+    let eventChannel = that.getOpenerEventChannel()
+    wx.showActionSheet({
+      itemList: menu,
+      success(res) {
+        switch (menu[res.tapIndex]) {
+          case '@Ta一下':
+            eventChannel.emit('doAtUser', user);
+            wx.navigateBack();
+            break;
+          case '摸一摸Ta':
+            eventChannel.emit('doTouchUser', user.user_id);
+            break;
           case '查看主页':
             wx.navigateTo({
               url: '../user/profile?bbbug=1&user_id=' + user.user_id,
@@ -105,6 +141,6 @@ Page({
             });
         }
       }
-    })
+    });
   }
 })

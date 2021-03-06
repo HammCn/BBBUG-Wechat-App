@@ -66,8 +66,8 @@
       <image class="bbbug_player_img" src="{{helper.getStaticUrl(songInfo.song.pic)}}" mode="widthFix"></image>
       <image class="bbbug_player_outer" src="/res/image/player_bg.png" mode="widthFix"></image>
       <image class="bbbug_player_bar" src="/res/image/player_bar.png" mode="widthFix"></image>
-      <view class="bbbug_player_song">{{songInfo.song.name}}</view>
-      <view class="bbbug_player_singer">{{songInfo.song.singer}}</view>
+      <view class="bbbug_player_song">{{songInfo.song.name}} - {{songInfo.song.singer}}</view>
+      <view class="bbbug_player_singer">{{lrcString}}</view>
       <view class="bbbug_player_user">点歌人 {{songInfo.user.user_name}}</view>
     </view>
     <view wx:if="{{!songInfo}}">

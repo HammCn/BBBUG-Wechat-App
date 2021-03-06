@@ -43,7 +43,6 @@ Page({
             }
             break;
           case '上传头像':
-            console.log(123);
             wx.chooseImage({
               count: 1,
               sizeType: 'compressed',
@@ -116,7 +115,6 @@ Page({
   },
   syncWechatUserInfo(e) {
     let that = this;
-    console.log(e);
     let wechatUserData = JSON.parse(e.detail.rawData);
     let userInfo = that.data.userInfo;
     userInfo.user_head = wechatUserData.avatarUrl;

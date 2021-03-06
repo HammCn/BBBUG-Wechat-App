@@ -23,7 +23,6 @@ Page({
         id: that.data.news_id
       },
       success(res) {
-        console.log(res);
         that.setData({
           item: res.data
         });

@@ -7,6 +7,8 @@ Page({
     isMusicPlaying: true,
     message: "",
     simplePlayer: true,
+    musicLrcObj: [],
+    lrcString: "",
     showPasswordForm: false,
     placeholderDefault: "说点什么吧...",
     placeholderSearchImage: "关键词搜索表情",
@@ -90,22 +92,26 @@ Page({
     if (that.data.enableTouchEnd) {
       this.data.clickTimer = setTimeout(function () {
         if (that.data.isDoubleClick) {
-          app.request({
-            url: "message/touch",
-            data: {
-              at: e.mark.user.user_id,
-              room_id: that.data.room_id
-            },
-            success(res) {
-              wx.vibrateLong();
-            }
-          });
+          that.doTouchUser(e.mark.user.user_id);
         } else {
           that.userTap(e.mark.user);
         }
         that.data.isDoubleClick = false;
       }, 300);
     }
+  },
+  doTouchUser(user_id) {
+    let that = this;
+    app.request({
+      url: "message/touch",
+      data: {
+        at: user_id,
+        room_id: that.data.room_id
+      },
+      success(res) {
+        wx.vibrateLong();
+      }
+    });
   },
   messageListScrolling(e) {
     let res = wx.getSystemInfoSync();
@@ -123,6 +129,18 @@ Page({
   },
   onLoad: function (options) {
     let that = this;
+    const updateManager = wx.getUpdateManager()
+    updateManager.onUpdateReady(function () {
+      wx.showModal({
+        title: '版本更新',
+        content: '你已经更新至最新版本，请点击确定重启最新版本',
+        showCancel: false,
+        success: function (res) {
+          updateManager.applyUpdate()
+        }
+      })
+    });
+    updateManager.onUpdateFailed(function () {});
     app.watchAccessToken(function () {
       that.getMyInfo();
     });
@@ -154,82 +172,59 @@ Page({
       });
     }
     wx.setStorageSync('access_token', access_token);
-    let loadSuccess = wx.getStorageSync('loadSuccess');
-    if (!loadSuccess) {
-      app.request({
-        url: "",
-        success(res) {
-          if (res.data.hide) {
-            that.setData({
-              newsShow: false
-            });
-            wx.setStorageSync('loadSuccess', 1);
-            that.getMyInfo();
-          } else {
-            that.setData({
-              newsList: res.data.data,
-              newsShow: true
-            });
-            wx.setNavigationBarTitle({
-              title: '每日推荐',
-            });
-            wx.showToast({
-              title: '已更新',
-            });
-            let audio = wx.getBackgroundAudioManager();
-            audio.src = 'http://img02.tuke88.com/newpreview_music/09/01/43/5c89e6ded0ebf83768.mp3';
-            audio.title = "背景音乐";
-            audio.play();
-          }
+    app.request({
+      url: "",
+      success(res) {
+        if (res.data.hide) {
+          that.setData({
+            newsShow: false
+          });
+          wx.setStorageSync('loadSuccess', 1);
+          that.getMyInfo();
+        } else {
+          that.setData({
+            newsList: res.data.data,
+            newsShow: true
+          });
+          wx.setNavigationBarTitle({
+            title: '每日推荐',
+          });
+          wx.showToast({
+            title: '已更新',
+          });
+          let audio = wx.getBackgroundAudioManager();
+          audio.src = 'http://img02.tuke88.com/newpreview_music/09/01/43/5c89e6ded0ebf83768.mp3';
+          audio.title = "背景音乐";
+          audio.play();
         }
-      });
-    } else {
-      that.setData({
-        newsShow: false
-      });
-      wx.setStorageSync('loadSuccess', 1);
-      that.getMyInfo();
-    }
-
-    let audioManager = wx.getBackgroundAudioManager();
-    audioManager.onNext(function () {
-      let type = 'pass';
-      if (that.data.roomInfo.room_user == that.data.userInfo.user_id || that.data.userInfo.user_admin || that.data.songInfo.user.user_id == that.data.userInfo.user_id) {
-        type = 'pass';
-      } else {
-        type = 'vote';
       }
-      app.request({
-        url: "song/pass",
-        data: {
-          room_id: app.globalData.roomInfo.room_id,
-          mid: that.data.songInfo.song.mid,
-        },
-        loading: type == 'pass' ? '切歌中' : '投票中',
-        success: function (res) {
-          if (type != 'pass') {}
-        },
-        error(res) {
-          return true;
-        }
-      });
-      return false;
     });
 
-    audioManager.onPrev(function () {
-      app.request({
-        url: "song/addMySong",
-        data: {
-          room_id: app.globalData.roomInfo.room_id,
-          mid: that.data.songInfo.song.mid,
-        },
-        loading: "收藏中",
-        success: function (res) {},
-        error(res) {
-          return true;
-        }
-      });
-      return false;
+    let audio = wx.getBackgroundAudioManager();
+    audio.onTimeUpdate(function (e) {
+      if (that.data.songInfo) {
+        wx.getBackgroundAudioPlayerState({
+          success(res) {
+            if (that.data.musicLrcObj && res.status == 1) {
+              for (let i = 0; i < that.data.musicLrcObj.length; i++) {
+                if (i == that.data.musicLrcObj.length - 1) {
+                  that.setData({
+                    lrcString: that.data.musicLrcObj[i].lineLyric
+                  });
+                  return;
+                } else {
+                  if (res.currentPosition > that.data.musicLrcObj[i].time && res.currentPosition < that.data.musicLrcObj[i + 1].time) {
+                    that.setData({
+                      lrcString: that.data.musicLrcObj[i].lineLyric
+                    });
+                    return;
+                  }
+                }
+              }
+            }
+          }
+        });
+      }
     });
   },
   doPasswordSubmit(e) {
@@ -652,6 +647,25 @@ Page({
       }
     });
   },
+  getMusicLrc() {
+    let that = this;
+    that.setData({
+      musicLrcObj: [],
+      lrcString: "歌词读取中..."
+    });
+    app.request({
+      url: 'song/getLrc',
+      data: {
+        mid: that.data.songInfo.song.mid
+      },
+      success(res) {
+        that.setData({
+          musicLrcObj: res.data,
+          lrcString: "歌词加载中..."
+        });
+      },
+    });
+  },
   alertChangeInfo() {
     let infoChanged = wx.getStorageSync('userInfoChanged') || false;
     if (!infoChanged && this.data.userInfo.user_id > 0) {
@@ -855,7 +869,7 @@ Page({
         data: "heartBeat"
       });
       clearTimeout(that.data.websocket.heartBeatTimer);
-      that.data.websocket.heartBeatTimer = clearTimeout(function () {
+      that.data.websocket.heartBeatTimer = setTimeout(function () {
         that.websocketHeartBeat();
       }, 10000);
     }
@@ -970,7 +984,7 @@ Page({
     that.setData({
       songInfo: msg
     });
-
+    that.getMusicLrc();
     for (let i = 0; i < that.data.messageList.length; i++) {
       if (that.data.messageList[i].type == 'play') {
         that.data.messageList.splice(i, 1);
@@ -1066,6 +1080,14 @@ Page({
       case '在线':
         wx.navigateTo({
           url: '../user/online?bbbug=1',
+          events: {
+            doAtUser: function (userInfo) {
+              that.longTapToAtUser(userInfo)
+            },
+            doTouchUser: function (user_id) {
+              that.doTouchUser(user_id);
+            },
+          }
         });
         break;
       case '换房':
@@ -1108,6 +1130,11 @@ Page({
       case '管理':
         wx.navigateTo({
           url: '../room/motify?bbbug=1',
+          events: {
+            reloadMessage: function () {
+              that.getMessageList();
+            },
+          }
         });
         break;
       case '分享':
@@ -1125,21 +1152,5 @@ Page({
     that.setData({
       isPanelShow: !that.data.isPanelShow
     });
-    return;
-    let menu = ['我的歌单', '在线用户', '切换房间'];
-    if (that.data.userInfo.user_admin || that.data.userInfo.user_id == that.data.roomInfo.room_user) {
-      menu = ['我的歌单', '在线用户', '切换房间', '房间管理'];
-    }
-    if (that.data.userInfo && that.data.userInfo.user_id > 0) {
-      menu.push("修改资料");
-    }
-    wx.showActionSheet({
-      itemList: menu,
-      success(res) {
-        switch (menu[res.tapIndex]) {
-
-        }
-      }
-    })
   },
 })

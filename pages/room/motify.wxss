@@ -7,6 +7,10 @@
   width: 80px;
 }
 
+.page__bd {
+  margin-bottom: calc(env(safe-area-inset-bottom) + 30px);
+}
+
 .user_head {
   text-align: center;
   margin: 30px;
@@ -28,4 +32,16 @@
   height: 100px;
   border-radius: 100%;
   border: 1px solid #ddd;
+}
+
+.deleteHistory {
+  font-size: 14px;
+  color: orangered;
+  text-align: center;
+  margin-top: 20px;
+  vertical-align: middle;
+}
+
+.deleteHistory i {
+  vertical-align: middle;
 }

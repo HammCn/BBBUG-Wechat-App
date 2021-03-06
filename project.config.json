@@ -21,9 +21,8 @@
     "checkSiteMap": true,
     "uploadWithSourceMap": true,
     "compileHotReLoad": false,
-    "useMultiFrameRuntime": true,
+    "useMultiFrameRuntime": false,
     "useApiHook": true,
-    "useApiHostProcess": true,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
@@ -34,7 +33,6 @@
     "useIsolateContext": true,
     "useCompilerModule": true,
     "userConfirmedUseCompilerModuleSwitch": false,
-    "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
     "packNpmRelationList": [],
     "minifyWXSS": true
@@ -64,6 +62,12 @@
         {
           "name": "自定义入口",
           "pathName": "pages/user/profile",
+          "query": "user_id=8",
+          "scene": null
+        },
+        {
+          "name": "pages/song/my",
+          "pathName": "pages/song/my",
           "query": "user_id=8",
           "scene": null
         }
