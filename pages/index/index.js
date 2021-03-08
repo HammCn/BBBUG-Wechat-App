@@ -192,6 +192,33 @@ Page({
         }
       }
     });
+
+    let audio = wx.getBackgroundAudioManager();
+    audio.onTimeUpdate(function (e) {
+      if (that.data.songInfo) {
+        wx.getBackgroundAudioPlayerState({
+          success(res) {
+            if (that.data.musicLrcObj && res.status == 1) {
+              for (let i = 0; i < that.data.musicLrcObj.length; i++) {
+                if (i == that.data.musicLrcObj.length - 1) {
+                  that.setData({
+                    lrcString: that.data.musicLrcObj[i].lineLyric
+                  });
+                  return;
+                } else {
+                  if (res.currentPosition > that.data.musicLrcObj[i].time && res.currentPosition < that.data.musicLrcObj[i + 1].time) {
+                    that.setData({
+                      lrcString: that.data.musicLrcObj[i].lineLyric
+                    });
+                    return;
+                  }
+                }
+              }
+            }
+          }
+        });
+      }
+    });
   },
   doPasswordSubmit(e) {
     this.setData({

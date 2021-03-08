@@ -11,7 +11,7 @@ Page({
   },
   doCreateRoom() {
     uni.navigateTo({
-      url: "../room/create?bbbug=1"
+      url: "../?bbbug=1"
     });
   },
   doJoinMyRoom() {

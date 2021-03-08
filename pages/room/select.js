@@ -34,7 +34,7 @@ Page({
   },
   createRoom() {
     wx.navigateTo({
-      url: '../room/create',
+      url: '../room/create?bbbug=1',
     });
   },
   joinMyRoom() {
