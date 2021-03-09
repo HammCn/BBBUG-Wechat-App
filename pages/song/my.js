@@ -1,7 +1,7 @@
 const app = getApp();
 Page({
   data: {
-    bbbug:false,
+    bbbug: false,
     songList: [],
     room_id: 0,
     page: 1,
@@ -32,6 +32,9 @@ Page({
   },
   getSongList() {
     let that = this;
+    if (that.data.isLoading) {
+      return;
+    }
     that.data.isLoading = true;
     app.request({
       url: "song/mySongList",
@@ -40,20 +43,18 @@ Page({
         page: that.data.page
       },
       success: function (res) {
-        that.data.isLoading = false;
+        let songList = that.data.songList;
         if (that.data.page == 1) {
-          that.setData({
-            songList: res.data
-          });
-        } else {
-          let songList = that.data.songList;
-          for (let i = 0; i < res.data.length; i++) {
-            songList.push(res.data[i]);
-          }
-          that.setData({
-            songList: songList
-          });
+          songList = [];
         }
+        songList = songList.concat(res.data);
+        that.setData({
+          songList: songList
+        });
+        that.data.isLoading = false;
+      },
+      error() {
+        that.data.isLoading = false;
       }
     });
   },
