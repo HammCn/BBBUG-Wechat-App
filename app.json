@@ -12,6 +12,7 @@
     "pages/room/select",
     "pages/room/motify",
     "pages/room/create",
+    "pages/pc/index",
     "pages/other/detail"
   ],
   "requiredBackgroundModes": ["audio"],
@@ -26,5 +27,5 @@
     "navigationStyle": "default"
   },
   "sitemapLocation": "sitemap.json",
-  "resizable": false
+  "resizable": true
 }
