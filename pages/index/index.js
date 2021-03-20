@@ -168,7 +168,7 @@ Page({
     let plat = systemInfo.platform.toLowerCase();
     if (plat == 'windows' || plat == 'mac') {
       wx.redirectTo({
-        url: '../pc/index?bbbug=1&url=' + encodeURIComponent('https://bbbug.com?access_token=' + access_token + "&title=BBBUG"),
+        url: '../pc/index?bbbug=1&url=' + encodeURIComponent('https://bbbug.com'),
       });
       wx.hideHomeButton();
       return;

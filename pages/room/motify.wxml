@@ -19,6 +19,15 @@
               disabled="disabled" readonly="readonly" bindtap="changeType" />
           </view>
         </view>
+        <view class="weui-cell weui-cell_input" wx:if="{{room_type_index==2}}">
+          <view class="weui-cell__hd">
+            <view class="weui-label">循环模式</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" placeholder="请选择循环播放模式" type="text" value="{{room_playone[room_playone_index].title}}"
+              disabled="disabled" readonly="readonly" bindtap="changePlayone" />
+          </view>
+        </view>
         <view class="weui-cell weui-cell_input">
           <view class="weui-cell__hd">
             <view class="weui-label">房间公告</view>

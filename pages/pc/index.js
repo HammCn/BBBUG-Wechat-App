@@ -14,7 +14,7 @@ Page({
   onLoad: function (options) {
     if (options.bbbug) {
       this.setData({
-        url: options.url ? decodeURIComponent(options.url) : 'https://bbbug.com'
+        url: 'https://bbbug.com'
       });
     }
   },

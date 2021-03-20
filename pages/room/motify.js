@@ -7,6 +7,7 @@ Page({
     room_addsong_index: 0,
     room_sendmsg_index: 0,
     room_public_index: 0,
+    room_playone_index: 0,
     room_type: [{
       id: 0,
       name: "普通聊天房"
@@ -37,6 +38,13 @@ Page({
     }, {
       value: 1,
       title: "加密房间"
+    }],
+    room_playone: [{
+      value: 0,
+      title: "随机播放"
+    }, {
+      value: 1,
+      title: "单曲循环"
     }],
     room_robot: [{
       value: 0,
@@ -143,12 +151,23 @@ Page({
         break;
       default:
     }
+    let room_playone_index = 0;
+    switch (app.globalData.roomInfo.room_playone) {
+      case 0:
+        room_playone_index = 0;
+        break;
+      case 1:
+        room_playone_index = 1;
+        break;
+      default:
+    }
     this.setData({
       roomInfo: app.globalData.roomInfo,
       room_type_index: room_type_index,
       room_addsong_index: room_addsong_index,
       room_sendmsg_index: room_sendmsg_index,
-      room_public_index: room_public_index
+      room_public_index: room_public_index,
+      room_playone_index: room_playone_index
     });
   },
   changeType() {
@@ -177,6 +196,21 @@ Page({
       success(res) {
         that.setData({
           room_public_index: res.tapIndex
+        });
+      }
+    })
+  },
+  changePlayone() {
+    let that = this;
+    let menu = [];
+    for (let i = 0; i < that.data.room_playone.length; i++) {
+      menu.push(that.data.room_playone[i].title);
+    }
+    wx.showActionSheet({
+      itemList: menu,
+      success(res) {
+        that.setData({
+          room_playone_index: res.tapIndex
         });
       }
     })
@@ -230,6 +264,7 @@ Page({
     roomInfo.room_addsong = that.data.room_addsong_index;
     roomInfo.room_sendmsg = that.data.room_sendmsg_index;
     roomInfo.room_public = that.data.room_public_index;
+    roomInfo.room_playone = that.data.room_playone_index;
     roomInfo.room_id = that.data.roomInfo.room_id;
     app.request({
       url: "room/saveMyRoom",
