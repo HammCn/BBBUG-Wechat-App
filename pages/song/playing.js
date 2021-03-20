@@ -40,7 +40,7 @@ Page({
     let that = this;
     let song = e.mark.item;
     let menu = ["顶歌", "收藏"];
-    if (app.globalData.roomInfo && app.globalData.userInfo && (app.globalData.roomInfo.room_user == app.globalData.userInfo.user_id || app.globalData.userInfo.user_admin || app.globalData.userInfo.user_id == e.user.user_id)) {
+    if (app.globalData.roomInfo && app.globalData.userInfo && (app.globalData.roomInfo.room_user == app.globalData.userInfo.user_id || app.globalData.userInfo.user_admin || app.globalData.userInfo.user_id == song.user.user_id)) {
       menu = ["顶歌", "收藏", "移除"];
     }
     wx.showActionSheet({

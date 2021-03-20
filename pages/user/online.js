@@ -50,7 +50,8 @@ Page({
     let that = this;
     let user = e.mark.item;
     let menu = ["禁止点歌", "禁止发言", "解除限制"];;
-    if (!app.globalData.roomInfo && app.globalData.userInfo && (app.globalData.roomInfo.room_user == app.globalData.userInfo.user_id || app.globalData.userInfo.user_admin)) {
+    if (!(app.globalData.roomInfo && app.globalData.userInfo && (app.globalData.roomInfo.room_user == app.globalData.userInfo.user_id || app.globalData.userInfo.user_admin))) {
+      console.log("你没有权限");
       return;
     }
     let eventChannel = that.getOpenerEventChannel()
