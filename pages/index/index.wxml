@@ -74,15 +74,6 @@
       <view class="bbbug_player_tips">播放器加载中</view>
     </view>
   </view>
-  <view class="bbbug_emoji" style="display:{{isEmojiBoxShow ?'inline-block':'none'}}">
-    <view class="bbbug_emoji_box">
-      <image wx:for="{{imageList}}" src="{{item}}" mode="widthFix" bindtap="sendEmoji" bindlongpress="previewImage"
-        mark:url="{{item}}" style="height:{{isSystemEmoji?'auto':'80px'}}"></image>
-
-      <view wx:if="{{imageList.length>0}}" class="bbbug_upload" bindtap="chooseImage">发送图片</view>
-      <view wx:if="{{imageList.length==0}}">请输入表情关键词搜索</view>
-    </view>
-  </view>
   <view class="bbbug_input">
     <view class="bbbug_face" bindtap="showOrHideEmojiBox">
       <image src="/res/image/add.png" />
@@ -105,9 +96,20 @@
       <i class="iconfont icon-close"></i>
     </view>
   </view>
-  <view class="bbbug_scroll_button" wx:if="{{!isScrollEnabled}}" bindtap="enableScroll">新消息</view>
+  <view class="bbbug_scroll_button" wx:if="{{!isScrollEnabled && !isEmojiBoxShow && !isPanelShow}}" bindtap="enableScroll">新消息</view>
+  <view class="bbbug_emoji {{isEmojiBoxShow?'animationSlideIn':'animationSlideOut'}}">
+    <view class="bbbug_emoji_box"
+      style="background-color:{{systemInfo.platform=='ios'?'none':'rgba(255, 255, 255, 0.95)'}}">
+      <image wx:for="{{imageList}}" src="{{item}}" mode="widthFix" bindtap="sendEmoji" bindlongpress="previewImage"
+        mark:url="{{item}}" style="height:{{isSystemEmoji?'auto':'80px'}}"></image>
+
+      <view wx:if="{{imageList.length>0}}" class="bbbug_upload" bindtap="chooseImage">发送图片</view>
+      <view wx:if="{{imageList.length==0}}">请输入表情关键词搜索</view>
+    </view>
+  </view>
   <view class="bbbug_cover" wx:if="{{!userInfo || userInfo.user_id<0}}" bindtap="login">点击登录后加入互动吧</view>
-  <view class="bbbug_panel" wx:if="{{isPanelShow}}">
+  <view class="bbbug_panel {{isPanelShow?'animationSlideIn':'animationSlideOut'}}"
+    style="background-color:{{systemInfo.platform=='ios'?'none':'rgba(255, 255, 255, 0.95)'}}">
     <view class="bbbug_panel_item" bindtap="mainMenuClicked" mark:title="点歌">
       <view class="bbbug_panel_icon"><i class="iconfont icon-icon_invite"></i></view>
       <view class="bbbug_panel_title">点歌</view>

@@ -6,7 +6,7 @@
     </view>
     <view class="tipText">没有歌曲啦，快去点歌吧</view>
   </view>
-  <view class="weui-panel weui-panel_access songList" style="margin:0;border-radius: 0;" wx:if="{{songList.length>0}}">
+  <view class="weui-panel weui-panel_access songList" wx:if="{{songList.length>0}}">
     <view class="weui-panel__bd">
       <view class="weui-media-box weui-media-box_appmsg" wx:for="{{songList}}" bindtap="showMenu" mark:item="{{item}}">
         <view class="weui-media-box__hd">

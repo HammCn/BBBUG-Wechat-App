@@ -96,6 +96,9 @@ Page({
     }, {
       value: 1,
       title: "仅管理可发言"
+    }, {
+      value: 2,
+      title: "仅管理嘉宾可发言"
     }]
   },
   onLoad: function (options) {
@@ -138,6 +141,9 @@ Page({
         break;
       case 1:
         room_sendmsg_index = 1;
+        break;
+      case 2:
+        room_sendmsg_index = 2;
         break;
       default:
     }

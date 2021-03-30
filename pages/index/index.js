@@ -2,9 +2,11 @@ const app = getApp()
 Page({
   data: {
     newsList: [],
+    isThisShow: false,
     newsShow: true,
     isPanelShow: false,
     isMusicPlaying: true,
+    systemInfo: {},
     message: "",
     simplePlayer: true,
     musicLrcObj: [],
@@ -51,6 +53,7 @@ Page({
     enableTouchEnd: false,
   },
   setSimplePlayer() {
+    wx.vibrateShort();
     this.setData({
       simplePlayer: !this.data.simplePlayer
     });
@@ -79,6 +82,7 @@ Page({
     }
   },
   messageFocused(e) {
+    wx.vibrateShort();
     if (this.data.isEmojiBoxShow) {
       this.setData({
         imageList: [],
@@ -147,10 +151,14 @@ Page({
       emojiList.push("/res/Emojis/" + i + ".png");
     }
     let systemInfo = wx.getSystemInfoSync();
+    wx.showModal({
+      content: JSON.stringify(systemInfo)
+    })
     this.setData({
-      bottomHeight: systemInfo.safeArea.bottom - systemInfo.safeArea.height + 60,
+      bottomHeight: systemInfo.safeArea.bottom - systemInfo.safeArea.height + 40,
       emojiList: emojiList,
       imageList: emojiList,
+      systemInfo: systemInfo,
       messagePlaceHolder: this.data.placeholderDefault,
     });
     let room_id = wx.getStorageSync('room_id') || this.data.default_room;
@@ -164,7 +172,7 @@ Page({
         userInfo: app.globalData.guestUserInfo
       });
     }
-    
+
     let plat = systemInfo.platform.toLowerCase();
     if (plat == 'windows' || plat == 'mac') {
       wx.redirectTo({
@@ -243,6 +251,10 @@ Page({
   },
   onShow: function () {
     let that = this;
+    this.data.isThisShow = true;
+  },
+  onHide: function () {
+    this.data.isThisShow = false;
   },
   clearAtInfo() {
     this.setData({
@@ -410,6 +422,7 @@ Page({
         break;
       default:
     }
+    wx.vibrateShort();
     wx.showActionSheet({
       itemList: menuList,
       success(res) {
@@ -516,6 +529,8 @@ Page({
       isPanelShow: false,
       isEmojiBoxShow: !this.data.isEmojiBoxShow,
     });
+
+    wx.vibrateShort();
     this.setData({
       messagePlaceHolder: this.data.isEmojiBoxShow ? this.data.placeholderSearchImage : this.data.placeholderDefault,
       messageSendButton: this.data.isEmojiBoxShow ? this.data.messageButtonTitleSearch : this.data.messageButtonTitleSend,
@@ -706,9 +721,11 @@ Page({
           roomInfo: res.data
         });
         app.globalData.roomInfo = res.data;
-        wx.setNavigationBarTitle({
-          title: res.data.room_name,
-        });
+        if (that.data.isThisShow) {
+          wx.setNavigationBarTitle({
+            title: res.data.room_name,
+          });
+        }
         that.getWebsocketUrl();
         that.getMessageList();
       },
@@ -960,9 +977,11 @@ Page({
         that.addSystemMessage(msg.content);
         break;
       case 'online':
-        wx.setNavigationBarTitle({
-          title: that.data.roomInfo.room_name + '(' + msg.data.length + ')',
-        });
+        if (that.data.isThisShow) {
+          wx.setNavigationBarTitle({
+            title: that.data.roomInfo.room_name + '(' + msg.data.length + ')',
+          });
+        }
         break;
       case 'roomUpdate':
         that.getRoomInfo();
@@ -1151,8 +1170,10 @@ Page({
   },
   showMainMenu() {
     let that = this;
+    wx.vibrateShort();
     that.setData({
-      isPanelShow: !that.data.isPanelShow
+      isPanelShow: !that.data.isPanelShow,
+      isEmojiBoxShow: false,
     });
   },
 })

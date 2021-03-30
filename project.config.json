@@ -40,7 +40,7 @@
     "minifyWXSS": true
   },
   "compileType": "miniprogram",
-  "libVersion": "2.8.3",
+  "libVersion": "2.10.0",
   "appid": "wx0a68e695b54ffb4c",
   "projectname": "BBBUG",
   "debugOptions": {

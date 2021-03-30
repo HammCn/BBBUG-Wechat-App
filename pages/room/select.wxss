@@ -20,8 +20,8 @@
 
 .btn_create {
   position: fixed;
-  right: 20px;
-  bottom: calc(env(safe-area-inset-bottom) + 20px);
+  right: 10px;
+  bottom: calc(env(safe-area-inset-bottom) + 10px);
   display: block;
   padding: 8px 16px;
   color: #fff;
@@ -121,8 +121,9 @@
 }
 
 .searchbox {
-  margin: 0px;
+  margin: 10px;
   background-color: white;
-  border-bottom: 1px solid #eee;
+  border: none;
   margin-bottom: 10px;
+  border-radius: 10px;
 }

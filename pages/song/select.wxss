@@ -1,13 +1,17 @@
 .searchbox {
-  margin: 0px;
+  margin: 10px;
   background-color: white;
-  border-bottom: 1px solid #eee;
+  border: none;
   margin-bottom: 10px;
+  border-radius: 10px;
 }
 
 .songList {
+  margin: 10px;
   margin-bottom: constant(safe-area-inset-bottom);
   margin-bottom: env(safe-area-inset-bottom);
+  border: none;
+  border-radius: 10px;
 }
 
 .number {

@@ -6,7 +6,7 @@
     </view>
     <view class="tipText">好尴尬,房间里一个人都没有</view>
   </view>
-  <view class="weui-panel weui-panel_access userList" style="margin:0;border-radius: 0;" wx:if="{{userList.length>0}}">
+  <view class="weui-panel weui-panel_access userList" wx:if="{{userList.length>0}}">
     <view class="weui-panel__bd">
       <view class="weui-media-box weui-media-box_appmsg" wx:for="{{userList}}" bindtap="showMenu" bindlongpress="showMenuMaster" mark:item="{{item}}">
         <view class="weui-media-box__hd">

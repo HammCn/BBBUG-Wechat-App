@@ -17,6 +17,14 @@ page {
   margin: 20px 10px;
 }
 
+.weui-media-box:before {
+  border-top: 1px solid #f5f5f5;
+}
+
+.weui-cell:before {
+  border-top: 1px solid #f5f5f5;
+}
+
 .page {
   padding-bottom: 10px;
 }
