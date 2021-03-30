@@ -151,9 +151,6 @@ Page({
       emojiList.push("/res/Emojis/" + i + ".png");
     }
     let systemInfo = wx.getSystemInfoSync();
-    wx.showModal({
-      content: JSON.stringify(systemInfo)
-    })
     this.setData({
       bottomHeight: systemInfo.safeArea.bottom - systemInfo.safeArea.height + 40,
       emojiList: emojiList,
