@@ -7,7 +7,7 @@
         <view class="bbbug_item {{item.user.user_id==userInfo.user_id?'bbbug_mine':''}}">
           <view class="bbbug_head">
             <image src="{{helper.getStaticUrl(item.user.user_head)}}" bindtouchstart="touchStarted"
-              bindtouchend="touchEnded" mark:user="{{item.user}}" />
+              bindtouchend="touchEnded" bindtouchmove="touchMoving" mark:user="{{item.user}}" />
           </view>
           <view class="bbbug_user">
             <view class="bbbug_username">{{helper.urldecode(item.user.user_name)}}</view>
@@ -96,7 +96,8 @@
       <i class="iconfont icon-close"></i>
     </view>
   </view>
-  <view class="bbbug_scroll_button" wx:if="{{!isScrollEnabled && !isEmojiBoxShow && !isPanelShow}}" bindtap="enableScroll">新消息</view>
+  <view class="bbbug_scroll_button" wx:if="{{!isScrollEnabled && !isEmojiBoxShow && !isPanelShow}}"
+    bindtap="enableScroll">新消息</view>
   <view class="bbbug_emoji {{isEmojiBoxShow?'animationSlideIn':'animationSlideOut'}}">
     <view class="bbbug_emoji_box"
       style="background-color:{{systemInfo.platform=='ios'?'none':'rgba(255, 255, 255, 0.95)'}}">

@@ -47,7 +47,9 @@ Page({
     historyMax: 20,
     touchStartTime: 0,
     touchEndTime: 0,
+    touchStartPostion: false,
     isDoubleClick: false,
+    isTouchMoved: false,
     touchTimer: false,
     clickTimer: false,
     enableTouchEnd: false,
@@ -67,10 +69,14 @@ Page({
   touchStarted(e) {
     let that = this;
     that.data.touchStartTime = e.timeStamp;
+    that.data.isTouchMoved = false;
+    that.data.touchStartPostion = e.touches ? e.touches[0] : false;
     clearTimeout(that.data.touchTimer);
     that.data.touchTimer = setTimeout(function () {
       that.data.enableTouchEnd = false;
-      that.longTapToAtUser(e.mark.user);
+      if (!that.data.isTouchMoved) {
+        that.longTapToAtUser(e.mark.user);
+      }
     }, 500);
     that.data.enableTouchEnd = true;
 
@@ -89,16 +95,26 @@ Page({
       });
     }
   },
+  touchMoving(e) {
+    let that = this;
+    if (e.touches && (e.touches[0].pageX != that.data.touchStartPostion.pageX || e.touches[0].pageY != that.data.touchStartPostion.pageY))
+      that.data.isTouchMoved = true;
+  },
   touchEnded(e) {
     let that = this;
     that.data.touchEndTime = e.timeStamp;
     clearTimeout(that.data.touchTimer);
+    if (that.data.isTouchMoved) {
+      return;
+    }
     if (that.data.enableTouchEnd) {
       this.data.clickTimer = setTimeout(function () {
         if (that.data.isDoubleClick) {
           that.doTouchUser(e.mark.user.user_id);
         } else {
-          that.userTap(e.mark.user);
+          if (!that.data.isTouchMoved) {
+            that.userTap(e.mark.user);
+          }
         }
         that.data.isDoubleClick = false;
       }, 300);
@@ -335,6 +351,9 @@ Page({
       itemList: menu,
       success(res) {
         switch (menu[res.tapIndex]) {
+          case '@Ta':
+            that.longTapToAtUser(user);
+            break;
           case '禁止点歌':
             app.request({
               url: 'user/songdown',
