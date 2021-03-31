@@ -74,14 +74,14 @@
       <view class="bbbug_player_tips">播放器加载中</view>
     </view>
   </view>
-  <view class="bbbug_input">
-    <view class="bbbug_face" bindtap="showOrHideEmojiBox">
+  <view class="bbbug_input" bindtap="footerTapedToFocus">
+    <view class="bbbug_face" catchtap="showOrHideEmojiBox">
       <image src="/res/image/add.png" />
     </view>
     <input type="text" confirm-type="{{messageSendButton}}" confirm-hold="{{messageConfirmHold}}"
       placeholder="{{messagePlaceHolder}}" bindconfirm="sendMessage" focus="{{messageFocus}}" value="{{message}}"
       bindfocus="messageFocused" cursor-spacing="15" />
-    <view class="bbbug_more" bindtap="showMainMenu">
+    <view class="bbbug_more" catchtap="showMainMenu">
       <image src="/res/image/more.png" />
     </view>
   </view>

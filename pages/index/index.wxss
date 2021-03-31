@@ -350,8 +350,9 @@ movable-view image {
 
 .bbbug_face {
   position: absolute;
-  right: 8px;
-  top: 8px;
+  right: 0;
+  top: 0;
+  padding: 8px;
 }
 
 .bbbug_face image {
@@ -368,8 +369,9 @@ movable-view image {
 
 .bbbug_more {
   position: absolute;
-  left: 8px;
-  top: 8px;
+  left: 0;
+  top: 0;
+  padding: 8px;
 }
 
 .bbbug_more image {

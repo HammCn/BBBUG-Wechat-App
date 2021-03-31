@@ -87,6 +87,11 @@ Page({
       that.data.isDoubleClick = false;
     }
   },
+  footerTapedToFocus() {
+    this.setData({
+      messageFocus: true
+    });
+  },
   messageFocused(e) {
     wx.vibrateShort();
     if (this.data.isEmojiBoxShow) {
