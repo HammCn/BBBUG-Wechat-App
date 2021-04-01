@@ -322,9 +322,25 @@ Page({
     });
     let message_send = message;
     if (that.data.atMessageObj) {
-      message_send = message.replace("@" + decodeURIComponent(that.data.atMessageObj.user_name),
+      message = "@" + decodeURIComponent(that.data.atMessageObj.user_name + " " + message,
         '');
     }
+    let msgObj = {
+      type: "text",
+      content: message,
+      where: "channel",
+      at: that.data.atMessageObj,
+      message_id: 0,
+      message_time: 0,
+      loading: true,
+      resource: message,
+      user: that.data.userInfo
+    };
+    that.addMessageToList(msgObj);
+    let atUserInfo = that.data.atMessageObj;
+    that.setData({
+      atMessageObj: false
+    });
     app.request({
       url: "message/send",
       data: {
@@ -332,12 +348,14 @@ Page({
         where: "channel",
         to: that.data.room_id,
         msg: encodeURIComponent(message_send),
-        at: that.data.atMessageObj
+        at: atUserInfo
       },
       success: function (res) {
         that.setData({
-          atMessageObj: false
+          atMessageObj: false,
+          isScrollEnabled: true,
         });
+        that.autoScroll();
       },
       error: function (res) {
         that.setData({
@@ -935,8 +953,15 @@ Page({
       case 'link':
       case 'jump':
       case 'system':
-        if (msg.type == 'text' && msg.at) {
-          msg.content = "@" + decodeURIComponent(msg.at.user_name) + " " + msg.content;
+        if (msg.type == 'text') {
+          if (msg.at) {
+            msg.content = "@" + decodeURIComponent(msg.at.user_name) + " " + msg.content;
+          }
+          for (let i = 0; i < that.data.messageList.length; i++) {
+            if (that.data.messageList[i].loading) {
+              that.data.messageList.splice(i, 1);
+            }
+          }
         }
         that.addMessageToList(msg);
         break;

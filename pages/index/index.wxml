@@ -51,7 +51,8 @@
               <view class="bbbug_quot" wx:if="{{item.at.message.type=='jump'}}">[飞机票]</view>
               <view class="bbbug_quot" wx:if="{{item.at.message.type=='link'}}">[链接]</view>
             </view>
-            <view class="bbbug_time">{{helper.friendlyTime(item.message_time)}}</view>
+            <view class="bbbug_time" wx:if="{{item.loading}}">　<i class="iconfont icon-loading"></i></view>
+            <view class="bbbug_time" wx:if="{{!item.loading}}">{{helper.friendlyTime(item.message_time)}}</view>
           </view>
         </view>
       </block>
