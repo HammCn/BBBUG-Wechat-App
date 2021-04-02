@@ -19,7 +19,8 @@ module.exports.getImageWidth = function (url) {
 module.exports.friendlyTime = function (time) {
   var now = parseInt(getDate().valueOf() / 1000);
   var todayDate = getDate();
-  var todayTimeStamp = parseInt(Date.parse(getDate(todayDate.getFullYear() + "-" + (todayDate.getMonth() + 1) + '-' + todayDate.getDate() + " 00:00:00")) / 1000);
+  var todayTimeStamp = parseInt(getDate(todayDate.getFullYear() + "/" + (todayDate.getMonth() + 1) + '/' + todayDate.getDate() + " 00:00:00").valueOf() / 1000);
+  console.log(todayTimeStamp);
   var date = getDate(time * 1000);
   var y = date.getFullYear(),
     m = date.getMonth() + 1,
