@@ -173,4 +173,16 @@ page {
     background-color: #222 !important;
     z-index: 21 !important;
   }
+
+  movable-view {
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5) !important;
+  }
+
+  .user_profile .user_vip {
+    background-color: #333;
+  }
+
+  .user_profile .user_vip_title {
+    color: #fff;
+  }
 }

@@ -227,7 +227,7 @@ movable-view image {
   bottom: 0;
   backdrop-filter: blur(20px) !important;
   padding: 10px 5px;
-  padding-bottom: calc(calc(env(safe-area-inset-bottom)) + 5px);
+  padding-bottom: calc(env(safe-area-inset-bottom) + 10px);
   text-align: center;
   display: flex;
   align-content: flex-start;
@@ -528,25 +528,21 @@ movable-view image {
   position: fixed;
   left: 10px;
   right: 10px;
-  bottom: 60px;
-  padding-bottom: calc(env(safe-area-inset-bottom));
-}
-
-.bbbug_emoji_box {
-  border-radius: 20px;
-  padding: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 10px;
+  bottom: calc(env(safe-area-inset-bottom) + 60px);
 }
 
-.bbbug_emoji .bbbug_emoji_box view {
+.bbbug_emoji view {
   font-size: 14px;
   color: #999;
   padding: 20px 0px;
   text-align: center;
 }
 
-.bbbug_emoji .bbbug_emoji_box image {
+.bbbug_emoji image {
   width: 9%;
   margin: 1%;
 }

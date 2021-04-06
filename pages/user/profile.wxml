@@ -1,5 +1,5 @@
 <wxs src="../../utils/helper.wxs" module="helper" />
-<view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
+<view class="page user_profile" xmlns:wx="http://www.w3.org/1999/xhtml">
   <view class="page__bd" wx:if="{{bbbug}}">
     <view wx:if="{{userInfo}}">
       <view class="user_head">
@@ -10,6 +10,7 @@
         <view class="user_name">{{helper.urldecode(userInfo.user_name)}}</view>
         <view class="user_info">
           <view class="user_id">ID:{{userInfo.user_id}}</view>
+          <view class="user_role" wx:if="{{userInfo.user_admin}}">管理员</view>
           <view class="user_sex">
             <i class="iconfont icon-man" wx:if="{{userInfo.user_sex==1}}"></i>
             <i class="iconfont icon-woman" wx:if="{{userInfo.user_sex==0}}"></i>
@@ -28,6 +29,10 @@
           </view>
         </view>
         <view class="user_remark">{{userInfo.user_remark}}</view>
+        <view class="user_vip" wx:if="{{userInfo.user_vip}}">
+          <view class="user_vip_title"><i class="verify icon-icon_certification_f iconfont"></i>{{userInfo.user_vip}}
+          </view>
+        </view>
 
       </view>
       <view class="user_song">

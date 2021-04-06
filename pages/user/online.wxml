@@ -8,23 +8,31 @@
   </view>
   <view class="weui-panel weui-panel_access userList" wx:if="{{userList.length>0}}">
     <view class="weui-panel__bd">
-      <view class="weui-media-box weui-media-box_appmsg" wx:for="{{userList}}" bindtap="showMenu" bindlongpress="showMenuMaster" mark:item="{{item}}">
+      <view class="weui-media-box weui-media-box_appmsg" wx:for="{{userList}}" bindtap="showMenu"
+        bindlongpress="showMenuMaster" mark:item="{{item}}">
         <view class="weui-media-box__hd">
           <image class="weui-media-box__thumb" style="border-radius: 10px;width:64px;height:64px;margin-right:10px;"
             src="{{item.user_head || '/res/image/nohead.jpg'}}" mode="aspectFill"></image>
         </view>
         <view class="weui-media-box__bd">
-          <view class="weui-media-box__title"><i style="color:#66CBFF;margin-right:5px;"
-              class="iconfont icon-xingbie-nan" wx:if="{{item.user_sex==1}}"></i><i
-              style="color:#FE9898;margin-right:5px;" class="iconfont icon-xingbie-nv"
-              wx:if="{{item.user_sex!=1}}"></i>{{helper.urldecode(item.user_name)}}</view>
+          <view class="weui-media-box__title"><i wx:if="{{item.user_vip}}"
+              class="verify icon-icon_certification_f iconfont"></i>{{helper.urldecode(item.user_name)}}</view>
           <view class="weui-media-box__desc">
             <view class="status">
-              <view class="badge" style="color:#999999">ID:{{item.user_id}}</view>
+              <view class="user_id">ID<span>{{item.user_id}}</span></view>
+              <block wx:if="{{item.user_id == roomInfo.room_user}}">
+                <view class="badge role">房主</view>
+              </block>
+              <block wx:if="{{item.user_id != roomInfo.room_user}}">
+                <view class="badge role" wx:if="{{item.user_admin}}">管理员</view>
+              </block>
+              <view class="badge guest" wx:if="{{item.user_guest}}">嘉宾</view>
               <view class="badge" wx:if="{{item.user_shutdown}}">禁言</view>
               <view class="badge" wx:if="{{item.user_songdown}}">禁歌</view>
             </view>
-            <view>{{helper.urldecode(item.user_remark)}}</view>
+            <view class="desc"><i style="color:#66CBFF;" class="iconfont icon-xingbie-nan"
+                wx:if="{{item.user_sex==1}}"></i><i style="color:#FE9898;" class="iconfont icon-xingbie-nv"
+                wx:if="{{item.user_sex!=1}}"></i>{{helper.urldecode(item.user_remark)}}</view>
           </view>
         </view>
       </view>

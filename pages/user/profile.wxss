@@ -21,26 +21,55 @@
   color: #999;
   margin-top: 10px;
 }
+
 .user_info view {
   font-size: 12px;
   display: inline-block;
+  vertical-align: middle;
+}
+
+.user_vip {
+  margin-top: 20px;
+  background-color: #fff;
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+.user_vip_content {
+  font-size: 14px;
+  color: #999;
+}
+
+.user_vip .iconfont {
+  color: rgb(9, 122, 216);
+  margin-right: 3px;
+}
+
+.user_role {
+  background-color: orangered;
+  color: white;
+  font-size: 12px;
+  border-radius: 3px;
+  margin-right: 5px;
+  padding: 0px 3px;
 }
 
 .user_id {
   background-color: #999;
   color: white;
-  padding: 1px 5px;
-  border-radius: 5px;
+  padding: 0px 3px;
+  border-radius: 3px;
   display: inline-block;
+  margin-right: 5px;
 }
 
-.user_sex i{
+.user_sex i {
   color: white;
-  padding: 0px 5px;
-  border-radius: 5px;
+  padding: 0px 3px;
+  border-radius: 3px;
   display: inline-block;
-  margin-left: 3px;
-  font-size: 14px;
+  margin-right: 5px;
+  font-size: 12px;
 }
 
 .user_sex .icon-man {
@@ -50,15 +79,16 @@
 .user_sex .icon-woman {
   background-color: #f288a4;
 }
-.user_device i{
+
+.user_device i {
   background-color: #333333;
   color: white;
-  padding: 0px 5px;
-  border-radius: 5px;
+  padding: 0px 3px;
+  border-radius: 3px;
   display: inline-block;
-  margin-left: 3px;
-  font-size: 14px;
+  font-size: 12px;
 }
+
 .number {
   font-size: 16px;
   font-weight: bolder;
@@ -90,7 +120,8 @@
   height: 50px;
   margin-right: 10px;
 }
-.songList{
-  margin:10px;
+
+.songList {
+  margin: 10px;
   border-radius: 10px;
 }

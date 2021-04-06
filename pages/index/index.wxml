@@ -23,9 +23,11 @@
             <block wx:if="{{item.type=='text' && item.user.user_id!=userInfo.user_id}}">
               <!-- 文字消息 且不是自己发的 -->
               <!-- 别人@了我 -->
-              <view class="bbbug_text bbbug_at_me" wx:if="{{item.at && item.at.user_id==userInfo.user_id}}">{{helper.urldecode(item.content)}}</view>
+              <view class="bbbug_text bbbug_at_me" wx:if="{{item.at && item.at.user_id==userInfo.user_id}}">
+                {{helper.urldecode(item.content)}}</view>
               <!-- 没有@或者不是@自己 -->
-              <view class="bbbug_text" wx:if="{{(!item.at || item.at.user_id!=userInfo.user_id)}}">{{helper.urldecode(item.content)}}</view>
+              <view class="bbbug_text" wx:if="{{(!item.at || item.at.user_id!=userInfo.user_id)}}">
+                {{helper.urldecode(item.content)}}</view>
             </block>
             <view class="bbbug_image" wx:if="{{item.type=='img'}}">
               <image src="{{helper.getStaticUrl(item.content)}}"
@@ -98,13 +100,11 @@
   <view class="bbbug_scroll_button" wx:if="{{!isScrollEnabled && !isEmojiBoxShow && !isPanelShow}}"
     bindtap="enableScroll">新消息</view>
   <view class="bbbug_emoji {{isEmojiBoxShow?'animationSlideIn':'animationSlideOut'}}">
-    <view class="bbbug_emoji_box">
-      <image wx:for="{{imageList}}" src="{{item}}" mode="widthFix" bindtap="sendEmoji" bindlongpress="previewImage"
-        mark:url="{{item}}" style="height:{{isSystemEmoji?'auto':'80px'}}"></image>
+    <image wx:for="{{imageList}}" src="{{item}}" mode="widthFix" bindtap="sendEmoji" bindlongpress="previewImage"
+      mark:url="{{item}}" style="height:{{isSystemEmoji?'auto':'80px'}}"></image>
 
-      <view wx:if="{{imageList.length>0}}" class="bbbug_upload" bindtap="chooseImage">发送图片</view>
-      <view wx:if="{{imageList.length==0}}">请输入表情关键词搜索</view>
-    </view>
+    <view wx:if="{{imageList.length>0}}" class="bbbug_upload" bindtap="chooseImage">发送图片</view>
+    <view wx:if="{{imageList.length==0}}">请输入表情关键词搜索</view>
   </view>
   <view class="bbbug_cover" wx:if="{{!userInfo || userInfo.user_id<0}}" bindtap="login">点击登录后加入互动吧</view>
   <view class="bbbug_panel {{isPanelShow?'animationSlideIn':'animationSlideOut'}}">

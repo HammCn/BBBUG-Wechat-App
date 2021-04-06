@@ -15,8 +15,55 @@
 
 .badge {
   display: inline-block;
-  color: orangered;
+  color: #999;
   margin-right: 5px;
+}
+
+.role {
+  color: orangered;
+}
+.guest{
+  color: green;
+}
+
+.user_id {
+  margin-right: 5px;
+  border: 1px solid #999;
+  border-radius: 3px;
+  padding: 0px 3px;
+  color: #999;
+  font-size: 12px;
+}
+
+.user_id span {
+  margin-left: 5px;
+}
+
+.status {
+  vertical-align: middle;
+}
+
+.status view {
+  vertical-align: middle;
+  display: inline-block;
+}
+
+
+.role i {
+  background-color: green;
+  border-radius: 3px;
+  padding: 2px;
+  color: white;
+  margin-right: 5px;
+  font-size: 12px;
+
+}
+
+.verify {
+  display: inline-block;
+  color: rgb(9, 122, 216);
+  margin-right: 3px;
+  font-size: 18px;
 }
 
 .tipImage {
@@ -35,4 +82,8 @@
   font-size: 14px;
   color: #999;
   text-align: center;
+}
+
+.desc i {
+  margin-right: 5px;
 }

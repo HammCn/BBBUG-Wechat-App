@@ -109,7 +109,7 @@ Page({
       bbbug: true
     });
     wx.setNavigationBarTitle({
-      title: '切换房间',
+      title: '修改房间信息',
     });
   },
   onShow: function () {
