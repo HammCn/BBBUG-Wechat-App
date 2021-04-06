@@ -225,7 +225,7 @@ movable-view image {
   left: 0;
   right: 0;
   bottom: 0;
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px) !important;
   padding: 10px 5px;
   padding-bottom: calc(calc(env(safe-area-inset-bottom)) + 5px);
   text-align: center;
@@ -405,7 +405,7 @@ movable-view image {
   left: 0;
   bottom: 0;
   right: 0;
-  height: 50px;
+  height: 55px;
   color: #999;
   z-index: 10;
   text-align: center;
@@ -602,4 +602,9 @@ movable-view image {
   font-size: 16px;
   font-weight: bold;
   vertical-align: middle;
+}
+
+.bbbug_history .bbbug_item .bbbug_content .bbbug_at_me {
+  background-color: #666;
+  color: white;
 }

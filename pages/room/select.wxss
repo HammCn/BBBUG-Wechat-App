@@ -6,9 +6,11 @@
   position: relative;
   height: 100px;
 }
-.roomList{
+
+.roomList {
   padding-bottom: 70px;
 }
+
 .roomTitle {
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -87,7 +89,6 @@
   background-color: #F5F5F5;
   padding: 1px 5px;
   border-radius: 3px;
-  font-weight: 100;
 }
 
 .roomRight {

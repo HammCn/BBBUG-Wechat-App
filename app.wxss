@@ -77,6 +77,95 @@ page {
   border-radius: 10px;
 }
 
-#searchBox {
-  margin: 10px;
+.searchbox {
+  overflow: hidden;
+}
+
+
+@media (prefers-color-scheme: dark) {
+
+  page,
+  .bbbug_history {
+    background-color: #222 !important;
+  }
+
+  .bbbug_login_sendmail,
+  .bbbug_input,
+  .bbbug_panel_icon .iconfont,
+  .bbbug_panel_title {
+    color: #ccc !important;
+  }
+
+  .bbbug_history .bbbug_item .bbbug_head image {
+    border: 1px solid #111111 !important;
+  }
+
+  .bbbug_cover {
+    background-color: #333 !important;
+    color: #fff !important;
+  }
+
+  .bbbug_input {
+    border-top: 1px solid #252525 !important;
+    background-color: #222 !important;
+  }
+
+  .bbbug_history .bbbug_item .bbbug_content .bbbug_text {
+    background-color: #333 !important;
+    color: #ccc !important;
+  }
+
+  .searchbox,
+  .weui-panel,
+  .weui-cells,
+  .roomBg,
+  .bbbug_history .bbbug_item .bbbug_content .bbbug_image,
+  .bbbug_history .bbbug_quot {
+    background-color: #333 !important;
+  }
+
+  .bbbug_history .bbbug_item .bbbug_content .bbbug_at_me {
+    background-color: #fff !important;
+    color: #666 !important;
+  }
+
+  .bbbug_history .bbbug_system view {
+    background-color: #333 !important;
+    color: #666 !important;
+  }
+
+  .roomUser {
+    color: #ccc !important;
+  }
+
+  .roomId {
+    background-color: #222 !important;
+    color: #999 !important;
+  }
+
+  .app_title {
+    color: #fff !important;
+    text-shadow: 1px 1px 1px #111 !important;
+  }
+
+  .roomBg {
+    color: #ccc !important;
+  }
+
+  .bbbug_time {
+    color: #666 !important;
+  }
+
+  .weui-media-box__title {
+    color: #ccc !important;
+  }
+
+  .weui-media-box__desc {
+    color: #999 !important;
+  }
+
+  .weui-cell:before,
+  .weui-media-box::before {
+    border-top: 1px solid #444 !important;
+  }
 }

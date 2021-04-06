@@ -480,12 +480,12 @@ Page({
             break;
           case '引用消息':
             that.setData({
+              messageFocus: true,
               atMessageObj: {
                 user_id: msg.user.user_id,
                 user_name: decodeURIComponent(msg.user.user_name),
                 message: msg
-              },
-              messageFocus: true
+              }
             });
             break;
           case '复制链接':
@@ -571,9 +571,9 @@ Page({
 
     wx.vibrateShort();
     this.setData({
+      messageFocus: this.data.isEmojiBoxShow ? false : true,
       messagePlaceHolder: this.data.isEmojiBoxShow ? this.data.placeholderSearchImage : this.data.placeholderDefault,
       messageSendButton: this.data.isEmojiBoxShow ? this.data.messageButtonTitleSearch : this.data.messageButtonTitleSend,
-      messageFocus: this.data.isEmojiBoxShow ? false : true,
       atMessageObj: false,
     });
   },
@@ -588,6 +588,11 @@ Page({
   },
   previewImage(e) {
     let that = this;
+    try {
+      e.mark.url = decodeURIComponent(e.mark.url);
+    } catch (e) {
+
+    }
     if (e.mark.url) {
       if (e.mark.url.indexOf('images/emoji/') == -1 && e.mark.url.indexOf('/res/Emojis/') == -1) {
         wx.previewImage({
@@ -799,9 +804,9 @@ Page({
         for (let i = 0; i < res.data.length; i++) {
           let _obj = false;
           try {
-            _obj = JSON.parse(decodeURIComponent(res.data[i].message_content));
-          } catch (error) {
             _obj = JSON.parse(res.data[i].message_content);
+          } catch (error) {
+            continue;
           }
           if (_obj) {
             if (_obj.at) {
@@ -810,6 +815,11 @@ Page({
             _obj.message_time = res.data[i].message_createtime;
             _obj.isAtAll = false;
             if (_obj.type == 'text') {
+              try {
+                _obj.content = decodeURIComponent(decodeURIComponent(_obj.content));
+              } catch (e) {
+                _obj.content = decodeURIComponent(_obj.content);
+              }
               _obj.isAtAll = decodeURIComponent(_obj.content).indexOf('@全体') == 0 && (_obj.user.user_id == that.data.roomInfo.room_user || _obj.user.user_admin) ? true : false;
             }
             messageList.unshift(_obj);
@@ -886,9 +896,9 @@ Page({
       that.data.websocket.task.onMessage(function (data) {
         let msg = false;
         try {
-          msg = JSON.parse(decodeURIComponent(data.data));
-        } catch (err) {
           msg = JSON.parse(data.data);
+        } catch (err) {
+          return;
         }
         if (msg) {
           that.messageController(msg);
@@ -954,6 +964,11 @@ Page({
       case 'jump':
       case 'system':
         if (msg.type == 'text') {
+          try {
+            msg.content = decodeURIComponent(decodeURIComponent(msg.content));
+          } catch (e) {
+            msg.content = decodeURIComponent(msg.content);
+          }
           if (msg.at) {
             msg.content = "@" + decodeURIComponent(msg.at.user_name) + " " + msg.content;
           }
