@@ -5,7 +5,7 @@ Page({
     userList: [],
   },
   onLoad(options) {
-    if (!options.bbbug) {
+    if (!options.bbbug || options.bbbug != app.globalData.systemVersion) {
       return;
     }
     this.setData({
@@ -133,7 +133,7 @@ Page({
             break;
           case '查看主页':
             wx.navigateTo({
-              url: '../user/profile?bbbug=1&user_id=' + user.user_id,
+              url: '../user/profile?bbbug=' + app.globalData.systemVersion + '&user_id=' + user.user_id,
             })
             break;
           default:

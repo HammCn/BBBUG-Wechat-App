@@ -1,0 +1,23 @@
+{
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "自定义入口",
+          "pathName": "pages/user/profile",
+          "query": "user_id=8",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

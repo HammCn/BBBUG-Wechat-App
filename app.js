@@ -1,5 +1,6 @@
 App({
   globalData: {
+    systemVersion: 0,
     access_token_changed: false,
     //网络请求相关参数
     request: {
@@ -177,7 +178,7 @@ App({
   showLogin: function () {
     let that = this;
     wx.navigateTo({
-      url: '../user/login?bbbug=1',
+      url: '../user/login?bbbug=' + app.globalData.systemVersion,
     });
   }
 });

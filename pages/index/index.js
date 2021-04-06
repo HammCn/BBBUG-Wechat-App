@@ -194,7 +194,7 @@ Page({
     let plat = systemInfo.platform.toLowerCase();
     if (plat == 'windows' || plat == 'mac') {
       wx.redirectTo({
-        url: '../pc/index?bbbug=1&url=' + encodeURIComponent('https://bbbug.com'),
+        url: '../pc/index?bbbug=' + app.globalData.systemVersion + '&url=' + encodeURIComponent('https://bbbug.com'),
       });
       wx.hideHomeButton();
       return;
@@ -203,10 +203,11 @@ Page({
     app.request({
       url: "",
       success(res) {
-        if (res.data.hide) {
+        if (res.data.success) {
           that.setData({
             newsShow: false
           });
+          app.globalData.systemVersion = res.data.systemVersion;
           wx.setStorageSync('loadSuccess', 1);
           that.getMyInfo();
         } else {
@@ -424,7 +425,7 @@ Page({
             break;
           case '查看主页':
             wx.navigateTo({
-              url: '../user/profile?bbbug=1&user_id=' + user.user_id,
+              url: '../user/profile?bbbug=' + app.globalData.systemVersion + '&user_id=' + user.user_id,
             })
             break;
           default:
@@ -607,7 +608,7 @@ Page({
   login() {
     let that = this;
     wx.navigateTo({
-      url: '../user/login?bbbug=1'
+      url: '../user/login?bbbug=' + app.globalData.systemVersion
     });
   },
   showSongMenu() {
@@ -1146,22 +1147,22 @@ Page({
     switch (e.mark.title) {
       case '点歌':
         wx.navigateTo({
-          url: '../song/select?bbbug=1',
+          url: '../song/select?bbbug=' + app.globalData.systemVersion,
         });
         break;
       case '已点':
         wx.navigateTo({
-          url: '../song/playing?bbbug=1',
+          url: '../song/playing?bbbug=' + app.globalData.systemVersion,
         });
         break;
       case '歌单':
         wx.navigateTo({
-          url: '../song/my?bbbug=1',
+          url: '../song/my?bbbug=' + app.globalData.systemVersion,
         });
         break;
       case '在线':
         wx.navigateTo({
-          url: '../user/online?bbbug=1',
+          url: '../user/online?bbbug=' + app.globalData.systemVersion,
           events: {
             doAtUser: function (userInfo) {
               that.longTapToAtUser(userInfo)
@@ -1174,7 +1175,7 @@ Page({
         break;
       case '换房':
         wx.navigateTo({
-          url: '../room/select?bbbug=1',
+          url: '../room/select?bbbug=' + app.globalData.systemVersion,
           events: {
             changeRoomSuccess: function (room_id) {
               that.setData({
@@ -1211,7 +1212,7 @@ Page({
         break;
       case '管理':
         wx.navigateTo({
-          url: '../room/motify?bbbug=1',
+          url: '../room/motify?bbbug=' + app.globalData.systemVersion,
           events: {
             reloadMessage: function () {
               that.getMessageList();

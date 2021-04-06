@@ -8,7 +8,7 @@ Page({
     isLoading: false,
   },
   onLoad(options) {
-    if (!options.bbbug) {
+    if (!options.bbbug || options.bbbug != app.globalData.systemVersion) {
       return;
     }
     this.setData({

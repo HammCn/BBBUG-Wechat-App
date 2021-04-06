@@ -11,7 +11,7 @@ Page({
   },
   doCreateRoom() {
     uni.navigateTo({
-      url: "../?bbbug=1"
+      url: '../?bbbug=' + app.globalData.systemVersion
     });
   },
   doJoinMyRoom() {
