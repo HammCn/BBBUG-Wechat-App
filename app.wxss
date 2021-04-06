@@ -168,4 +168,9 @@ page {
   .weui-media-box::before {
     border-top: 1px solid #444 !important;
   }
+
+  .passwordForm {
+    background-color: #222 !important;
+    z-index: 21 !important;
+  }
 }
