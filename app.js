@@ -178,7 +178,7 @@ App({
   showLogin: function () {
     let that = this;
     wx.navigateTo({
-      url: '../user/login?bbbug=' + app.globalData.systemVersion,
+      url: '../user/login?bbbug=' + that.globalData.systemVersion,
     });
   }
 });

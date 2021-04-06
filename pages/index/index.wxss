@@ -584,6 +584,12 @@ movable-view image {
   color: #666;
 }
 
+.bbbug_username .verify {
+  color: rgb(9, 122, 216);
+  margin-right: 3px;
+  vertical-align: middle;
+}
+
 .footer view {
   display: inline-block;
   margin: 0px 5px;

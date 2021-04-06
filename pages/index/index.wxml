@@ -10,7 +10,8 @@
               bindtouchend="touchEnded" bindtouchmove="touchMoving" mark:user="{{item.user}}" />
           </view>
           <view class="bbbug_user">
-            <view class="bbbug_username">{{helper.urldecode(item.user.user_name)}}</view>
+            <view class="bbbug_username"><i wx:if="{{item.user.user_vip}}"
+                class="verify icon-icon_certification_f iconfont"></i>{{helper.urldecode(item.user.user_name)}}</view>
           </view>
           <view class="bbbug_content" bindlongpress="longTapToMessage" mark:msg="{{item}}" bindtap="hideAllDialog">
             <block wx:if="{{item.type=='text' && item.user.user_id==userInfo.user_id}}">
