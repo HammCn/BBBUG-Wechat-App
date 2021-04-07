@@ -157,8 +157,6 @@ Page({
         isScrollEnabled: true
       });
     }
-
-    //
   },
   onLoad: function (options) {
     let that = this;

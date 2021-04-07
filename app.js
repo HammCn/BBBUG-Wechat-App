@@ -17,6 +17,7 @@ App({
         login: 401,
         updateForce: 301,
         update: 302,
+        hide: 503,
         error: 500
       }
     },
@@ -110,6 +111,11 @@ App({
                   }
                 });
               }
+              break;
+            case that.globalData.request.code.hide:
+              wx.reLaunch({
+                url: '../index/index',
+              });
               break;
             default:
               //解析其他状态码
