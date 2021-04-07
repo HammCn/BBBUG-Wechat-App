@@ -92,8 +92,10 @@ Page({
       messageFocus: true
     });
   },
-  messageBlured() {
+  messageBlured(e) {
+    console.log(e);
     this.setData({
+      message: e.detail.value,
       messageFocus: false
     });
   },
