@@ -316,6 +316,16 @@ movable-view image {
   padding: 15px;
 }
 
+.bbbug_input .placeholder {
+  padding: 15px;
+  color: #999;
+  position: absolute;
+  left: 40px;
+  right: 40px;
+  top: 0;
+  bottom: 0;
+}
+
 .bbbug_at {
   position: fixed;
   left: 5px;

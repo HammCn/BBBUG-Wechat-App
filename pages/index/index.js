@@ -92,6 +92,11 @@ Page({
       messageFocus: true
     });
   },
+  messageBlured() {
+    this.setData({
+      messageFocus: false
+    });
+  },
   messageFocused(e) {
     wx.vibrateShort();
     if (this.data.isEmojiBoxShow) {
@@ -99,6 +104,9 @@ Page({
         imageList: [],
       });
     }
+    this.setData({
+      messageFocus: true
+    });
   },
   touchMoving(e) {
     let that = this;
