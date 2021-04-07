@@ -4,6 +4,47 @@
   border: none;
   margin-bottom: constant(safe-area-inset-bottom);
   margin-bottom: env(safe-area-inset-bottom);
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.userName {
+  vertical-align: middle;
+}
+
+.userName .iconfont {
+  vertical-align: middle;
+}
+
+.userItemBox {
+  border-top: 1px solid #f5f5f5;
+  position: relative;
+  padding: 10px;
+  overflow: hidden;
+}
+
+.userHead {
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  width: 64px;
+  height: 64px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.userHead image {
+  width: 100%;
+  height: 100%;
+}
+
+.userInfo {
+  margin-left: 80px;
+}
+
+.userDesc {
+  font-size: 12px;
+  color: #999;
 }
 
 .number {
@@ -22,18 +63,11 @@
 .role {
   color: orangered;
 }
-.guest{
+
+.guest {
   color: green;
 }
 
-.user_id {
-  margin-right: 5px;
-  border: 1px solid #999;
-  border-radius: 3px;
-  padding: 0px 3px;
-  color: #999;
-  font-size: 12px;
-}
 
 .user_id span {
   margin-left: 5px;
@@ -45,6 +79,22 @@
 
 .status view {
   vertical-align: middle;
+  display: inline-block;
+}
+
+.user_id {
+  margin-right: 5px;
+  border: 1px solid #999;
+  border-radius: 3px;
+  padding: 0px 3px;
+  color: #999;
+  font-size: 12px;
+  display: inline !important;
+}
+
+.status .iconfont {
+  vertical-align: middle;
+  margin-right: 3px;
   display: inline-block;
 }
 
@@ -84,6 +134,22 @@
   text-align: center;
 }
 
-.desc i {
-  margin-right: 5px;
+.desc {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (prefers-color-scheme: dark) {
+  .userName {
+    color: #ccc;
+  }
+
+  .userList {
+    background-color: #333;
+  }
+
+  .userItemBox {
+    border-top: 1px solid #444444;
+  }
 }

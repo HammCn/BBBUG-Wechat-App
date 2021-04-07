@@ -13,9 +13,6 @@ Page({
       bbbug: true,
       roomInfo: app.globalData.roomInfo
     });
-    wx.setNavigationBarTitle({
-      title: '在线用户',
-    });
     this.getList();
   },
   onPullDownRefresh() {

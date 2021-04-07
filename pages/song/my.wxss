@@ -44,3 +44,7 @@
   height: 50px;
   margin-right: 10px;
 }
+
+.weui-media-box__desc {
+  -webkit-line-clamp: 1;
+}
