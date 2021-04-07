@@ -125,3 +125,7 @@
   margin: 10px;
   border-radius: 10px;
 }
+
+.weui-media-box__desc {
+  -webkit-line-clamp: 1;
+}
