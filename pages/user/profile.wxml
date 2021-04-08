@@ -11,10 +11,9 @@
         <view class="user_info">
           <view class="user_id">ID:{{userInfo.user_id}}</view>
           <view class="user_role" wx:if="{{userInfo.user_admin}}">管理员</view>
-          <view class="user_sex">
-            <i class="iconfont icon-man" wx:if="{{userInfo.user_sex==1}}"></i>
-            <i class="iconfont icon-woman" wx:if="{{userInfo.user_sex==0}}"></i>
-          </view>
+          <i style="color:#66CBFF;" class="user_sex iconfont icon-xingbie-nan"
+            wx:if="{{userInfo.user_sex==1}}"></i><i style="color:#FE9898;" class="user_sex iconfont icon-xingbie-nv"
+            wx:if="{{userInfo.user_sex!=1}}"></i>
           <view class="user_device" wx:if="{{userInfo.user_device=='Windows'}}"><i
               class="iconfont icon-windows-fill"></i>
           </view>

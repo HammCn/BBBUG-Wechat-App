@@ -10,8 +10,15 @@
               bindtouchend="touchEnded" bindtouchmove="touchMoving" mark:user="{{item.user}}" />
           </view>
           <view class="bbbug_user">
-            <view class="bbbug_username"><i wx:if="{{item.user.user_vip}}"
-                class="verify icon-icon_certification_f iconfont"></i>{{helper.urldecode(item.user.user_name)}}</view>
+            <view class="bbbug_username">{{helper.urldecode(item.user.user_name)}}<i wx:if="{{item.user.user_vip}}"
+                class="verify icon-icon_certification_f iconfont"></i>
+              <block wx:if="{{item.user.user_id==roomInfo.room_user}}">
+                <view class="bbbug_user_role">房</view>
+              </block>
+              <block wx:if="{{item.user.user_id!=roomInfo.room_user}}">
+                <view class="bbbug_user_role" wx:if="{{item.user.user_admin}}">管</view>
+              </block>
+            </view>
           </view>
           <view class="bbbug_content" bindlongpress="longTapToMessage" mark:msg="{{item}}" bindtap="hideAllDialog">
             <block wx:if="{{item.type=='text' && item.user.user_id==userInfo.user_id}}">
@@ -82,8 +89,8 @@
     </view>
     <view class="placeholder" wx:if="{{!messageFocus && !message}}">{{messagePlaceHolder}}</view>
     <input type="text" confirm-type="{{messageSendButton}}" confirm-hold="{{messageConfirmHold}}"
-      bindconfirm="sendMessage" focus="{{messageFocus}}" value="{{message}}" bindfocus="messageFocused" bindblur="messageBlured"
-      cursor-spacing="15" />
+      bindconfirm="sendMessage" focus="{{messageFocus}}" value="{{message}}" bindfocus="messageFocused"
+      bindblur="messageBlured" cursor-spacing="15" />
     <view class="bbbug_more" catchtap="showMainMenu">
       <image src="/res/image/more.png" />
     </view>

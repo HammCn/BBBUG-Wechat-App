@@ -435,6 +435,15 @@ movable-view image {
   text-align: right;
 }
 
+.bbbug_user_role {
+  background-color: orangered;
+  color: white;
+  padding: 0px 2px;
+  font-size: 12px;
+  border-radius: 3px;
+  display: inline;
+}
+
 .bbbug_history .bbbug_item .bbbug_content .bbbug_text {
   background-color: white;
   border-radius: 10px;
@@ -596,7 +605,7 @@ movable-view image {
 
 .bbbug_username .verify {
   color: rgb(9, 122, 216);
-  margin-right: 3px;
+  margin: 0px 3px;
   vertical-align: middle;
 }
 

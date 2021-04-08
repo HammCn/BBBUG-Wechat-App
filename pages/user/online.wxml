@@ -19,16 +19,16 @@
           <view class="status"><i style="color:#66CBFF;" class="iconfont icon-xingbie-nan"
               wx:if="{{item.user_sex==1}}"></i><i style="color:#FE9898;" class="iconfont icon-xingbie-nv"
               wx:if="{{item.user_sex!=1}}"></i>
-            <view class="user_id">ID<span>{{item.user_id}}</span></view>
+            <view class="user_id">ID:{{item.user_id}}</view>
             <block wx:if="{{item.user_id == roomInfo.room_user}}">
-              <view class="badge role">房主</view>
+              <view class="badge role">房</view>
             </block>
             <block wx:if="{{item.user_id != roomInfo.room_user}}">
-              <view class="badge role" wx:if="{{item.user_admin}}">管理员</view>
+              <view class="badge role" wx:if="{{item.user_admin}}">管</view>
             </block>
-            <view class="badge guest" wx:if="{{item.user_guest}}">嘉宾</view>
-            <view class="badge" wx:if="{{item.user_shutdown}}">禁言</view>
-            <view class="badge" wx:if="{{item.user_songdown}}">禁歌</view>
+            <view class="badge guest" wx:if="{{item.user_guest}}">宾</view>
+            <view class="badge ban" wx:if="{{item.user_shutdown}}">禁言</view>
+            <view class="badge ban" wx:if="{{item.user_songdown}}">禁歌</view>
           </view>
           <view class="desc">{{helper.urldecode(item.user_remark)}}</view>
         </view>
