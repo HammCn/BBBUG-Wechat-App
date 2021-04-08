@@ -88,27 +88,33 @@ Page({
     }
   },
   footerTapedToFocus() {
-    this.setData({
-      messageFocus: true
-    });
-  },
-  messageBlured(e) {
-    console.log(e);
-    this.setData({
-      message: e.detail.value,
-      messageFocus: false
-    });
-  },
-  messageFocused(e) {
-    wx.vibrateShort();
-    if (this.data.isEmojiBoxShow) {
+    if (this.data.systemInfo.platform != 'android') {
       this.setData({
-        imageList: [],
+        messageFocus: true
       });
     }
-    this.setData({
-      messageFocus: true
-    });
+  },
+  messageBlured(e) {
+    if (this.data.messageFocus) {
+      this.setData({
+        messageFocus: false,
+      });
+      wx.hideKeyboard();
+    }
+  },
+  messageChanged(e) {
+    // this.setData({
+    //   message: e.detail.value,
+    // });
+  },
+  messageFocused(e) {
+    if (!this.data.messageFocus) {
+      if (this.data.isEmojiBoxShow) {
+        this.setData({
+          imageList: [],
+        });
+      }
+    }
   },
   touchMoving(e) {
     let that = this;
@@ -496,6 +502,11 @@ Page({
                 message: msg
               }
             });
+            if (!that.data.messageFocus) {
+              that.setData({
+                messageFocus: true
+              });
+            }
             break;
           case '复制链接':
             wx.setClipboardData({
@@ -537,6 +548,11 @@ Page({
         user_name: decodeURIComponent(user.user_name),
       }
     });
+    if (!this.data.messageFocus) {
+      this.setData({
+        messageFocus: true
+      });
+    }
     wx.vibrateShort();
   },
   sendEmoji(e) {

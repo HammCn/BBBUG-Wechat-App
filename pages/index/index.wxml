@@ -87,10 +87,13 @@
     <view class="bbbug_face" catchtap="showOrHideEmojiBox">
       <image src="/res/image/add.png" />
     </view>
-    <view class="placeholder" wx:if="{{!messageFocus && !message}}">{{messagePlaceHolder}}</view>
+    <!-- <view class="placeholder" wx:if="{{!message}}">{{messagePlaceHolder}}</view> -->
+    <!-- <input type="text" confirm-type="{{messageSendButton}}" confirm-hold="{{messageConfirmHold}}"
+      bindconfirm="sendMessage" focus="{{messageFocus}}" value="{{message}}" bindinput="messageChanged"
+      bindblur="messageBlured" cursor-spacing="15" /> -->
     <input type="text" confirm-type="{{messageSendButton}}" confirm-hold="{{messageConfirmHold}}"
-      bindconfirm="sendMessage" focus="{{messageFocus}}" value="{{message}}" bindfocus="messageFocused"
-      bindblur="messageBlured" cursor-spacing="15" />
+      bindconfirm="sendMessage" focus="{{messageFocus}}" placeholder="{{messagePlaceHolder}}"
+      value="{{message}}" cursor-spacing="15" catchtap="" bindfocus="messageFocused"/>
     <view class="bbbug_more" catchtap="showMainMenu">
       <image src="/res/image/more.png" />
     </view>
