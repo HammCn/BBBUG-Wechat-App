@@ -342,7 +342,7 @@ Page({
     }
     let msgObj = {
       type: "text",
-      content: message,
+      content: encodeURIComponent(message),
       where: "channel",
       at: that.data.atMessageObj,
       message_id: 0,
@@ -841,9 +841,9 @@ Page({
             _obj.isAtAll = false;
             if (_obj.type == 'text') {
               try {
-                _obj.content = decodeURIComponent(decodeURIComponent(_obj.content));
+                _obj.content = (decodeURIComponent(_obj.content));
               } catch (e) {
-                _obj.content = decodeURIComponent(_obj.content);
+                _obj.content = (_obj.content);
               }
               _obj.isAtAll = decodeURIComponent(_obj.content).indexOf('@全体') == 0 && (_obj.user.user_id == that.data.roomInfo.room_user || _obj.user.user_admin) ? true : false;
             }
@@ -990,9 +990,9 @@ Page({
       case 'system':
         if (msg.type == 'text') {
           try {
-            msg.content = decodeURIComponent(decodeURIComponent(msg.content));
+            msg.content = (decodeURIComponent(msg.content));
           } catch (e) {
-            msg.content = decodeURIComponent(msg.content);
+            msg.content = (msg.content);
           }
           if (msg.at) {
             msg.content = "@" + decodeURIComponent(msg.at.user_name) + " " + msg.content;
