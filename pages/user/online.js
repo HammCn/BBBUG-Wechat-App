@@ -50,15 +50,12 @@ Page({
     let user = e.mark.item;
     let menu = ["禁止点歌", "禁止发言", "解除限制"];;
     if (!(app.globalData.roomInfo && app.globalData.userInfo && (app.globalData.roomInfo.room_user == app.globalData.userInfo.user_id || app.globalData.userInfo.user_admin))) {
-      console.log("你没有权限");
       return;
     }
-    if (app.globalData.roomInfo.room_type == 4) {
-      if (user.user_guest) {
-        menu.push('取消嘉宾');
-      } else {
-        menu.push('设为嘉宾');
-      }
+    if (user.user_guest) {
+      menu.push('取消嘉宾');
+    } else {
+      menu.push('设为嘉宾');
     }
     let eventChannel = that.getOpenerEventChannel()
     wx.showActionSheet({
