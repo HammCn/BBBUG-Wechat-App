@@ -38,6 +38,7 @@
   right: 10px;
   bottom: 10px;
   left: 10px;
+  overflow: hidden;
 }
 
 .roomOnline {
@@ -55,13 +56,11 @@
 .roomNotice {
   font-size: 12px;
   color: #AAAAAA;
-  text-overflow: -o-ellipsis-lastline;
   overflow: hidden;
   text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  line-clamp: 1;
-  -webkit-box-orient: vertical;
+  white-space: nowrap;
+  overflow: hidden;
+  display: inline-block;
 }
 
 .roomUser {

@@ -14,6 +14,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  display: inline-block;
 }
 
 .userName .iconfont {
@@ -143,6 +144,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   margin-top: -5px;
+  display: inline-block;
 }
 
 @media (prefers-color-scheme: dark) {
