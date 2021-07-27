@@ -92,8 +92,8 @@
       bindconfirm="sendMessage" focus="{{messageFocus}}" value="{{message}}" bindinput="messageChanged"
       bindblur="messageBlured" cursor-spacing="15" /> -->
     <input type="text" confirm-type="{{messageSendButton}}" confirm-hold="{{messageConfirmHold}}"
-      bindconfirm="sendMessage" focus="{{messageFocus}}" placeholder="{{messagePlaceHolder}}"
-      value="{{message}}" cursor-spacing="15" catchtap="" bindfocus="messageFocused"/>
+      bindconfirm="sendMessage" focus="{{messageFocus}}" placeholder="{{messagePlaceHolder}}" value="{{message}}"
+      cursor-spacing="15" catchtap="" bindfocus="messageFocused" />
     <view class="bbbug_more" catchtap="showMainMenu">
       <image src="/res/image/more.png" />
     </view>
@@ -152,6 +152,10 @@
       <view class="bbbug_panel_icon"><i class="iconfont icon-qrcode"></i></view>
       <view class="bbbug_panel_title">分享</view>
     </view>
+    <!-- <view class="bbbug_panel_item" bindtap="mainMenuClicked" mark:title="驾驶">
+      <view class="bbbug_panel_icon"><i class="iconfont icon-changyongtubiao-xianxingdaochu-zhuanqu-112"></i></view>
+      <view class="bbbug_panel_title">驾驶</view>
+    </view> -->
   </view>
   <movable-area>
     <movable-view inertia="true" direction="all" bindtap="showSongMenu" bindlongpress="setSimplePlayer"
@@ -164,6 +168,29 @@
       </view>
     </movable-view>
   </movable-area>
+  <view class="car-mode" wx:if="{{isCarMode}}" bindtap="startOrStopRecord">
+    <view class="car-mode-siri">
+      <i class="iconfont icon-icon_voice"></i>
+    </view>
+    <view class="car-mode-player" wx:if="{{songInfo}}">
+      <view class="car-mode-img">
+        <image src="{{songInfo.song.pic}}" />
+      </view>
+      <view class="car-mode-song">
+        <view class="car-mode-name">{{songInfo.song.name}}</view>
+        <view class="car-mode-singer">{{songInfo.song.singer}}</view>
+        <view class="car-mode-singer">点歌人: {{helper.urldecode(songInfo.user.user_name)}}</view>
+      </view>
+      <view class="car-mode-lrc">
+        <block wx:if="{{carModeMessage}}">
+          <view class="car-mode-message">{{carModeMessage}}</view>
+        </block>
+        <block wx:if="{{!carModeMessage}}">
+          {{lrcString}}
+        </block>
+      </view>
+    </view>
+  </view>
 </view>
 <view wx:if="{{showPasswordForm}}" class="passwordForm">
   <view class="tips">该房间需要输入密码</view>

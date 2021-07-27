@@ -1,5 +1,6 @@
 {
   "usingComponents": {},
   "navigationBarTitleText": "BBBUG",
-  "navigationStyle": "default"
+  "navigationStyle": "default",
+  "pageOrientation": "auto"
 }

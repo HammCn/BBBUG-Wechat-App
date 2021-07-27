@@ -1,6 +1,14 @@
 const app = getApp()
+var WechatSI = requirePlugin("WechatSI");
+let WechatRecord = WechatSI.getRecordRecognitionManager();
 Page({
   data: {
+    carModeMessage: "",
+    timerForMessage: false,
+    timerForStopRecord: false,
+    isCarMode: false,
+    audioPlayer: false,
+    bgPlayer: false,
     newsList: [],
     isThisShow: false,
     newsShow: true,
@@ -53,6 +61,31 @@ Page({
     touchTimer: false,
     clickTimer: false,
     enableTouchEnd: false,
+    isRecording: false,
+  },
+  startOrStopRecord() {
+    let that = this;
+    this.data.recodeString = "";
+    if (this.data.isRecording) {
+      this.setData({
+        carModeMessage: ""
+      });
+      WechatRecord.stop();
+      this.data.bgPlayer.play();
+      this.data.isRecording = false;
+    } else {
+      this.data.bgPlayer.pause();
+      WechatRecord.start();
+      this.data.isRecording = true;
+      this.setData({
+        carModeMessage: "请告诉我你想做什么..."
+      });
+      clearTimeout(that.data.timerForStopRecord);
+      that.data.timerForStopRecord = setTimeout(function () {
+        that.data.isRecording = true;
+        that.startOrStopRecord();
+      }, 5000);
+    }
   },
   setSimplePlayer() {
     wx.vibrateShort();
@@ -168,6 +201,7 @@ Page({
   },
   onLoad: function (options) {
     let that = this;
+    that.data.bgPlayer = wx.getBackgroundAudioManager();
     const updateManager = wx.getUpdateManager()
     updateManager.onUpdateReady(function () {
       updateManager.applyUpdate()
@@ -235,40 +269,164 @@ Page({
           wx.showToast({
             title: '已更新',
           });
-          let audio = wx.getBackgroundAudioManager();
-          audio.src = 'http://img02.tuke88.com/newpreview_music/09/01/43/5c89e6ded0ebf83768.mp3';
-          audio.title = "背景音乐";
-          audio.play();
+          that.data.bgPlayer.src = 'http://img02.tuke88.com/newpreview_music/09/01/43/5c89e6ded0ebf83768.mp3';
+          that.data.bgPlayer.title = "背景音乐";
+          that.data.bgPlayer.play();
         }
       }
     });
-
-    let audio = wx.getBackgroundAudioManager();
-    audio.onTimeUpdate(function (e) {
-      if (that.data.songInfo) {
-        wx.getBackgroundAudioPlayerState({
-          success(res) {
-            if (that.data.musicLrcObj && res.status == 1) {
-              for (let i = 0; i < that.data.musicLrcObj.length; i++) {
-                if (i == that.data.musicLrcObj.length - 1) {
-                  that.setData({
-                    lrcString: that.data.musicLrcObj[i].lineLyric
-                  });
-                  return;
-                } else {
-                  if (res.currentPosition > that.data.musicLrcObj[i].time && res.currentPosition < that.data.musicLrcObj[i + 1].time) {
-                    that.setData({
-                      lrcString: that.data.musicLrcObj[i].lineLyric
-                    });
-                    return;
-                  }
-                }
-              }
+    WechatRecord.onRecognize(function (res) {
+      that.data.recodeString += res.result;
+      that.setData({
+        carModeMessage: that.data.recodeString
+      });
+      clearTimeout(that.data.timerForMessage);
+      that.data.timerForMessage = setTimeout(function () {
+        that.setData({
+          carModeMessage: ""
+        });
+      }, 3000);
+      clearTimeout(that.data.timerForStopRecord);
+      that.data.timerForStopRecord = setTimeout(function () {
+        that.data.isRecording = true;
+        that.startOrStopRecord();
+      }, 5000);
+    });
+    WechatRecord.onStop = function (res) {
+      // res.result = "哈哈哈";
+      if (res.result) {
+        if (res.result.indexOf('切歌') >= 0 || res.result.indexOf('下一首') >= 0 || res.result.indexOf('换首歌') >= 0 || res.result.indexOf('换一首') >= 0 || res.result.indexOf('切割') >= 0) {
+          app.request({
+            url: "song/pass",
+            data: {
+              room_id: app.globalData.roomInfo.room_id,
+              mid: that.data.songInfo.song.mid,
+            },
+            loading: "切歌中",
+            success: function (res) {
+              that.say(res.msg);
+            },
+            error(res) {
+              that.say(res.msg);
+              return true;
+            },
+          });
+          return;
+        }
+        if (res.result.indexOf('收藏') >= 0 || res.result.indexOf('搜藏') >= 0 || res.result.indexOf('喜欢') >= 0 || res.result.indexOf('豪庭') >= 0) {
+          app.request({
+            url: "song/addMySong",
+            data: {
+              room_id: app.globalData.roomInfo.room_id,
+              mid: that.data.songInfo.song.mid,
+            },
+            loading: "收藏中",
+            success: function (res) {
+              that.say(res.msg);
+            },
+            error(res) {
+              that.say(res.msg);
+              return true;
             }
+          });
+          return;
+        }
+        app.request({
+          url: "message/send",
+          data: {
+            type: 'text',
+            where: "channel",
+            to: that.data.room_id,
+            msg: encodeURIComponent(res.result),
+            at: false
+          },
+          success: function (res) {
+            that.setData({
+              atMessageObj: false,
+              isScrollEnabled: true,
+            });
+            that.autoScroll();
+          },
+          error: function (res) {
+            return true;
           }
         });
       }
+    };
+    that.data.bgPlayer.onTimeUpdate(function (e) {
+      if (that.data.songInfo) {
+        if (that.data.musicLrcObj) {
+          for (let i = 0; i < that.data.musicLrcObj.length; i++) {
+            if (i == that.data.musicLrcObj.length - 1) {
+              that.setData({
+                lrcString: that.data.musicLrcObj[i].lineLyric
+              });
+              return;
+            } else {
+              if (that.data.bgPlayer.currentTime > that.data.musicLrcObj[i].time && that.data.bgPlayer.currentTime < that.data.musicLrcObj[i + 1].time) {
+                that.setData({
+                  lrcString: that.data.musicLrcObj[i].lineLyric
+                });
+                return;
+              }
+            }
+          }
+        }
+      }
     });
+    that.data.bgPlayer.onPrev(function () {
+      if (that.data.isCarMode) {
+        that.startOrStopRecord();
+      }
+    });
+    that.data.bgPlayer.onNext(function () {
+      if (!that.data.isCarMode) {
+        return;
+      }
+      app.request({
+        url: "song/pass",
+        data: {
+          room_id: app.globalData.roomInfo.room_id,
+          mid: that.data.songInfo.song.mid,
+        },
+        success: function (res) {},
+        error() {
+          return true;
+        },
+      });
+    });
+    that.data.audioPlayer = wx.createInnerAudioContext({
+      useWebAudioImplement: true
+    });
+    that.data.audioPlayer.onEnded(function () {
+      that.data.bgPlayer.play();
+    });
+  },
+  say(str) {
+    let that = this;
+    if (!that.data.isCarMode) {
+      return;
+    }
+    that.setData({
+      carModeMessage: str
+    });
+
+    clearTimeout(that.data.timerForMessage);
+    that.data.timerForMessage = setTimeout(function () {
+      that.setData({
+        carModeMessage: ""
+      });
+    }, 3000);
+    WechatSI.textToSpeech({
+      lang: "zh_CN",
+      tts: true,
+      content: str,
+      success: function (res) {
+        that.data.bgPlayer.pause();
+        that.data.audioPlayer.src = res.filename;
+        that.data.audioPlayer.play();
+      }
+    })
   },
   doPasswordSubmit(e) {
     this.setData({
@@ -650,8 +808,7 @@ Page({
           case '关闭音乐':
           case '打开音乐':
             if (that.data.isMusicPlaying) {
-              let audio = wx.getBackgroundAudioManager();
-              audio.stop();
+              that.data.bgPlayer.stop();
               that.setData({
                 isMusicPlaying: false
               });
@@ -969,9 +1126,12 @@ Page({
   },
   messageController(msg) {
     let that = this;
+    let msgString = "";
     switch (msg.type) {
       case 'touch':
-        that.addSystemMessage(decodeURIComponent(msg.user.user_name) + " 摸了摸 " + decodeURIComponent(msg.at.user_name) + msg.at.user_touchtip, '#999', '#eee');
+        msgString = decodeURIComponent(msg.user.user_name) + " 摸了摸 " + decodeURIComponent(msg.at.user_name) + msg.at.user_touchtip;
+        that.say(msgString);
+        that.addSystemMessage(msgString, '#999', '#eee');
         if (msg.at) {
           if (msg.at.user_id == that.data.userInfo.user_id) {
             wx.vibrateLong();
@@ -996,7 +1156,11 @@ Page({
           }
           if (msg.at) {
             msg.content = "@" + decodeURIComponent(msg.at.user_name) + " " + msg.content;
+            msgString = decodeURIComponent(msg.user.user_name) + "对" + decodeURIComponent(msg.at.user_name) + "说：" + decodeURIComponent(msg.content);
+          } else {
+            msgString = decodeURIComponent(msg.user.user_name) + "说：" + decodeURIComponent(msg.content);
           }
+          that.say(msgString);
           for (let i = 0; i < that.data.messageList.length; i++) {
             if (that.data.messageList[i].loading) {
               that.data.messageList.splice(i, 1);
@@ -1007,39 +1171,49 @@ Page({
         break;
       case 'addSong':
         if (msg.at) {
-          that.addSystemMessage(decodeURIComponent(msg.user.user_name) + " 送了一首 《" + msg.song.name + "》 给 " +
-            decodeURIComponent(msg.at.user_name), '#333');
+          msgString = decodeURIComponent(msg.user.user_name) + " 送了一首 《" + msg.song.name + "》 给 " +
+            decodeURIComponent(msg.at.user_name);
+          that.addSystemMessage(msgString, '#333');
+          that.say(msgString);
         } else {
-          that.addSystemMessage(decodeURIComponent(msg.user.user_name) + " 点了一首《" + msg.song.name + "》", '#333');
+          msgString = decodeURIComponent(msg.user.user_name) + " 点了一首《" + msg.song.name + "》";
+          that.addSystemMessage(msgString, '#333');
+          that.say(msgString);
         }
 
         break;
       case 'pass':
-        that.addSystemMessage(decodeURIComponent(msg.user.user_name) + " 切掉了《" + msg.song.name + "》", '#ff4500');
-
+        msgString = decodeURIComponent(msg.user.user_name) + " 切掉了《" + msg.song.name + "》";
+        that.addSystemMessage(msgString, '#ff4500');
+        that.say(msgString);
         break;
       case 'push':
-        that.addSystemMessage(decodeURIComponent(msg.user.user_name) + " 将歌曲 《" + msg.song.name + "》 设为置顶候播放");
-
+        msgString = decodeURIComponent(msg.user.user_name) + " 将歌曲 《" + msg.song.name + "》 设为置顶候播放";
+        that.addSystemMessage(msgString);
+        that.say(msgString);
         break;
       case 'removeSong':
-        that.addSystemMessage(decodeURIComponent(msg.user.user_name) + " 将歌曲 《" + msg.song.name + "》 从队列移除");
-
+        msgString = decodeURIComponent(msg.user.user_name) + " 将歌曲 《" + msg.song.name + "》 从队列移除";
+        that.addSystemMessage(msgString);
+        that.say(msgString);
         break;
       case 'removeban':
-        that.addSystemMessage(decodeURIComponent(msg.user.user_name) + " 将 " + decodeURIComponent(msg.ban.user_name) +
-          " 解禁");
-
+        msgString = decodeURIComponent(msg.user.user_name) + " 将 " + decodeURIComponent(msg.ban.user_name) +
+          " 解禁";
+        that.addSystemMessage(msgString);
+        that.say(msgString);
         break;
       case 'shutdown':
-        that.addSystemMessage(decodeURIComponent(msg.user.user_name) + " 禁止了用户 " + decodeURIComponent(msg.ban.user_name) +
-          " 发言");
-
+        msgString = decodeURIComponent(msg.user.user_name) + " 禁止了用户 " + decodeURIComponent(msg.ban.user_name) +
+          " 发言";
+        that.addSystemMessage(msgString);
+        that.say(msgString);
         break;
       case 'songdown':
-        that.addSystemMessage(decodeURIComponent(msg.user.user_name) + " 禁止了用户 " + decodeURIComponent(msg.ban.user_name) +
-          " 点歌");
-
+        msgString = decodeURIComponent(msg.user.user_name) + " 禁止了用户 " + decodeURIComponent(msg.ban.user_name) +
+          " 点歌";
+        that.addSystemMessage(msgString);
+        that.say(msgString);
         break;
       case 'back':
         for (let i = 0; i < that.data.messageList.length; i++) {
@@ -1051,8 +1225,9 @@ Page({
         that.setData({
           messageList: that.data.messageList
         });
-        that.addSystemMessage(decodeURIComponent(msg.user.user_name) + " 撤回了一条消息");
-
+        msgString = decodeURIComponent(msg.user.user_name) + " 撤回了一条消息";
+        that.addSystemMessage(msgString);
+        that.say(msgString);
         break;
       case 'playSong':
         if (msg && msg.song && msg.user) {
@@ -1106,19 +1281,17 @@ Page({
       messageList: that.data.messageList
     });
 
-    let audio = wx.getBackgroundAudioManager();
-    audio.src = app.globalData.request.apiUrl + '/song/playurl?mid=' + msg.song.mid;
-    audio.title = msg.song.name + ' - ' + msg.song.singer;
-    audio.singer = "点歌人: " + decodeURIComponent(msg.user.user_name) + " " + that.data.roomInfo.room_name + "";
-    // audio.epname = "(" + that.data.roomInfo.room_name + ")";
-    audio.coverImgUrl = msg.song.pic;
-    audio.webUrl = msg.song.pic;
-    audio.seek(parseInt(new Date().valueOf() / 1000) - msg.since);
+    that.data.bgPlayer.src = app.globalData.request.apiUrl + '/song/playurl?mid=' + msg.song.mid;
+    that.data.bgPlayer.title = msg.song.name + ' - ' + msg.song.singer;
+    that.data.bgPlayer.singer = "点歌人: " + decodeURIComponent(msg.user.user_name) + " " + that.data.roomInfo.room_name + "";
+    that.data.bgPlayer.coverImgUrl = msg.song.pic;
+    that.data.bgPlayer.webUrl = msg.song.pic;
+    that.data.bgPlayer.seek(parseInt(new Date().valueOf() / 1000) - msg.since);
     if (that.data.isMusicPlaying) {
       that.addSystemMessage('正在播放 ' + decodeURIComponent(msg.user.user_name) + ' 点的 ' + msg.song.name + '(' + msg.song.singer + ')');
-      audio.play();
+      that.data.bgPlayer.play();
     } else {
-      audio.stop();
+      that.data.bgPlayer.stop();
     }
   },
   chooseImage() {
@@ -1166,9 +1339,32 @@ Page({
       },
     });
   },
+  onResize(res) {
+    let that = this;
+    if (res.deviceOrientation == 'landscape') {
+      that.setData({
+        isCarMode: true
+      });
+      wx.setKeepScreenOn({
+        keepScreenOn: true,
+      });
+    } else {
+      that.setData({
+        isCarMode: false
+      });
+      wx.setKeepScreenOn({
+        keepScreenOn: false,
+      });
+    }
+  },
   mainMenuClicked(e) {
     let that = this;
     switch (e.mark.title) {
+      case '驾驶':
+        that.setData({
+          isCarMode: !that.data.isCarMode
+        });
+        break;
       case '点歌':
         wx.navigateTo({
           url: '../song/select?bbbug=' + app.globalData.systemVersion,
@@ -1208,8 +1404,7 @@ Page({
               that.setData({
                 songInfo: false
               });
-              let audio = wx.getBackgroundAudioManager();
-              audio.stop();
+              that.data.bgPlayer.stop();
               that.getRoomInfo();
             }
           }

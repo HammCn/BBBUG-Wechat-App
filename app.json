@@ -2,7 +2,7 @@
   "darkmode": true,
   "themeLocation": "theme.json",
   "pages": [
-    "pages/index/index", 
+    "pages/index/index",
     "pages/user/motify",
     "pages/user/index",
     "pages/user/login",
@@ -29,5 +29,11 @@
     "navigationStyle": "default"
   },
   "sitemapLocation": "sitemap.json",
+  "plugins": {
+    "WechatSI": {
+      "version": "0.3.4",
+      "provider": "wx069ba97219f66d99"
+    }
+  },
   "resizable": true
 }
