@@ -3,9 +3,6 @@ var WechatSI = requirePlugin("WechatSI");
 let WechatRecord = WechatSI.getRecordRecognitionManager();
 Page({
   data: {
-    carModeMessage: "",
-    timerForMessage: false,
-    timerForStopRecord: false,
     isCarMode: false,
     audioPlayer: false,
     bgPlayer: false,
@@ -62,30 +59,6 @@ Page({
     clickTimer: false,
     enableTouchEnd: false,
     isRecording: false,
-  },
-  startOrStopRecord() {
-    let that = this;
-    this.data.recodeString = "";
-    if (this.data.isRecording) {
-      this.setData({
-        carModeMessage: ""
-      });
-      WechatRecord.stop();
-      this.data.bgPlayer.play();
-      this.data.isRecording = false;
-    } else {
-      this.data.bgPlayer.pause();
-      WechatRecord.start();
-      this.data.isRecording = true;
-      this.setData({
-        carModeMessage: "请告诉我你想做什么..."
-      });
-      clearTimeout(that.data.timerForStopRecord);
-      that.data.timerForStopRecord = setTimeout(function () {
-        that.data.isRecording = true;
-        that.startOrStopRecord();
-      }, 5000);
-    }
   },
   setSimplePlayer() {
     wx.vibrateShort();
@@ -275,84 +248,6 @@ Page({
         }
       }
     });
-    WechatRecord.onRecognize(function (res) {
-      that.data.recodeString += res.result;
-      that.setData({
-        carModeMessage: that.data.recodeString
-      });
-      clearTimeout(that.data.timerForMessage);
-      that.data.timerForMessage = setTimeout(function () {
-        that.setData({
-          carModeMessage: ""
-        });
-      }, 3000);
-      clearTimeout(that.data.timerForStopRecord);
-      that.data.timerForStopRecord = setTimeout(function () {
-        that.data.isRecording = true;
-        that.startOrStopRecord();
-      }, 5000);
-    });
-    WechatRecord.onStop = function (res) {
-      // res.result = "哈哈哈";
-      if (res.result) {
-        if (res.result.indexOf('切歌') >= 0 || res.result.indexOf('下一首') >= 0 || res.result.indexOf('换首歌') >= 0 || res.result.indexOf('换一首') >= 0 || res.result.indexOf('切割') >= 0) {
-          app.request({
-            url: "song/pass",
-            data: {
-              room_id: app.globalData.roomInfo.room_id,
-              mid: that.data.songInfo.song.mid,
-            },
-            loading: "切歌中",
-            success: function (res) {
-              that.say(res.msg);
-            },
-            error(res) {
-              that.say(res.msg);
-              return true;
-            },
-          });
-          return;
-        }
-        if (res.result.indexOf('收藏') >= 0 || res.result.indexOf('搜藏') >= 0 || res.result.indexOf('喜欢') >= 0 || res.result.indexOf('豪庭') >= 0) {
-          app.request({
-            url: "song/addMySong",
-            data: {
-              room_id: app.globalData.roomInfo.room_id,
-              mid: that.data.songInfo.song.mid,
-            },
-            loading: "收藏中",
-            success: function (res) {
-              that.say(res.msg);
-            },
-            error(res) {
-              that.say(res.msg);
-              return true;
-            }
-          });
-          return;
-        }
-        app.request({
-          url: "message/send",
-          data: {
-            type: 'text',
-            where: "channel",
-            to: that.data.room_id,
-            msg: encodeURIComponent(res.result),
-            at: false
-          },
-          success: function (res) {
-            that.setData({
-              atMessageObj: false,
-              isScrollEnabled: true,
-            });
-            that.autoScroll();
-          },
-          error: function (res) {
-            return true;
-          }
-        });
-      }
-    };
     that.data.bgPlayer.onTimeUpdate(function (e) {
       if (that.data.songInfo) {
         if (that.data.musicLrcObj) {
@@ -376,7 +271,21 @@ Page({
     });
     that.data.bgPlayer.onPrev(function () {
       if (that.data.isCarMode) {
-        that.startOrStopRecord();
+        app.request({
+          url: "song/addMySong",
+          data: {
+            room_id: app.globalData.roomInfo.room_id,
+            mid: that.data.songInfo.song.mid,
+          },
+          loading: "收藏中",
+          success: function (res) {
+            that.say(res.msg);
+          },
+          error(res) {
+            that.say(res.msg);
+            return true;
+          }
+        });
       }
     });
     that.data.bgPlayer.onNext(function () {
@@ -389,7 +298,9 @@ Page({
           room_id: app.globalData.roomInfo.room_id,
           mid: that.data.songInfo.song.mid,
         },
-        success: function (res) {},
+        success: function (res) {
+          that.say(res.msg);
+        },
         error() {
           return true;
         },
@@ -398,32 +309,19 @@ Page({
     that.data.audioPlayer = wx.createInnerAudioContext({
       useWebAudioImplement: true
     });
-    that.data.audioPlayer.onEnded(function () {
-      that.data.bgPlayer.play();
-    });
   },
   say(str) {
     let that = this;
     if (!that.data.isCarMode) {
       return;
     }
-    that.setData({
-      carModeMessage: str
-    });
-
-    clearTimeout(that.data.timerForMessage);
-    that.data.timerForMessage = setTimeout(function () {
-      that.setData({
-        carModeMessage: ""
-      });
-    }, 3000);
     WechatSI.textToSpeech({
       lang: "zh_CN",
       tts: true,
       content: str,
       success: function (res) {
-        that.data.bgPlayer.pause();
         that.data.audioPlayer.src = res.filename;
+        that.data.audioPlayer.playbackRate = 1.2;
         that.data.audioPlayer.play();
       }
     })
@@ -433,6 +331,24 @@ Page({
       room_password: e.detail.value.password
     });
     this.getRoomInfo();
+  },
+  tapToAddSong() {
+    let that = this;
+    app.request({
+      url: "song/addMySong",
+      data: {
+        room_id: app.globalData.roomInfo.room_id,
+        mid: that.data.songInfo.song.mid,
+      },
+      loading: "收藏中",
+      success: function (res) {
+        that.say(res.msg);
+      },
+      error(res) {
+        that.say(res.msg);
+        return true;
+      }
+    });
   },
   openNewsDetail(e) {
     let id = e.mark.news_id;
@@ -1130,7 +1046,6 @@ Page({
     switch (msg.type) {
       case 'touch':
         msgString = decodeURIComponent(msg.user.user_name) + " 摸了摸 " + decodeURIComponent(msg.at.user_name) + msg.at.user_touchtip;
-        that.say(msgString);
         that.addSystemMessage(msgString, '#999', '#eee');
         if (msg.at) {
           if (msg.at.user_id == that.data.userInfo.user_id) {
@@ -1142,6 +1057,7 @@ Page({
         msg.content = msg.content;
         msg.type = 'system';
         that.addMessageToList(msg);
+        that.say(msg.content);
         break;
       case 'text':
       case 'img':
@@ -1155,8 +1071,8 @@ Page({
             msg.content = (msg.content);
           }
           if (msg.at) {
-            msg.content = "@" + decodeURIComponent(msg.at.user_name) + " " + msg.content;
             msgString = decodeURIComponent(msg.user.user_name) + "对" + decodeURIComponent(msg.at.user_name) + "说：" + decodeURIComponent(msg.content);
+            msg.content = "@" + decodeURIComponent(msg.at.user_name) + " " + msg.content;
           } else {
             msgString = decodeURIComponent(msg.user.user_name) + "说：" + decodeURIComponent(msg.content);
           }
@@ -1251,6 +1167,25 @@ Page({
         console.log("消息未解析")
     }
     that.autoScroll();
+  },
+  longPressPassTheSong() {
+    let that = this;
+    app.request({
+      url: "song/pass",
+      data: {
+        room_id: app.globalData.roomInfo.room_id,
+        mid: that.data.songInfo.song.mid,
+      },
+      success: function (res) {
+        if (res.msg != "切歌成功") {
+          res.msg = "已发起切歌投票";
+        }
+        that.say(res.msg);
+      },
+      error() {
+        return true;
+      },
+    });
   },
   onShareAppMessage() {
     let that = this;

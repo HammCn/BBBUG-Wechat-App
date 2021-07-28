@@ -250,34 +250,33 @@ movable-view image {
   z-index: 30;
 }
 
-.car-mode-siri {
-  position: fixed;
-  left: 20px;
-  bottom: 20px;
-}
-
-.car-mode-siri .iconfont {
-  font-size: 64px;
-  color: white;
-  text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-}
 
 .car-mode-player {
   position: fixed;
   left: 20px;
   top: 80px;
+  right: 20px;
+  bottom: 20px;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   margin-top: -50px;
   text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   color: white;
 }
 
+.car-mode-tips {
+  font-size: 12px;
+  color: #ccc;
+  font-weight: 300;
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+}
 
 .car-mode-img image {
-  width: 120px;
-  height: 120px;
+  width: 160px;
+  height: 160px;
   border-radius: 20px;
 }
 
@@ -288,34 +287,26 @@ movable-view image {
   text-overflow: ellipsis;
   white-space: nowrap;
   margin-left: 20px;
-  font-weight: 300;
 }
 
 
 .car-mode-name {
   font-size: 32px;
-  margin-bottom: 20px;
+  font-weight: bold;
 }
 
 .car-mode-singer {
-  font-size: 16px;
+  font-size: 20px;
   color: #eee;
 }
 
 .car-mode-lrc {
-  font-size: 36px;
-  position: fixed;
-  left: 100px;
-  bottom: 45px;
-  right: 20px;
+  font-size: 28px;
   text-align: left;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.car-mode-message {
-  color: lightgreen;
+  margin-top: 25px;
 }
 
 @keyframes slideIn {

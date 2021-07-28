@@ -83,7 +83,7 @@
       <view class="bbbug_player_tips">播放器加载中</view>
     </view>
   </view>
-  <view class="bbbug_input" bindtap="footerTapedToFocus">
+  <view class="bbbug_input" bindtap="footerTapedToFocus" wx:if="{{!isCarMode}}">
     <view class="bbbug_face" catchtap="showOrHideEmojiBox">
       <image src="/res/image/add.png" />
     </view>
@@ -168,27 +168,22 @@
       </view>
     </movable-view>
   </movable-area>
-  <view class="car-mode" wx:if="{{isCarMode}}" bindtap="startOrStopRecord">
-    <view class="car-mode-siri">
-      <i class="iconfont icon-icon_voice"></i>
-    </view>
+  <view class="car-mode" wx:if="{{isCarMode}}" bindlongpress="longPressPassTheSong" bindtap="tapToAddSong">
     <view class="car-mode-player" wx:if="{{songInfo}}">
       <view class="car-mode-img">
         <image src="{{songInfo.song.pic}}" />
       </view>
       <view class="car-mode-song">
-        <view class="car-mode-name">{{songInfo.song.name}}</view>
-        <view class="car-mode-singer">{{songInfo.song.singer}}</view>
-        <view class="car-mode-singer">点歌人: {{helper.urldecode(songInfo.user.user_name)}}</view>
-      </view>
-      <view class="car-mode-lrc">
-        <block wx:if="{{carModeMessage}}">
-          <view class="car-mode-message">{{carModeMessage}}</view>
-        </block>
-        <block wx:if="{{!carModeMessage}}">
+        <view class="car-mode-name">{{songInfo.song.name}} - {{songInfo.song.singer}}</view>
+        <view class="car-mode-singer">点歌人: (ID:{{songInfo.user.user_id}}){{helper.urldecode(songInfo.user.user_name)}}
+        </view>
+        <view class="car-mode-lrc">
           {{lrcString}}
-        </block>
+        </view>
       </view>
+    </view>
+    <view class="car-mode-tips">
+      点击本页收藏歌曲，长按切歌，我们会为你朗读消息，但为了你的驾驶安全，暂不支持发送消息。
     </view>
   </view>
 </view>
