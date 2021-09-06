@@ -7,6 +7,8 @@ Page({
   data: {
     item: {},
     news_id: 0,
+    timer: false,
+    count: 0
   },
 
   /**
@@ -77,5 +79,24 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  taps() {
+    let that = this;
+    that.data.count++;
+    if (that.data.count >= 10) {
+      wx.showToast({
+        title: '再按次' + (15 - that.data.count) + '解锁',
+      })
+      clearTimeout(that.data.timer);
+      that.data.timer = setTimeout(function () {
+        that.data.count = 0;
+      }, 5000);
+    }
+    if (that.data.count >= 15) {
+      app.globalData.systemVersion = new Date().valueOf();
+      wx.reLaunch({
+        url: '../index/index',
+      })
+    }
   }
 })

@@ -212,26 +212,26 @@ Page({
       });
     }
 
-    let plat = systemInfo.platform.toLowerCase();
-    if (plat == 'windows' || plat == 'mac') {
-      wx.redirectTo({
-        url: '../pc/index?bbbug=' + app.globalData.systemVersion + '&url=' + encodeURIComponent('https://bbbug.com'),
-      });
-      wx.hideHomeButton();
-      return;
-    }
     wx.setStorageSync('access_token', access_token);
-    app.request({
-      url: "",
-      success(res) {
-        if (res.data.success) {
-          that.setData({
-            newsShow: false
-          });
-          app.globalData.systemVersion = res.data.systemVersion;
-          wx.setStorageSync('loadSuccess', 1);
-          that.getMyInfo();
-        } else {
+
+
+    if (app.globalData.systemVersion > 0) {
+      that.setData({
+        newsShow: false
+      });
+      let plat = systemInfo.platform.toLowerCase();
+      if (plat == 'windows' || plat == 'mac') {
+        wx.redirectTo({
+          url: '../pc/index?bbbug=' + app.globalData.systemVersion + '&url=' + encodeURIComponent('https://demo.bbbug.com'),
+        });
+        wx.hideHomeButton();
+        return;
+      }
+      that.getMyInfo();
+    } else {
+      app.request({
+        url: "",
+        success(res) {
           that.setData({
             newsList: res.data.data,
             newsShow: true
@@ -246,8 +246,8 @@ Page({
           that.data.bgPlayer.title = "背景音乐";
           that.data.bgPlayer.play();
         }
-      }
-    });
+      });
+    }
     that.data.bgPlayer.onTimeUpdate(function (e) {
       if (that.data.songInfo) {
         if (that.data.musicLrcObj) {
